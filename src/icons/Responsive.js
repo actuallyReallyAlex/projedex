@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 const Responsive = props => {
   return (
     <svg
-      width={props.width ? props.width : 50}
+      width={props.width ? props.width : 40}
       style={props.style}
       version="1.1"
       id="Capa_1"
