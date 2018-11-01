@@ -1,0 +1,25 @@
+{
+  "name": "projedex",
+  "version": "0.1.0",
+  "description": "An overview of my projects, and their assets.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexlee-dev/projedex.git"
+  },
+  "keywords": [
+    "project",
+    "dashboard",
+    "overview",
+    "projedex"
+  ],
+  "author": "Alex Lee",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/alexlee-dev/projedex/issues"
+  },
+  "homepage": "https://github.com/alexlee-dev/projedex#readme"
+}
