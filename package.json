@@ -1,8 +1,7 @@
 {
   "name": "projedex",
-  "version": "0.1.0",
+  "version": "0.0.0",
   "description": "An overview of my projects, and their assets.",
-  "private": true,
   "repository": {
     "type": "git",
     "url": "git+https://github.com/alexlee-dev/projedex.git"
