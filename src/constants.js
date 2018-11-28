@@ -5,7 +5,9 @@ const svgSizes = {
 }
 
 const iconColors = {
-  github: 'dark-1'
+  docs: 'neutral-3',
+  github: 'dark-1',
+  home: 'brand'
 }
 
 export { svgSizes, iconColors }
