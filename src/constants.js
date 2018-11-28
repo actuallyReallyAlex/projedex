@@ -4,4 +4,8 @@ const svgSizes = {
   large: '600'
 }
 
-export { svgSizes }
+const iconColors = {
+  github: 'dark-1'
+}
+
+export { svgSizes, iconColors }
