@@ -1,5 +1,12 @@
 # Change Log
 
+## [v0.2.1](https://github.com/alexlee-dev/projedex/tree/v0.2.1) (2018-11-28)
+[Full Changelog](https://github.com/alexlee-dev/projedex/compare/v0.2.0...v0.2.1)
+
+**Implemented enhancements:**
+
+- ✏️ Split up Home page and Projects page. [\#3](https://github.com/alexlee-dev/projedex/pull/3) ([alexlee-dev](https://github.com/alexlee-dev))
+
 ## [v0.2.0](https://github.com/alexlee-dev/projedex/tree/v0.2.0) (2018-11-28)
 [Full Changelog](https://github.com/alexlee-dev/projedex/compare/v0.1.1...v0.2.0)
 
