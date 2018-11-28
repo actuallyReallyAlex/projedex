@@ -20,7 +20,7 @@ const Classification = ({ children, index = 0, name }) => (
               count: 'fit',
               size: size === 'small' ? 'small' : 'medium'
             }}
-            rows="small"
+            // rows="medium"
             gap={{ row: 'medium' }}
           >
             {children}
