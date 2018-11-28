@@ -1,48 +1,26 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import { Box, Heading, Paragraph, Anchor } from 'grommet'
-import { Info, TextAlignFull, Chat } from 'grommet-icons'
+import { ResponsiveContext, Box } from 'grommet'
+import Beer from './svg/Beer'
+import Header from './Header'
 
-const Hero = props => {
-  return (
-    <Box
-      direction="row"
-      justify="center"
-      fill="horizontal"
-      pad="xlarge"
-      gap="xlarge"
-      background="light-1"
-    >
-      <Box>
-        <Heading level={2}>{props.heading}</Heading>
-        <Paragraph>{props.subHeading}</Paragraph>
-        <Box direction="row" gap="medium" justify="start">
-          <Anchor
-            label="Learn More"
-            icon={<Info />}
-            onClick={() => alert('clicked')}
-          />
-          <Anchor
-            label="Documentation"
-            icon={<TextAlignFull />}
-            onClick={() => alert('clicked')}
-          />
-          <Anchor
-            label="Support"
-            icon={<Chat />}
-            onClick={() => alert('clicked')}
-          />
+const Hero = () => (
+  <ResponsiveContext.Consumer>
+    {size => (
+      <Box direction="row">
+        <Box pad="medium" align="center">
+          <Beer size={size} />
         </Box>
+        <Header
+          label="Projédex"
+          summary={
+            <span>
+              Like a pokédex, but for your projects.
+            </span>
+          }
+        />
       </Box>
-      <Box>{props.icon}</Box>
-    </Box>
-  )
-}
-
-Hero.propTypes = {
-  heading: PropTypes.string,
-  icon: PropTypes.element,
-  subHeading: PropTypes.string
-}
+    )}
+  </ResponsiveContext.Consumer>
+)
 
 export default Hero
