@@ -39,7 +39,7 @@ class Card extends Component {
           <Heading level={3}>{title}</Heading>
           <Text margin={{ bottom: 'large' }}>{description}</Text>
           {links && (
-            <Box direction="row" margin={{ top: 'auto' }} gap="medium">
+            <Box direction="row" margin={{ top: 'auto' }} gap="small">
               {links.map((link, i) => {
                 return <CircleButton key={i} icon={link.icon} link={link.link} color={link.color} />
               })}
