@@ -6,14 +6,12 @@ import Nav from '../components/Nav'
 import Section from '../components/Section'
 import Home from '../pages/Home'
 
-
 const NotFound = () => <h1>NotFound</h1>
 
-grommet.global.colors.brand = "#6194EB"
+grommet.global.colors.brand = '#6194EB'
 
-const AppRouter = () => {
-  console.log(grommet)
-  return ( <BrowserRouter>
+const AppRouter = () => (
+  <BrowserRouter>
     <Grommet theme={grommet}>
       <Section>
         <Nav />
@@ -24,6 +22,6 @@ const AppRouter = () => {
       </Switch>
     </Grommet>
   </BrowserRouter>
-)}
+)
 
 export default AppRouter
