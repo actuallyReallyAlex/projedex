@@ -1,5 +1,12 @@
 # Change Log
 
+## [v0.2.2](https://github.com/alexlee-dev/projedex/tree/v0.2.2) (2018-11-28)
+[Full Changelog](https://github.com/alexlee-dev/projedex/compare/v0.2.1...v0.2.2)
+
+**Implemented enhancements:**
+
+- ✨ Fader Component [\#4](https://github.com/alexlee-dev/projedex/pull/4) ([alexlee-dev](https://github.com/alexlee-dev))
+
 ## [v0.2.1](https://github.com/alexlee-dev/projedex/tree/v0.2.1) (2018-11-28)
 [Full Changelog](https://github.com/alexlee-dev/projedex/compare/v0.2.0...v0.2.1)
 
