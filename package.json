@@ -15,7 +15,7 @@
   "bugs": {
     "url": "https://github.com/alexlee-dev/projedex/issues"
   },
-  "homepage": "https://github.com/alexlee-dev/projedex#readme",
+  "homepage": "https://projedex.netlify.com/",
   "author": "Alex Lee",
   "license": "MIT",
   "dependencies": {
