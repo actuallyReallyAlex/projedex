@@ -7,6 +7,8 @@ const projectRouter = require("./routers/project");
 const app = express();
 const port = process.env.PORT;
 
+app.get("/", (req, res) => res.send("Projedex Application"));
+
 app.use(express.json());
 
 app.use(userRouter);
