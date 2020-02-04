@@ -16,7 +16,7 @@
     "url": "https://github.com/alexlee-dev/projedex/issues"
   },
   "homepage": "https://projedex.netlify.com/",
-  "author": "Alex Lee",
+  "author": "Alex Lee <www.alexlee.dev>",
   "license": "MIT",
   "dependencies": {},
   "scripts": {}
