@@ -9,6 +9,7 @@ import useLocalStorage from "./hooks/useLocalStorage";
 import request from "request";
 import { proxy } from "./constants";
 import DataViewer from "./components/DataViewer";
+import RefreshDataButton from "./components/RefreshDataButton";
 
 const App = () => {
   const [userData, setUserData] = useLocalStorage("userData", null);
@@ -60,6 +61,13 @@ const App = () => {
   return (
     <div className="App">
       <h1>Projedex (BASIC UI)</h1>
+      {userData && (
+        <RefreshDataButton
+          userData={userData}
+          setUserData={setUserData}
+          setProjects={setProjects}
+        />
+      )}
       <DataViewer
         userData={userData}
         projects={projects}
