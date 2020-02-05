@@ -3,6 +3,7 @@ import Login from "./components/Login";
 import CreateUser from "./components/CreateUser";
 import Logout from "./components/Logout";
 import DeleteUser from "./components/DeleteUser";
+import ModifyUser from "./components/ModifyUser";
 
 const App = () => {
   const [userData, setUserData] = useState(null);
@@ -14,8 +15,8 @@ const App = () => {
     const localStorageUserData = window.localStorage.getItem("userData");
 
     if (localStorageUserData && !userData) {
-      setUserData(localStorageUserData);
-    } else if (!localStorageUserData && userData) {
+      setUserData(JSON.parse(localStorageUserData));
+    } else {
       window.localStorage.setItem("userData", JSON.stringify(userData));
     }
   }, [userData]);
@@ -48,6 +49,9 @@ const App = () => {
         {userData && <Logout setUserData={setUserData} userData={userData} />}
         {userData && (
           <DeleteUser setUserData={setUserData} userData={userData} />
+        )}
+        {userData && (
+          <ModifyUser setUserData={setUserData} userData={userData} />
         )}
       </form>
     </div>
