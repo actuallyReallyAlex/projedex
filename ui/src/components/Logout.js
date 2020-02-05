@@ -2,7 +2,7 @@ import React from "react";
 import { proxy } from "../constants";
 import request from "request";
 
-const Logout = ({ setUserData, userData }) => {
+const Logout = ({ setUserData, userData, setProjects }) => {
   const handleLogout = () => {
     request(
       proxy + "https://projedex.herokuapp.com/users/logout",
@@ -22,8 +22,8 @@ const Logout = ({ setUserData, userData }) => {
         }
 
         if (response.statusCode === 200) {
-          window.localStorage.removeItem("userData");
           setUserData(null);
+          setProjects([]);
         }
       }
     );
