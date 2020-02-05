@@ -8,6 +8,7 @@ import CreateProject from "./components/CreateProject";
 import useLocalStorage from "./hooks/useLocalStorage";
 import request from "request";
 import { proxy } from "./constants";
+import DataViewer from "./components/DataViewer";
 
 const App = () => {
   const [userData, setUserData] = useLocalStorage("userData", null);
@@ -59,7 +60,11 @@ const App = () => {
   return (
     <div className="App">
       <h1>Projedex (BASIC UI)</h1>
-      <pre>{JSON.stringify({ userData, projects }, null, 2)}</pre>
+      <DataViewer
+        userData={userData}
+        projects={projects}
+        setProjects={setProjects}
+      />
       <form>
         {!userData && (
           <Fragment>
