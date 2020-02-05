@@ -66,7 +66,6 @@ router.patch("/projects/:id", auth, async (req, res) => {
 
     res.send(project);
   } catch (e) {
-    console.log(e);
     res.status(500).send();
   }
 });
