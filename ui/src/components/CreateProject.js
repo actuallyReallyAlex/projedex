@@ -1,37 +1,11 @@
 import React, { useState } from "react";
-import request from "request";
-import { proxy } from "../constants";
+import { createProject } from "../requests";
 
 const CreateProject = ({ userData, projects, setProjects }) => {
   const [name, setName] = useState(null);
 
-  const handleCreateProject = () => {
-    request(
-      proxy + "https://projedex.herokuapp.com/projects",
-      {
-        json: true,
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: { name },
-        auth: {
-          bearer: userData.token
-        }
-      },
-      (error, response, body) => {
-        if (error) {
-          document.getElementById("create-project-name").value = "";
-          return console.error(error);
-        }
-
-        if (response.statusCode === 201) {
-          document.getElementById("create-project-name").value = "";
-          setProjects([...projects, body]);
-        }
-      }
-    );
-  };
+  const handleCreateProject = () =>
+    createProject(userData, name, setProjects, projects);
 
   return (
     <div id="create-project">

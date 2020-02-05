@@ -1,6 +1,5 @@
 import React from "react";
-import request from "request";
-import { proxy } from "../constants";
+import { createUser } from "../requests";
 
 const CreateUser = ({
   setName,
@@ -14,24 +13,7 @@ const CreateUser = ({
   const handleCreateUser = async e => {
     e.preventDefault();
 
-    request(
-      proxy + "https://projedex.herokuapp.com/users",
-      {
-        json: true,
-        body: { email, password, name },
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        }
-      },
-      (error, response, body) => {
-        if (error) {
-          return console.error(error);
-        }
-
-        setUserData(body);
-      }
-    );
+    createUser(email, password, name, setUserData);
   };
   return (
     <div id="createUser">

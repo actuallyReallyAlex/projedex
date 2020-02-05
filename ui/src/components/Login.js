@@ -1,29 +1,11 @@
 import React from "react";
-import request from "request";
-import { proxy } from "../constants";
+import { login } from "../requests";
 
 const Login = ({ email, password, setEmail, setPassword, setUserData }) => {
   const handleLogin = async e => {
     e.preventDefault();
 
-    request(
-      proxy + "https://projedex.herokuapp.com/users/login",
-      {
-        json: true,
-        body: { email, password },
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        }
-      },
-      (error, response, body) => {
-        if (error) {
-          return console.error(error);
-        }
-
-        setUserData(body);
-      }
-    );
+    login(email, password, setUserData);
   };
   return (
     <div id="login">
