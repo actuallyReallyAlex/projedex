@@ -177,3 +177,33 @@ export const deleteProject = (id, userData, setProjects, projects) =>
       }
     }
   );
+
+export const modifyProject = (id, userData, name, setProjects, projects) =>
+  request(
+    proxy + `https://projedex.herokuapp.com/projects/${id}`,
+    {
+      json: true,
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: { name },
+      auth: {
+        bearer: userData.token
+      }
+    },
+    (error, response, body) => {
+      if (error) {
+        return console.error(error);
+      }
+
+      if (response.statusCode === 200) {
+        const newProjectsArray = [...projects];
+        const modifiedProjectIndex = newProjectsArray.findIndex(
+          project => project._id === body._id
+        );
+        newProjectsArray[modifiedProjectIndex] = body;
+        setProjects(newProjectsArray);
+      }
+    }
+  );

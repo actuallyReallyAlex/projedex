@@ -1,5 +1,6 @@
 import React from "react";
 import DeleteProjectButton from "./DeleteProjectButton";
+import ModifyProjectButton from "./ModifyProjectButton";
 
 const DataViewer = ({ userData, projects, setProjects }) => {
   return (
@@ -10,6 +11,12 @@ const DataViewer = ({ userData, projects, setProjects }) => {
         <div key={_id}>
           <span>{name}</span>
           <DeleteProjectButton
+            id={_id}
+            userData={userData}
+            setProjects={setProjects}
+            projects={projects}
+          />
+          <ModifyProjectButton
             id={_id}
             userData={userData}
             setProjects={setProjects}
