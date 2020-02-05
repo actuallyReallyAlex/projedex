@@ -5,7 +5,13 @@
   "main": "index.js",
   "scripts": {
     "start": "node src/index.js",
-    "dev": "env-cmd nodemon src/index.js"
+    "dev": "env-cmd -e development nodemon src/index.js",
+    "test": "env-cmd -e test jest --watch --runInBand",
+    "coverage": "env-cmd -e test jest --runInBand --detectOpenHandles --coverage",
+    "view-coverage": "http-server ./coverage/lcov-report -s -c-1 -o"
+  },
+  "jest": {
+    "testEnvironment": "node"
   },
   "author": "Alex Lee <www.alexlee.dev>",
   "license": "MIT",
@@ -32,7 +38,11 @@
     "validator": "^12.2.0"
   },
   "devDependencies": {
+    "@types/jest": "^25.1.1",
     "env-cmd": "^10.0.1",
-    "nodemon": "^2.0.2"
+    "http-server": "^0.12.1",
+    "jest": "^25.1.0",
+    "nodemon": "^2.0.2",
+    "supertest": "^4.0.2"
   }
 }

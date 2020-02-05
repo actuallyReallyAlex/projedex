@@ -1,17 +1,6 @@
-const express = require("express");
-require("./db/mongoose");
-
-const userRouter = require("./routers/user");
-const projectRouter = require("./routers/project");
-
-const app = express();
+const app = require("./app");
 const port = process.env.PORT;
 
 app.get("/", (req, res) => res.send("Projedex Application"));
-
-app.use(express.json());
-
-app.use(userRouter);
-app.use(projectRouter);
 
 app.listen(port, () => console.log(`Server is listening on port: ${port}`));
