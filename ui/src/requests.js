@@ -153,3 +153,27 @@ export const modifyUser = (requestBody, userData, setUserData) =>
       }
     }
   );
+
+export const deleteProject = (id, userData, setProjects, projects) =>
+  request(
+    proxy + `https://projedex.herokuapp.com/projects/${id}`,
+    {
+      json: true,
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      auth: {
+        bearer: userData.token
+      }
+    },
+    (error, response, body) => {
+      if (error) {
+        return console.error(error);
+      }
+
+      if (response.statusCode === 200) {
+        setProjects(projects.filter(project => project._id !== body._id));
+      }
+    }
+  );
