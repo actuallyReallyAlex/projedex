@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import request from "request";
-import { proxy } from "../constants";
+import { modifyUser } from "../requests";
 
 const ModifyUser = ({ setUserData, userData }) => {
   const [email, setEmail] = useState(null);
@@ -16,35 +15,7 @@ const ModifyUser = ({ setUserData, userData }) => {
       if (field[key]) requestBody[key] = field[key];
     });
 
-    request(
-      proxy + "https://projedex.herokuapp.com/users/me",
-      {
-        json: true,
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: requestBody,
-        auth: {
-          bearer: userData.token
-        }
-      },
-      (error, response, body) => {
-        if (error) {
-          document.getElementById("modify-user-email").value = "";
-          document.getElementById("modify-user-name").value = "";
-          document.getElementById("modify-user-password").value = "";
-          return console.error(error);
-        }
-
-        if (response.statusCode === 200) {
-          document.getElementById("modify-user-email").value = "";
-          document.getElementById("modify-user-name").value = "";
-          document.getElementById("modify-user-password").value = "";
-          setUserData({ ...userData, user: body });
-        }
-      }
-    );
+    modifyUser(requestBody, userData, setUserData);
   };
 
   return (

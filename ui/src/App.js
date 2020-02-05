@@ -86,6 +86,7 @@ const App = () => {
             setProjects={setProjects}
             setUserData={setUserData}
             userData={userData}
+            setHasFetchedProjectData={setHasFetchedProjectData}
           />
         )}
         {userData && (
