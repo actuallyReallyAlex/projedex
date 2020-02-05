@@ -207,3 +207,57 @@ export const modifyProject = (id, userData, name, setProjects, projects) =>
       }
     }
   );
+
+export const refreshData = (userData, setUserData, setProjects) => {
+  let newUserData;
+  let newProjects;
+
+  request(
+    proxy + `https://projedex.herokuapp.com/users/me`,
+    {
+      json: true,
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      auth: {
+        bearer: userData.token
+      }
+    },
+    (error, response, body) => {
+      if (error) {
+        return console.error(error);
+      }
+
+      if (response.statusCode === 200) {
+        newUserData = body;
+
+        request(
+          proxy + `https://projedex.herokuapp.com/projects`,
+          {
+            json: true,
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            auth: {
+              bearer: userData.token
+            }
+          },
+          (error, response, body) => {
+            if (error) {
+              return console.error(error);
+            }
+
+            if (response.statusCode === 200) {
+              newProjects = body;
+
+              setUserData({ ...userData, user: newUserData });
+              setProjects(newProjects);
+            }
+          }
+        );
+      }
+    }
+  );
+};
