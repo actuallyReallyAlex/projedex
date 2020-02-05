@@ -2,6 +2,7 @@ import React, { useState, useEffect, Fragment } from "react";
 import Login from "./components/Login";
 import CreateUser from "./components/CreateUser";
 import Logout from "./components/Logout";
+import DeleteUser from "./components/DeleteUser";
 
 const App = () => {
   const [userData, setUserData] = useState(null);
@@ -45,6 +46,9 @@ const App = () => {
           </Fragment>
         )}
         {userData && <Logout setUserData={setUserData} userData={userData} />}
+        {userData && (
+          <DeleteUser setUserData={setUserData} userData={userData} />
+        )}
       </form>
     </div>
   );
