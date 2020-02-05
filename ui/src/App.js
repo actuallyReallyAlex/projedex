@@ -1,95 +1,50 @@
-import React, { useState, useEffect } from "react";
-import request from "request";
+import React, { useState, useEffect, Fragment } from "react";
+import Login from "./components/Login";
+import CreateUser from "./components/CreateUser";
+import Logout from "./components/Logout";
 
 const App = () => {
-  const [user, setUser] = useState(null);
-  const [token, setToken] = useState(null);
+  const [userData, setUserData] = useState(null);
   const [name, setName] = useState(null);
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
 
-  const handleSubmit = async e => {
-    e.preventDefault();
-
-    const proxy = "https://cors-anywhere.herokuapp.com/";
-
-    request(
-      proxy + "https://projedex.herokuapp.com/users",
-      {
-        json: true,
-        body: { email, password, name },
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        }
-      },
-      (error, response, body) => {
-        if (error) {
-          return console.error(error);
-        }
-
-        setUser(body.user);
-        setToken(body.token);
-      }
-    );
-  };
-
   useEffect(() => {
-    const localStorageUser = window.localStorage.getItem("user");
-    const localStorageToken = window.localStorage.getItem("token");
+    const localStorageUserData = window.localStorage.getItem("userData");
 
-    if (!localStorageUser) {
-      if (user) {
-        window.localStorage.setItem("user", JSON.stringify(user));
-      }
-    } else {
-      if (!user) {
-        const userObj = JSON.parse(localStorageUser);
-        setUser(userObj);
-        setName(userObj.name);
-        setEmail(userObj.email);
-      }
+    if (localStorageUserData && !userData) {
+      setUserData(localStorageUserData);
+    } else if (!localStorageUserData && userData) {
+      window.localStorage.setItem("userData", JSON.stringify(userData));
     }
-
-    if (!localStorageToken) {
-      if (token) {
-        window.localStorage.setItem("token", token);
-      }
-    } else {
-      if (!token) {
-        setToken(localStorageToken);
-      }
-    }
-  }, [user, token]);
+  }, [userData]);
 
   return (
     <div className="App">
       <h1>Projedex (BASIC UI)</h1>
-      <pre>{JSON.stringify({ user, token, name, email }, null, 2)}</pre>
-      <form onSubmit={handleSubmit}>
-        {!user && (
-          <div id="login">
-            <label>Name</label>
-            <input
-              id="name"
-              onChange={e => setName(e.target.value)}
-              type="text"
+      <pre>{JSON.stringify({ userData }, null, 2)}</pre>
+      <form>
+        {!userData && (
+          <Fragment>
+            <CreateUser
+              setName={setName}
+              setEmail={setEmail}
+              setPassword={setPassword}
+              email={email}
+              password={password}
+              name={name}
+              setUserData={setUserData}
             />
-            <label>Email</label>
-            <input
-              id="email"
-              onChange={e => setEmail(e.target.value)}
-              type="text"
+            <Login
+              email={email}
+              password={password}
+              setEmail={setEmail}
+              setPassword={setPassword}
+              setUserData={setUserData}
             />
-            <label>Password</label>
-            <input
-              id="password"
-              onChange={e => setPassword(e.target.value)}
-              type="text"
-            />
-            <button type="submit">Login</button>
-          </div>
+          </Fragment>
         )}
+        {userData && <Logout setUserData={setUserData} userData={userData} />}
       </form>
     </div>
   );
