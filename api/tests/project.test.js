@@ -1,17 +1,15 @@
 const request = require("supertest");
 const app = require("../src/app");
 const Project = require("../src/models/project");
+const User = require("../src/models/user");
 const {
   userOneId,
   userOne,
-  userTwoId,
   userTwo,
   projectOne,
-  projectTwo,
-  projectThree,
-  projectFour,
   setupDatabase
 } = require("./fixtures/db");
+const { mockGitHubAccount } = require("./fixtures/githubAccount");
 
 describe("Project Endpoints | Authorized", () => {
   beforeEach(setupDatabase);
@@ -75,6 +73,22 @@ describe("Project Endpoints | Authorized", () => {
     const project = await Project.findById(projectOne._id);
     expect(response.body._id).toBe(projectOne._id.toString());
     expect(project).toBeNull();
+  });
+
+  test("GET /projects-import | Should be able to import GitHub project data", async () => {
+    await request(app)
+      .get(`/projects-import`)
+      .set("Authorization", `Bearer ${userOne.tokens[0].token}`)
+      .send()
+      .expect(201);
+    const user = await User.findById(userOneId);
+    expect(user.gitHubLogin).toBe(mockGitHubAccount.login);
+    expect(user.gitHubPublicRepoCount).toBe(mockGitHubAccount.repos.length);
+    const projects = await Project.find({ owner: userOneId });
+    const mockProjects = projects.filter(project =>
+      project.name.includes("Mock")
+    );
+    expect(mockProjects.length).toBe(2);
   });
 });
 

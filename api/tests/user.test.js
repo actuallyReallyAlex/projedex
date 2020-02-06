@@ -1,13 +1,7 @@
 const request = require("supertest");
 const app = require("../src/app");
 const User = require("../src/models/user");
-const {
-  userOneId,
-  userOne,
-  userTwoId,
-  userTwo,
-  setupDatabase
-} = require("./fixtures/db");
+const { userOneId, userOne, setupDatabase } = require("./fixtures/db");
 
 describe("User Endpoints | Authorized", () => {
   beforeEach(setupDatabase);
@@ -127,6 +121,18 @@ describe("User Endpoints | Authorized", () => {
       })
       .expect(400);
     expect(failResponse.body.error).toBe("Invalid operation.");
+  });
+
+  test("POST /gh-token | Should add a gh-token to the user", async () => {
+    await request(app)
+      .post("/gh-token")
+      .set("Authorization", `Bearer ${userOne.tokens[0].token}`)
+      .send({
+        token: "mock-token"
+      })
+      .expect(200);
+    const user = await User.findById(userOneId);
+    expect(user.gitHubPersonalAccessToken).toBe("mock-token");
   });
 });
 
