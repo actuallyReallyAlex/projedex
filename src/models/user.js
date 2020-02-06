@@ -18,6 +18,15 @@ const userSchema = new mongoose.Schema(
         }
       }
     },
+    gitHubLogin: {
+      type: String
+    },
+    gitHubPersonalAccessToken: {
+      type: String
+    },
+    gitHubPublicRepoCount: {
+      type: Number
+    },
     name: {
       required: true,
       trim: true,
