@@ -123,6 +123,37 @@ export const logout = (
     }
   );
 
+export const logoutAll = (
+  userData,
+  setUserData,
+  setProjects,
+  setHasFetchedProjectData
+) =>
+  request(
+    proxy + "https://projedex.herokuapp.com/users/logoutAll",
+    {
+      json: true,
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      auth: {
+        bearer: userData.token
+      }
+    },
+    (error, response, body) => {
+      if (error) {
+        return console.error(error);
+      }
+
+      if (response.statusCode === 200) {
+        setUserData(null);
+        setProjects([]);
+        setHasFetchedProjectData(false);
+      }
+    }
+  );
+
 export const modifyUser = (requestBody, userData, setUserData) =>
   request(
     proxy + "https://projedex.herokuapp.com/users/me",

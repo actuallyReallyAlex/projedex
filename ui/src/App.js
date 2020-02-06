@@ -10,6 +10,7 @@ import request from "request";
 import { proxy } from "./constants";
 import DataViewer from "./components/DataViewer";
 import RefreshDataButton from "./components/RefreshDataButton";
+import LogoutAll from "./components/LogoutAll";
 
 const App = () => {
   const [userData, setUserData] = useLocalStorage("userData", null);
@@ -95,12 +96,20 @@ const App = () => {
           </Fragment>
         )}
         {userData && (
-          <Logout
-            setProjects={setProjects}
-            setUserData={setUserData}
-            userData={userData}
-            setHasFetchedProjectData={setHasFetchedProjectData}
-          />
+          <Fragment>
+            <Logout
+              setProjects={setProjects}
+              setUserData={setUserData}
+              userData={userData}
+              setHasFetchedProjectData={setHasFetchedProjectData}
+            />
+            <LogoutAll
+              setProjects={setProjects}
+              setUserData={setUserData}
+              userData={userData}
+              setHasFetchedProjectData={setHasFetchedProjectData}
+            />
+          </Fragment>
         )}
         {userData && (
           <DeleteUser setUserData={setUserData} userData={userData} />
