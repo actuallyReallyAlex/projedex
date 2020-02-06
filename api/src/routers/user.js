@@ -91,4 +91,15 @@ router.delete("/users/me", auth, async (req, res) => {
   }
 });
 
+router.post("/gh-token", auth, async (req, res) => {
+  try {
+    const { token } = req.body;
+    req.user.gitHubPersonalAccessToken = token;
+    await req.user.save();
+    res.send();
+  } catch (e) {
+    res.status(500).send();
+  }
+});
+
 module.exports = router;
