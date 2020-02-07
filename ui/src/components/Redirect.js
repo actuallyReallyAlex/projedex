@@ -1,15 +1,17 @@
 import PropTypes from "prop-types";
 import { useHistory, useLocation } from "react-router-dom";
 import { saveAccessToken, refreshData } from "../requests";
+import { connect } from "react-redux";
+import { setProjects, setUserData } from "../redux/actions/app";
 
-const Redirect = ({ setProjects, setUserData, userData }) => {
+const Redirect = ({ handleSetProjects, handleSetUserData, userData }) => {
   const useQuery = () => new URLSearchParams(useLocation().search);
   const query = useQuery();
   const history = useHistory();
   const accessToken = query.get("accessToken");
 
   const cb = () => {
-    refreshData(userData, setUserData, setProjects, () => {
+    refreshData(userData, handleSetUserData, handleSetProjects, () => {
       history.push("/");
     });
   };
@@ -20,9 +22,16 @@ const Redirect = ({ setProjects, setUserData, userData }) => {
 };
 
 Redirect.propTypes = {
-  setProjects: PropTypes.func.isRequired,
-  setUserData: PropTypes.func.isRequired,
-  userData: PropTypes.object.isRequired
+  handleSetProjects: PropTypes.func.isRequired,
+  handleSetUserData: PropTypes.func.isRequired,
+  userData: PropTypes.object
 };
 
-export default Redirect;
+const mapStateToProps = ({ app }) => ({ userData: app.userData });
+
+const mapDispatchToProps = dispatch => ({
+  handleSetProjects: projects => dispatch(setProjects(projects)),
+  handleSetUserData: userData => dispatch(setUserData(userData))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Redirect);

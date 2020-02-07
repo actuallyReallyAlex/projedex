@@ -1,11 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
+import PropTypes from "prop-types";
 import { login } from "../requests";
+import { connect } from "react-redux";
+import { setUserData } from "../redux/actions/app";
 
-const Login = ({ email, password, setEmail, setPassword, setUserData }) => {
+const Login = ({ handleSetUserData }) => {
+  const [email, setEmail] = useState(null);
+  const [password, setPassword] = useState(null);
   const handleLogin = async e => {
     e.preventDefault();
 
-    login(email, password, setUserData);
+    login(email, password, handleSetUserData);
   };
   return (
     <div id="login">
@@ -29,4 +34,12 @@ const Login = ({ email, password, setEmail, setPassword, setUserData }) => {
   );
 };
 
-export default Login;
+Login.propTypes = {
+  handleSetUserData: PropTypes.func.isRequired
+};
+
+const mapDispatchToProps = dispatch => ({
+  handleSetUserData: userData => dispatch(setUserData(userData))
+});
+
+export default connect(null, mapDispatchToProps)(Login);
