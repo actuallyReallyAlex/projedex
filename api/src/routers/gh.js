@@ -19,7 +19,8 @@ router.get("/gh", auth, async (req, res) => {
     const url = `https://github.com/login/oauth/authorize?client_id=${process.env.OAUTH_CLIENT_ID}&redirect_uri=${process.env.OAUTH_REDIRECT_URI_START}&scope=repo`;
     res.send({ url });
   } catch (e) {
-    res.status(500).send();
+    console.log({ error: e });
+    res.status(500).send({ error: e });
   }
 });
 
@@ -43,7 +44,8 @@ router.get("/gh-redirect", async (req, res) => {
 
     res.send({ accessToken: access_token });
   } catch (e) {
-    res.status(500).send();
+    console.log({ error: e });
+    res.status(500).send({ error: e });
   }
 });
 
