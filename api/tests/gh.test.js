@@ -24,12 +24,10 @@ describe("GitHub Endpoints | Authorized", () => {
   });
 
   test("GET /gh-redirect | Should get access token OAuth Web Flow Step 2", async () => {
-    await request(app)
+    const response = await request(app)
       .get(`/gh-redirect?code=mock-code`)
-      .set("Authorization", `Bearer ${userOne.tokens[0].token}`)
       .expect(200);
-    const user = await User.findById(userOneId);
-    expect(user.accessToken).toBe("mock-access-token");
+    expect(response.body.accessToken).toBe("mock-access-token");
   });
 });
 
@@ -40,13 +38,6 @@ describe("GitHub Endpoints | Unauthorized", () => {
     const response = await request(app)
       .get("/gh")
       .send()
-      .expect(401);
-    expect(response.body.error).toBe("Please authenticate.");
-  });
-
-  test("GET /gh-redirect | Should not be able to get access token OAuth Web Flow Step 2 if not authorized", async () => {
-    const response = await request(app)
-      .get(`/gh-redirect?code=mock-code`)
       .expect(401);
     expect(response.body.error).toBe("Please authenticate.");
   });
