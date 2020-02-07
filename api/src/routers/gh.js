@@ -39,6 +39,10 @@ router.get("/gh-redirect", async (req, res) => {
         url: `https://github.com/login/oauth/access_token?client_id=${process.env.OAUTH_CLIENT_ID}&client_secret=${process.env.OAUTH_CLIENT_SECRET}&code=${code}&redirect_uri=${process.env.OAUTH_REDIRECT_URI_FINAL}`,
         headers: { Accept: "application/json" }
       });
+      console.log(gitHubResponse);
+      console.log("--------");
+      console.log(gitHubResponse.body);
+
       access_token = gitHubResponse.body.access_token;
     }
 
