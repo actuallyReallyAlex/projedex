@@ -16,7 +16,7 @@ router.get("/gh", auth, async (req, res) => {
   // * ☑️ 3. User authenticates on GitHub (Step 1)
 
   try {
-    const url = `https://github.com/login/oauth/authorize?client_id=${process.env.OAUTH_CLIENT_ID}&redirect_uri=${process.env.OAUTH_REDIRECT_URI_START}&scope=repo`;
+    const url = `https://github.com/login/oauth/authorize?client_id=${process.env.OAUTH_CLIENT_ID}&redirect_uri=${process.env.OAUTH_REDIRECT_URI}&scope=repo`;
     res.send({ url });
   } catch (e) {
     console.log({ error: e });
@@ -36,7 +36,7 @@ router.get("/gh-redirect", async (req, res) => {
       // * Prod
       const gitHubResponse = await axios({
         method: "POST",
-        url: `https://github.com/login/oauth/access_token?client_id=${process.env.OAUTH_CLIENT_ID}&client_secret=${process.env.OAUTH_CLIENT_SECRET}&code=${code}&redirect_uri=${process.env.OAUTH_REDIRECT_URI_FINAL}`,
+        url: `https://github.com/login/oauth/access_token?client_id=${process.env.OAUTH_CLIENT_ID}&client_secret=${process.env.OAUTH_CLIENT_SECRET}&code=${code}&redirect_uri=${process.env.OAUTH_REDIRECT_URI}`,
         headers: { Accept: "application/json" }
       });
       console.log(gitHubResponse);

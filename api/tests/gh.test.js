@@ -19,7 +19,7 @@ describe("GitHub Endpoints | Authorized", () => {
       .set("Authorization", `Bearer ${userOne.tokens[0].token}`)
       .expect(200);
     expect(response.body.url).toBe(
-      `https://github.com/login/oauth/authorize?client_id=${process.env.OAUTH_CLIENT_ID}&redirect_uri=${process.env.OAUTH_REDIRECT_URI_START}&scope=repo`
+      `https://github.com/login/oauth/authorize?client_id=${process.env.OAUTH_CLIENT_ID}&redirect_uri=${process.env.OAUTH_REDIRECT_URI}&scope=repo`
     );
   });
 
