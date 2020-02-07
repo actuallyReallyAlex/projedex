@@ -6,6 +6,9 @@ const Project = require("../models/project");
 
 const userSchema = new mongoose.Schema(
   {
+    accessToken: {
+      type: String
+    },
     email: {
       lowercase: true,
       required: true,
@@ -19,9 +22,6 @@ const userSchema = new mongoose.Schema(
       }
     },
     gitHubLogin: {
-      type: String
-    },
-    gitHubPersonalAccessToken: {
       type: String
     },
     gitHubPublicRepoCount: {
