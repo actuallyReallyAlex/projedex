@@ -11,11 +11,12 @@ import RefreshDataButton from "./RefreshDataButton";
 import LogoutAll from "./LogoutAll";
 import IntegrateWithGitHub from "./IntegrateWithGitHub";
 import { connect } from "react-redux";
+import { version } from "../../package.json";
 
 const Home = ({ userData }) => {
   return (
     <div className="App">
-      <h1>Projedex (BASIC UI)</h1>
+      <h1>Projedex (BASIC UI) {version}</h1>
       {userData && <RefreshDataButton />}
       <DataViewer />
       <form>
