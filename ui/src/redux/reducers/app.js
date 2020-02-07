@@ -1,6 +1,7 @@
 const appDefaultState = {
   hasFetchedProjectData: false,
   projects: [],
+  shouldHitSaveToken: true,
   userData: null
 };
 
@@ -10,6 +11,11 @@ export default (state = appDefaultState, action) => {
       return {
         ...state,
         hasFetchedProjectData: action.payload.hasFetchedProjectData
+      };
+    case "SET_SHOULD_HIT_SAVE_TOKEN":
+      return {
+        ...state,
+        shouldHitSaveToken: action.payload.shouldHitSaveToken
       };
     case "SET_PROJECTS":
       return { ...state, projects: action.payload.projects };
