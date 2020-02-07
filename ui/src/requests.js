@@ -239,7 +239,7 @@ export const modifyProject = (id, userData, name, setProjects, projects) =>
     }
   );
 
-export const refreshData = (userData, setUserData, setProjects) => {
+export const refreshData = (userData, setUserData, setProjects, cb) => {
   let newUserData;
   let newProjects;
 
@@ -285,6 +285,8 @@ export const refreshData = (userData, setUserData, setProjects) => {
 
               setUserData({ ...userData, user: newUserData });
               setProjects(newProjects);
+
+              if (cb) cb();
             }
           }
         );
@@ -310,6 +312,30 @@ export const integrateWithGitHub = userData =>
 
       if (response.statusCode === 200) {
         window.location.assign(response.body.url);
+      }
+    }
+  );
+
+export const saveAccessToken = (userData, accessToken, cb) =>
+  request(
+    proxy + `https://projedex.herokuapp.com/users/me`,
+    {
+      json: true,
+      method: "PATCH",
+      auth: {
+        bearer: userData.token
+      },
+      body: {
+        accessToken
+      }
+    },
+    (error, response, body) => {
+      if (error) {
+        return console.error(error);
+      }
+
+      if (response.statusCode === 200) {
+        cb();
       }
     }
   );
