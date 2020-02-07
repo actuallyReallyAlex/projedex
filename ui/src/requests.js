@@ -293,15 +293,12 @@ export const refreshData = (userData, setUserData, setProjects) => {
   );
 };
 
-export const integrateWithGitHub = (userData, setInnerHTML) =>
+export const integrateWithGitHub = userData =>
   request(
     proxy + `https://projedex.herokuapp.com/gh`,
     {
       json: true,
       method: "GET",
-      // headers: {
-      // "Content-Type": "application/json"
-      // },
       auth: {
         bearer: userData.token
       }
@@ -312,7 +309,7 @@ export const integrateWithGitHub = (userData, setInnerHTML) =>
       }
 
       if (response.statusCode === 200) {
-        setInnerHTML(response.body);
+        window.location.assign(response.body.url);
       }
     }
   );
