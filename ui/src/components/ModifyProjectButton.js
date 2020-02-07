@@ -1,7 +1,10 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 import { modifyProject } from "../requests";
+import { connect } from "react-redux";
+import { setProjects } from "../redux/actions/app";
 
-const ModifyProjectButton = ({ id, userData, setProjects, projects }) => {
+const ModifyProjectButton = ({ handleSetProjects, id, projects, userData }) => {
   const [isModifying, setIsModifying] = useState(false);
   const [name, setName] = useState(null);
 
@@ -9,7 +12,7 @@ const ModifyProjectButton = ({ id, userData, setProjects, projects }) => {
     document.getElementById(`modify-project-name-${id}`).value = "";
     setIsModifying(false);
 
-    modifyProject(id, userData, name, setProjects, projects);
+    modifyProject(id, userData, name, handleSetProjects, projects);
   };
   return (
     <div>
@@ -33,4 +36,23 @@ const ModifyProjectButton = ({ id, userData, setProjects, projects }) => {
   );
 };
 
-export default ModifyProjectButton;
+ModifyProjectButton.propTypes = {
+  handleSetProjects: PropTypes.func.isRequired,
+  id: PropTypes.string.isRequired,
+  projects: PropTypes.array.isRequired,
+  userData: PropTypes.object.isRequired
+};
+
+const mapStateToProps = ({ app }) => ({
+  projects: app.projects,
+  userData: app.userData
+});
+
+const mapDispatchToProps = dispatch => ({
+  handleSetProjects: projects => dispatch(setProjects(projects))
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ModifyProjectButton);

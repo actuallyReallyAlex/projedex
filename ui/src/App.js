@@ -1,23 +1,20 @@
-import React, { useState, useEffect } from "react";
-import useLocalStorage from "./hooks/useLocalStorage";
-import request from "request";
-import { proxy } from "./constants";
+import React, { useEffect } from "react";
+import PropTypes from "prop-types";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from "./components/Home";
 import Redirect from "./components/Redirect";
+import request from "request";
+import { proxy } from "./constants";
+import { connect } from "react-redux";
+import { setHasFetchedProjectData, setProjects } from "./redux/actions/app";
 
-const App = () => {
-  const [userData, setUserData] = useLocalStorage("userData", null);
-  const [projects, setProjects] = useLocalStorage("projects", []);
-  const [hasFetchedProjectData, setHasFetchedProjectData] = useLocalStorage(
-    "hasFetchedProjectData",
-    false
-  );
-
-  const [name, setName] = useState(null);
-  const [email, setEmail] = useState(null);
-  const [password, setPassword] = useState(null);
-
+const App = ({
+  handleSetHasFetchedProjectData,
+  handleSetProjects,
+  hasFetchedProjectData,
+  projects,
+  userData
+}) => {
   useEffect(() => {
     // * Check if you should read projects
     if (userData && !hasFetchedProjectData) {
@@ -39,8 +36,8 @@ const App = () => {
           }
 
           if (response.statusCode === 200) {
-            setHasFetchedProjectData(true);
-            setProjects(body);
+            handleSetHasFetchedProjectData(true);
+            handleSetProjects(body);
           }
         }
       );
@@ -49,43 +46,37 @@ const App = () => {
     userData,
     projects,
     hasFetchedProjectData,
-    setHasFetchedProjectData,
-    setProjects
+    handleSetHasFetchedProjectData,
+    handleSetProjects
   ]);
-
   return (
     <Router>
       <Switch>
-        <Route
-          path="/gh"
-          children={
-            <Redirect
-              setProjects={setProjects}
-              setUserData={setUserData}
-              userData={userData}
-            />
-          }
-        />
-        <Route
-          path="/"
-          children={
-            <Home
-              email={email}
-              name={name}
-              password={password}
-              projects={projects}
-              setEmail={setEmail}
-              setHasFetchedProjectData={setHasFetchedProjectData}
-              setName={setName}
-              setPassword={setPassword}
-              setProjects={setProjects}
-              setUserData={setUserData}
-            />
-          }
-        />
+        <Route path="/gh" children={<Redirect />} />
+        <Route path="/" children={<Home />} />
       </Switch>
     </Router>
   );
 };
 
-export default App;
+App.propTypes = {
+  handleSetHasFetchedProjectData: PropTypes.func.isRequired,
+  handleSetProjects: PropTypes.func.isRequired,
+  hasFetchedProjectData: PropTypes.bool.isRequired,
+  projects: PropTypes.array.isRequired,
+  userData: PropTypes.object
+};
+
+const mapStateToProps = ({ app }) => ({
+  hasFetchedProjectData: app.hasFetchedProjectData,
+  projects: app.projects,
+  userData: app.userData
+});
+
+const mapDispatchToProps = dispatch => ({
+  handleSetHasFetchedProjectData: hasFetchedProjectData =>
+    dispatch(setHasFetchedProjectData(hasFetchedProjectData)),
+  handleSetProjects: projects => dispatch(setProjects(projects))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
