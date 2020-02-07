@@ -11,6 +11,7 @@ import { proxy } from "./constants";
 import DataViewer from "./components/DataViewer";
 import RefreshDataButton from "./components/RefreshDataButton";
 import LogoutAll from "./components/LogoutAll";
+import IntegrateWithGitHub from "./components/IntegrateWithGitHub";
 
 const App = () => {
   const [userData, setUserData] = useLocalStorage("userData", null);
@@ -124,6 +125,7 @@ const App = () => {
             userData={userData}
           />
         )}
+        {userData && <IntegrateWithGitHub userData={userData} />}
       </form>
     </div>
   );
