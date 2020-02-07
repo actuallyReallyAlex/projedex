@@ -11,8 +11,10 @@ import { proxy } from "./constants";
 import DataViewer from "./components/DataViewer";
 import RefreshDataButton from "./components/RefreshDataButton";
 import LogoutAll from "./components/LogoutAll";
+import IntegrateWithGitHub from "./components/IntegrateWithGitHub";
 
 const App = () => {
+  const [innerHTML, setInnerHTML] = useState(null);
   const [userData, setUserData] = useLocalStorage("userData", null);
   const [projects, setProjects] = useLocalStorage("projects", []);
   const [hasFetchedProjectData, setHasFetchedProjectData] = useLocalStorage(
@@ -61,70 +63,83 @@ const App = () => {
 
   return (
     <div className="App">
-      <h1>Projedex (BASIC UI)</h1>
-      {userData && (
-        <RefreshDataButton
-          userData={userData}
-          setUserData={setUserData}
-          setProjects={setProjects}
-        />
-      )}
-      <DataViewer
-        userData={userData}
-        projects={projects}
-        setProjects={setProjects}
-      />
-      <form>
-        {!userData && (
-          <Fragment>
-            <CreateUser
-              setName={setName}
-              setEmail={setEmail}
-              setPassword={setPassword}
-              email={email}
-              password={password}
-              name={name}
-              setUserData={setUserData}
-            />
-            <Login
-              email={email}
-              password={password}
-              setEmail={setEmail}
-              setPassword={setPassword}
-              setUserData={setUserData}
-            />
-          </Fragment>
-        )}
-        {userData && (
-          <Fragment>
-            <Logout
-              setProjects={setProjects}
-              setUserData={setUserData}
+      {!innerHTML && (
+        <div>
+          <h1>Projedex (BASIC UI)</h1>
+          {userData && (
+            <RefreshDataButton
               userData={userData}
-              setHasFetchedProjectData={setHasFetchedProjectData}
-            />
-            <LogoutAll
-              setProjects={setProjects}
               setUserData={setUserData}
-              userData={userData}
-              setHasFetchedProjectData={setHasFetchedProjectData}
+              setProjects={setProjects}
             />
-          </Fragment>
-        )}
-        {userData && (
-          <DeleteUser setUserData={setUserData} userData={userData} />
-        )}
-        {userData && (
-          <ModifyUser setUserData={setUserData} userData={userData} />
-        )}
-        {userData && (
-          <CreateProject
-            setProjects={setProjects}
-            projects={projects}
+          )}
+          <DataViewer
             userData={userData}
+            projects={projects}
+            setProjects={setProjects}
           />
-        )}
-      </form>
+          <form>
+            {!userData && (
+              <Fragment>
+                <CreateUser
+                  setName={setName}
+                  setEmail={setEmail}
+                  setPassword={setPassword}
+                  email={email}
+                  password={password}
+                  name={name}
+                  setUserData={setUserData}
+                />
+                <Login
+                  email={email}
+                  password={password}
+                  setEmail={setEmail}
+                  setPassword={setPassword}
+                  setUserData={setUserData}
+                />
+              </Fragment>
+            )}
+            {userData && (
+              <Fragment>
+                <Logout
+                  setProjects={setProjects}
+                  setUserData={setUserData}
+                  userData={userData}
+                  setHasFetchedProjectData={setHasFetchedProjectData}
+                />
+                <LogoutAll
+                  setProjects={setProjects}
+                  setUserData={setUserData}
+                  userData={userData}
+                  setHasFetchedProjectData={setHasFetchedProjectData}
+                />
+              </Fragment>
+            )}
+            {userData && (
+              <DeleteUser setUserData={setUserData} userData={userData} />
+            )}
+            {userData && (
+              <ModifyUser setUserData={setUserData} userData={userData} />
+            )}
+            {userData && (
+              <CreateProject
+                setProjects={setProjects}
+                projects={projects}
+                userData={userData}
+              />
+            )}
+            {userData && (
+              <IntegrateWithGitHub
+                userData={userData}
+                setInnerHTML={setInnerHTML}
+              />
+            )}
+          </form>
+        </div>
+      )}
+      <div
+        dangerouslySetInnerHTML={innerHTML ? { __html: innerHTML } : undefined}
+      />
     </div>
   );
 };

@@ -292,3 +292,27 @@ export const refreshData = (userData, setUserData, setProjects) => {
     }
   );
 };
+
+export const integrateWithGitHub = (userData, setInnerHTML) =>
+  request(
+    proxy + `https://projedex.herokuapp.com/gh`,
+    {
+      json: true,
+      method: "GET",
+      // headers: {
+      // "Content-Type": "application/json"
+      // },
+      auth: {
+        bearer: userData.token
+      }
+    },
+    (error, response, body) => {
+      if (error) {
+        return console.error(error);
+      }
+
+      if (response.statusCode === 200) {
+        setInnerHTML(response.body);
+      }
+    }
+  );
