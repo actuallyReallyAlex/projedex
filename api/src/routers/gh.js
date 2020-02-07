@@ -46,9 +46,10 @@ router.get("/gh-redirect", async (req, res) => {
       console.log({ data: gitHubResponse.data });
 
       access_token = gitHubResponse.data.access_token;
+      // * Email this access token? Have the user enter it in a form?;
     }
 
-    res.send({ accessToken: access_token });
+    res.redirect(`https://projedex.netlify.com/gh?accessToken=${access_token}`);
   } catch (e) {
     console.log({ error: e });
     res.status(500).send({ error: e });
