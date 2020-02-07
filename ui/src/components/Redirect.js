@@ -1,8 +1,10 @@
+import React from "react";
 import PropTypes from "prop-types";
 import { useHistory, useLocation } from "react-router-dom";
 import { saveAccessToken, refreshData } from "../requests";
 import { connect } from "react-redux";
 import { setProjects, setUserData } from "../redux/actions/app";
+import { version } from "../../package.json";
 
 const Redirect = ({ handleSetProjects, handleSetUserData, userData }) => {
   const useQuery = () => new URLSearchParams(useLocation().search);
@@ -10,15 +12,24 @@ const Redirect = ({ handleSetProjects, handleSetUserData, userData }) => {
   const history = useHistory();
   const accessToken = query.get("accessToken");
 
-  const cb = () => {
-    refreshData(userData, handleSetUserData, handleSetProjects, () => {
-      history.push("/");
-    });
-  };
+  if (accessToken) {
+    console.log({ accessToken });
+    const cb = () => {
+      refreshData(userData, handleSetUserData, handleSetProjects, () => {
+        history.push("/");
+      });
+    };
 
-  saveAccessToken(userData, accessToken, cb);
+    saveAccessToken(userData, accessToken, cb);
+  } else {
+    console.log("No access token");
+  }
 
-  return null;
+  return (
+    <div>
+      <h1>REDIRECT {version}</h1>
+    </div>
+  );
 };
 
 Redirect.propTypes = {
