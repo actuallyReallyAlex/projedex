@@ -23,7 +23,7 @@ router.get("/gh", auth, async (req, res) => {
   }
 });
 
-router.get("/gh-redirect", auth, async (req, res) => {
+router.get("/gh-redirect", async (req, res) => {
   // * ✅ 4. User is redirected to /gh-redirect?code=**** with a special code as a parameter (Step 2)
   // * ✅ 5. API hits GitHub with that code and gets back an access token (Step 2)
   // * ✅ 6. API saves that access token to the User profile (Step 3)
@@ -41,9 +41,7 @@ router.get("/gh-redirect", auth, async (req, res) => {
       access_token = gitHubResponse.body.access_token;
     }
 
-    req.user.accessToken = access_token;
-    await req.user.save();
-    res.send();
+    res.send({ accessToken: access_token });
   } catch (e) {
     res.status(500).send();
   }
