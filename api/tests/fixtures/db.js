@@ -9,7 +9,6 @@ const userOne = {
   name: "Bob",
   email: "bob@example.com",
   password: "Red1234567890",
-  gitHubPersonalAccessToken: "mock-token",
   tokens: [
     {
       token: jwt.sign({ _id: userOneId }, process.env.JWT_SECRET)
@@ -23,7 +22,6 @@ const userTwo = {
   name: "George",
   email: "george@example.com",
   password: "Red1234567890",
-  gitHubPersonalAccessToken: "mock-token",
   tokens: [
     {
       token: jwt.sign({ _id: userTwoId }, process.env.JWT_SECRET)
