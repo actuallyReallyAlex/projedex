@@ -2,6 +2,7 @@ const request = require("supertest");
 const app = require("../src/app");
 const { userOne, userOneId, setupDatabase } = require("./fixtures/db");
 const User = require("../src/models/user");
+const fs = require("fs");
 
 // * ✅ 1. Hit /gh -> API sends back a URL (Step 1)
 // * ☑️ 2. UI hits that URL (Step 1)
@@ -26,19 +27,22 @@ describe("GitHub Endpoints | Authorized", () => {
   test("GET /gh-redirect | Should get access token OAuth Web Flow Step 2", async () => {
     const response = await request(app)
       .get(`/gh-redirect?code=mock-code`)
-      .expect(200);
-    expect(response.body.accessToken).toBe("mock-access-token");
+      .expect(302);
+    expect(response.header.location).toBe(
+      `${process.env.UI_DOMAIN}/gh?accessToken=mock-access-token`
+    );
   });
 });
 
 describe("GitHub Endpoints | Unauthorized", () => {
   beforeEach(setupDatabase);
 
-  test("GET /gh | Should not be able to get OAuth URL if not authorized", async () => {
+  test("GET /gh | Should not be able to get OAuth URL if not authorized", async done => {
     const response = await request(app)
       .get("/gh")
       .send()
       .expect(401);
     expect(response.body.error).toBe("Please authenticate.");
+    done();
   });
 });
