@@ -14,6 +14,9 @@ const projectSchema = new mongoose.Schema(
       ref: "User",
       required: true,
       type: mongoose.Schema.Types.ObjectId
+    },
+    repoId: {
+      type: Number
     }
   },
   {
