@@ -32,25 +32,29 @@ const userTwo = {
 const projectOne = {
   _id: new mongoose.Types.ObjectId(),
   name: "Project One",
-  owner: userOneId
+  owner: userOneId,
+  description: "Mock Description 1"
 };
 
 const projectTwo = {
   _id: new mongoose.Types.ObjectId(),
   name: "Project Two",
-  owner: userOneId
+  owner: userOneId,
+  description: "Mock Description 2"
 };
 
 const projectThree = {
   _id: new mongoose.Types.ObjectId(),
   name: "Project Three",
-  owner: userTwoId
+  owner: userTwoId,
+  description: "Mock Description 3"
 };
 
 const projectFour = {
   _id: new mongoose.Types.ObjectId(),
   name: "Project Four",
-  owner: userTwoId
+  owner: userTwoId,
+  description: "Mock Description 4"
 };
 
 const setupDatabase = async () => {
