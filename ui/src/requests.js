@@ -1,9 +1,9 @@
 import request from "request";
-import { proxy } from "./constants";
+import { apiDomain } from "./constants";
 
 export const createProject = (userData, name, setProjects, projects) =>
   request(
-    proxy + "https://projedex.herokuapp.com/projects",
+    `${apiDomain}/projects`,
     {
       json: true,
       method: "POST",
@@ -30,7 +30,7 @@ export const createProject = (userData, name, setProjects, projects) =>
 
 export const createUser = (email, password, name, setUserData) =>
   request(
-    proxy + "https://projedex.herokuapp.com/users",
+    `${apiDomain}/users`,
     {
       json: true,
       body: { email, password, name },
@@ -50,7 +50,7 @@ export const createUser = (email, password, name, setUserData) =>
 
 export const deleteUser = (userData, setUserData) =>
   request(
-    proxy + "https://projedex.herokuapp.com/users/me",
+    `${apiDomain}/users/me`,
     {
       json: true,
       method: "DELETE",
@@ -74,7 +74,7 @@ export const deleteUser = (userData, setUserData) =>
 
 export const login = (email, password, setUserData) =>
   request(
-    proxy + "https://projedex.herokuapp.com/users/login",
+    `${apiDomain}/users/login`,
     {
       json: true,
       body: { email, password },
@@ -99,7 +99,7 @@ export const logout = (
   setHasFetchedProjectData
 ) =>
   request(
-    proxy + "https://projedex.herokuapp.com/users/logout",
+    `${apiDomain}/users/logout`,
     {
       json: true,
       method: "POST",
@@ -130,7 +130,7 @@ export const logoutAll = (
   setHasFetchedProjectData
 ) =>
   request(
-    proxy + "https://projedex.herokuapp.com/users/logoutAll",
+    `${apiDomain}/users/logoutAll`,
     {
       json: true,
       method: "POST",
@@ -156,7 +156,7 @@ export const logoutAll = (
 
 export const modifyUser = (requestBody, userData, setUserData) =>
   request(
-    proxy + "https://projedex.herokuapp.com/users/me",
+    `${apiDomain}/users/me`,
     {
       json: true,
       method: "PATCH",
@@ -187,7 +187,7 @@ export const modifyUser = (requestBody, userData, setUserData) =>
 
 export const deleteProject = (id, userData, setProjects, projects) =>
   request(
-    proxy + `https://projedex.herokuapp.com/projects/${id}`,
+    `${apiDomain}/projects/${id}`,
     {
       json: true,
       method: "DELETE",
@@ -211,7 +211,7 @@ export const deleteProject = (id, userData, setProjects, projects) =>
 
 export const modifyProject = (id, userData, name, setProjects, projects) =>
   request(
-    proxy + `https://projedex.herokuapp.com/projects/${id}`,
+    `${apiDomain}/projects/${id}`,
     {
       json: true,
       method: "PATCH",
@@ -244,7 +244,7 @@ export const refreshData = (userData, setUserData, setProjects, cb) => {
   let newProjects;
 
   request(
-    proxy + `https://projedex.herokuapp.com/users/me`,
+    `${apiDomain}/users/me`,
     {
       json: true,
       method: "GET",
@@ -264,7 +264,7 @@ export const refreshData = (userData, setUserData, setProjects, cb) => {
         newUserData = body;
 
         request(
-          proxy + `https://projedex.herokuapp.com/projects`,
+          `${apiDomain}/projects`,
           {
             json: true,
             method: "GET",
@@ -297,7 +297,7 @@ export const refreshData = (userData, setUserData, setProjects, cb) => {
 
 export const integrateWithGitHub = userData =>
   request(
-    proxy + `https://projedex.herokuapp.com/gh`,
+    `${apiDomain}/gh`,
     {
       json: true,
       method: "GET",
@@ -318,7 +318,7 @@ export const integrateWithGitHub = userData =>
 
 export const saveAccessToken = (userData, accessToken, cb) =>
   request(
-    proxy + `https://projedex.herokuapp.com/users/me`,
+    `${apiDomain}/users/me`,
     {
       json: true,
       method: "PATCH",
@@ -339,3 +339,48 @@ export const saveAccessToken = (userData, accessToken, cb) =>
       }
     }
   );
+
+export const getRepos = (userData, handleSetRepos) => {
+  request(
+    `${apiDomain}/gh-import`,
+    {
+      json: true,
+      method: "GET",
+      auth: {
+        bearer: userData.token
+      }
+    },
+    (error, response, body) => {
+      if (error) {
+        return console.error(error);
+      }
+
+      if (response.statusCode === 200) {
+        handleSetRepos(response.body);
+      }
+    }
+  );
+};
+
+export const importRepos = (userData, repos, handleSetProjects) => {
+  request(
+    `${apiDomain}/gh-import`,
+    {
+      json: true,
+      method: "POST",
+      auth: {
+        bearer: userData.token
+      },
+      body: { repos }
+    },
+    (error, response, body) => {
+      if (error) {
+        return console.error(error);
+      }
+
+      if (response.statusCode === 201) {
+        handleSetProjects(response.body.projects);
+      }
+    }
+  );
+};
