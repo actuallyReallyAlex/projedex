@@ -10,6 +10,7 @@ import DataViewer from "./DataViewer";
 import RefreshDataButton from "./RefreshDataButton";
 import LogoutAll from "./LogoutAll";
 import IntegrateWithGitHub from "./IntegrateWithGitHub";
+import GetRepos from "./GetRepos";
 import { connect } from "react-redux";
 import { version } from "../../package.json";
 
@@ -33,7 +34,8 @@ const Home = ({ userData }) => {
             <DeleteUser />
             <ModifyUser />
             <CreateProject />
-            <IntegrateWithGitHub />
+            {userData && !userData.user.accessToken && <IntegrateWithGitHub />}
+            <GetRepos />
           </Fragment>
         )}
       </form>

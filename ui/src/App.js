@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from "./components/Home";
 import Redirect from "./components/Redirect";
 import request from "request";
-import { proxy } from "./constants";
+import { apiDomain } from "./constants";
 import { connect } from "react-redux";
 import { setHasFetchedProjectData, setProjects } from "./redux/actions/app";
 
@@ -19,7 +19,7 @@ const App = ({
     // * Check if you should read projects
     if (userData && !hasFetchedProjectData) {
       request(
-        proxy + "https://projedex.herokuapp.com/projects",
+        `${apiDomain}/projects`,
         {
           json: true,
           method: "GET",
