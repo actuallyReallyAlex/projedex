@@ -86,7 +86,7 @@ router.post("/gh-import", auth, async (req, res) => {
         description: "mock-description-1",
         name: "mock-name-1",
         owner: req.user._id,
-        gitHubRepoId: "mock-gitHubRepoId-1"
+        repoId: "mock-repoId-1"
       }
     ];
     if (!process.env.MOCK) {
@@ -106,7 +106,7 @@ router.post("/gh-import", auth, async (req, res) => {
         description,
         name,
         owner: req.user._id,
-        gitHubRepoId: id
+        repoId: id
       });
 
       await project.save();
