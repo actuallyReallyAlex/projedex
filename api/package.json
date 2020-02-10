@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node src/index.js",
     "dev": "env-cmd -e development nodemon src/index.js",
+    "debug": "env-cmd -e development node --inspect src/index.js",
     "test": "env-cmd -e test jest --watch --runInBand",
     "coverage": "env-cmd -e test jest --runInBand --detectOpenHandles --coverage",
     "view-coverage": "http-server ./coverage/lcov-report -s -c-1 -o"
