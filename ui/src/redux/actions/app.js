@@ -45,8 +45,6 @@ const makeRequest = (uri, options) =>
 export const refreshData = history => async (dispatch, getState) => {
   try {
     const { user } = await getState();
-
-    debugger;
     const userResponse = await makeRequest(`${apiDomain}/users/me`, {
       json: true,
       method: "GET",
@@ -122,6 +120,31 @@ export const saveAccessToken = (history, accessToken) => async (
 
     dispatch(refreshData(history));
     dispatch(setShouldHitSaveToken(false));
+  } catch (e) {
+    return console.error(e);
+  }
+};
+
+/**
+ * Get list of repos
+ * @param {Function} setRepos Hook function for displaying repo data
+ */
+export const getRepos = setRepos => async (dispatch, getState) => {
+  try {
+    const { user } = await getState();
+    const response = await makeRequest(`${apiDomain}/gh-import`, {
+      json: true,
+      method: "GET",
+      auth: {
+        bearer: user.userData.token
+      }
+    });
+
+    if (response.statusCode === 200) {
+      setRepos(response.body);
+    } else {
+      throw new Error({ error: "Response statusCode was not 200", response });
+    }
   } catch (e) {
     return console.error(e);
   }
