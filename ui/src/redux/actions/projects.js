@@ -57,3 +57,29 @@ export const createProject = name => async (dispatch, getState) => {
     return console.error(e);
   }
 };
+
+/**
+ * Delete a project
+ * @param {String} id ID of project
+ */
+export const deleteProject = id => async (dispatch, getState) => {
+  try {
+    const { projects, user } = await getState();
+    await makeRequest(`${apiDomain}/projects/${id}`, {
+      json: true,
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      auth: {
+        bearer: user.userData.token
+      }
+    });
+
+    dispatch(
+      setProjectData(projects.projectData.filter(project => project._id !== id))
+    );
+  } catch (e) {
+    return console.error(e);
+  }
+};

@@ -1,36 +1,23 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { deleteProject } from "../requests";
+import { deleteProject } from "../redux/actions/projects";
 import { connect } from "react-redux";
-import { setProjectData } from "../redux/actions/projects";
 
-const DeleteProjectButton = ({ handleSetProjects, id, projects, userData }) => {
-  const handleDeleteProject = () =>
-    deleteProject(id, userData, handleSetProjects, projects);
+const DeleteProjectButton = ({ handleDeleteProject, id }) => {
   return (
-    <button onClick={handleDeleteProject} type="button">
+    <button onClick={() => handleDeleteProject(id)} type="button">
       Delete Project
     </button>
   );
 };
 
 DeleteProjectButton.propTypes = {
-  handleSetProjects: PropTypes.func.isRequired,
-  id: PropTypes.string.isRequired,
-  projects: PropTypes.array.isRequired,
-  userData: PropTypes.object.isRequired
+  handleDeleteProject: PropTypes.func.isRequired,
+  id: PropTypes.string.isRequired
 };
 
-const mapStateToProps = ({ app, projects, user }) => ({
-  projectData: projects.projectData,
-  userData: user.userData
-});
-
 const mapDispatchToProps = dispatch => ({
-  handleSetProjects: projectData => dispatch(setProjectData(projectData))
+  handleDeleteProject: id => dispatch(deleteProject(id))
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(DeleteProjectButton);
+export default connect(null, mapDispatchToProps)(DeleteProjectButton);

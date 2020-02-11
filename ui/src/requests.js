@@ -1,30 +1,6 @@
 import request from "request";
 import { apiDomain } from "./constants";
 
-export const deleteProject = (id, userData, setProjects, projects) =>
-  request(
-    `${apiDomain}/projects/${id}`,
-    {
-      json: true,
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      auth: {
-        bearer: userData.token
-      }
-    },
-    (error, response, body) => {
-      if (error) {
-        return console.error(error);
-      }
-
-      if (response.statusCode === 200) {
-        setProjects(projects.filter(project => project._id !== body._id));
-      }
-    }
-  );
-
 export const modifyProject = (id, userData, name, setProjects, projects) =>
   request(
     `${apiDomain}/projects/${id}`,
