@@ -123,3 +123,28 @@ export const logout = () => async (dispatch, getState) => {
     return console.error(e);
   }
 };
+
+/**
+ * Logout User from All Accounts
+ */
+export const logoutAll = () => async (dispatch, getState) => {
+  try {
+    const { user } = await getState();
+    await makeRequest(`${apiDomain}/users/logoutAll`, {
+      json: true,
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      auth: {
+        bearer: user.userData.token
+      }
+    });
+
+    dispatch(setUserData(null));
+    dispatch(setProjectData([]));
+    dispatch(setHasFetchedProjectData(false));
+  } catch (e) {
+    return console.error(e);
+  }
+};

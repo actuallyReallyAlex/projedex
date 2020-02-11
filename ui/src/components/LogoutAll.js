@@ -1,28 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { logoutAll } from "../requests";
+import { logoutAll } from "../redux/actions/user";
 import { connect } from "react-redux";
-import { setHasFetchedProjectData } from "../redux/actions/app";
-import { setProjectData } from "../redux/actions/projects";
-import { setUserData } from "../redux/actions/user";
 
-const LogoutAll = ({
-  handleSetHasFetchedProjectData,
-  handleSetProjects,
-  handleSetUserData,
-  userData
-}) => {
-  const handleLogoutAll = () =>
-    logoutAll(
-      userData,
-      handleSetUserData,
-      handleSetProjects,
-      handleSetHasFetchedProjectData
-    );
+const LogoutAll = ({ handleLogoutAll }) => {
   return (
     <div id="logout-all">
       <h2>Logout All</h2>
-      <button onClick={handleLogoutAll} type="button">
+      <button onClick={() => handleLogoutAll()} type="button">
         Logout All
       </button>
     </div>
@@ -30,21 +15,11 @@ const LogoutAll = ({
 };
 
 LogoutAll.propTypes = {
-  handleSetHasFetchedProjectData: PropTypes.func.isRequired,
-  handleSetProjects: PropTypes.func.isRequired,
-  handleSetUserData: PropTypes.func.isRequired,
-  userData: PropTypes.object.isRequired
+  handleLogoutAll: PropTypes.func.isRequired
 };
 
-const mapStateToProps = ({ app, projects, user }) => ({
-  userData: user.userData
-});
-
 const mapDispatchToProps = dispatch => ({
-  handleSetHasFetchedProjectData: hasFetchedProjectData =>
-    dispatch(setHasFetchedProjectData(hasFetchedProjectData)),
-  handleSetProjects: projectData => dispatch(setProjectData(projectData)),
-  handleSetUserData: userData => dispatch(setUserData(userData))
+  handleLogoutAll: () => dispatch(logoutAll())
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(LogoutAll);
+export default connect(null, mapDispatchToProps)(LogoutAll);

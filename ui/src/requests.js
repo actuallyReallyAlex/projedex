@@ -1,37 +1,6 @@
 import request from "request";
 import { apiDomain } from "./constants";
 
-export const logoutAll = (
-  userData,
-  setUserData,
-  setProjects,
-  setHasFetchedProjectData
-) =>
-  request(
-    `${apiDomain}/users/logoutAll`,
-    {
-      json: true,
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      auth: {
-        bearer: userData.token
-      }
-    },
-    (error, response, body) => {
-      if (error) {
-        return console.error(error);
-      }
-
-      if (response.statusCode === 200) {
-        setUserData(null);
-        setProjects([]);
-        setHasFetchedProjectData(false);
-      }
-    }
-  );
-
 export const modifyUser = (requestBody, userData, setUserData) =>
   request(
     `${apiDomain}/users/me`,
