@@ -10,9 +10,23 @@ const app = express();
 
 app.use(express.json());
 
-if (process.env.NODE_ENV === "development") {
-  app.use(cors());
-}
+const whitelistDomains = [
+  "https://projedex.netlify.com",
+  "http://localhost:5000"
+];
+
+const corsOptions = {
+  origin: (origin, cb) => {
+    if (whitelistDomains.indexOf(origin) !== -1) {
+      cb(null, true);
+    } else {
+      console.log(`API Refused to allow: ${origin}`);
+      cb(new Error("Not allowed by CORS"));
+    }
+  }
+};
+
+app.use(cors(corsOptions));
 
 app.use(userRouter);
 app.use(projectRouter);
