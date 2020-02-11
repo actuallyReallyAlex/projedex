@@ -29,6 +29,12 @@ const makeRequest = (uri, options) =>
   });
 
 // * THUNKS
+/**
+ * Create User
+ * @param {String} email Email
+ * @param {String} name Name
+ * @param {String} password Password
+ */
 export const createUser = (email, name, password) => async dispatch => {
   try {
     const response = await makeRequest(`${apiDomain}/users`, {
@@ -41,6 +47,29 @@ export const createUser = (email, name, password) => async dispatch => {
     });
 
     dispatch(setUserData(response.body));
+  } catch (e) {
+    return console.error(e);
+  }
+};
+
+/**
+ * Delete User
+ */
+export const deleteUser = () => async (dispatch, getState) => {
+  try {
+    const { user } = getState();
+    await makeRequest(`${apiDomain}/users/me`, {
+      json: true,
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      auth: {
+        bearer: user.userData.token
+      }
+    });
+
+    dispatch(setUserData(null));
   } catch (e) {
     return console.error(e);
   }

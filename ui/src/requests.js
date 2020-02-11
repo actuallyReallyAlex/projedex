@@ -1,50 +1,6 @@
 import request from "request";
 import { apiDomain } from "./constants";
 
-export const createUser = (email, password, name, setUserData) =>
-  request(
-    `${apiDomain}/users`,
-    {
-      json: true,
-      body: { email, password, name },
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      }
-    },
-    (error, response, body) => {
-      if (error) {
-        return console.error(error);
-      }
-
-      setUserData(body);
-    }
-  );
-
-export const deleteUser = (userData, setUserData) =>
-  request(
-    `${apiDomain}/users/me`,
-    {
-      json: true,
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      auth: {
-        bearer: userData.token
-      }
-    },
-    (error, response, body) => {
-      if (error) {
-        return console.error(error);
-      }
-
-      if (response.statusCode === 200) {
-        setUserData(null);
-      }
-    }
-  );
-
 export const login = (email, password, setUserData) =>
   request(
     `${apiDomain}/users/login`,
