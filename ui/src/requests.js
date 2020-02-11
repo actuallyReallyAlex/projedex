@@ -1,27 +1,6 @@
 import request from "request";
 import { apiDomain } from "./constants";
 
-export const integrateWithGitHub = userData =>
-  request(
-    `${apiDomain}/gh`,
-    {
-      json: true,
-      method: "GET",
-      auth: {
-        bearer: userData.token
-      }
-    },
-    (error, response, body) => {
-      if (error) {
-        return console.error(error);
-      }
-
-      if (response.statusCode === 200) {
-        window.location.assign(response.body.url);
-      }
-    }
-  );
-
 export const saveAccessToken = (userData, accessToken, cb) =>
   request(
     `${apiDomain}/users/me`,

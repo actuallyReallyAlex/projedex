@@ -38,6 +38,10 @@ const makeRequest = (uri, options) =>
 
 // * THUNKS
 
+/**
+ * Refresh Data on App with fresh data from Database
+ * @param {Object} history History object from router
+ */
 export const refreshData = history => async (dispatch, getState) => {
   try {
     const { user } = await getState();
@@ -70,6 +74,25 @@ export const refreshData = history => async (dispatch, getState) => {
     dispatch(setProjectData(newProjects));
 
     if (history) history.push("/");
+  } catch (e) {
+    return console.error(e);
+  }
+};
+
+/**
+ * Integrate with GitHub
+ */
+export const integrateWithGitHub = () => async (dispatch, getState) => {
+  try {
+    const { user } = await getState();
+    const response = await makeRequest(`${apiDomain}/gh`, {
+      json: true,
+      method: "GET",
+      auth: {
+        bearer: user.userData.token
+      }
+    });
+    window.location.assign(response.body.url);
   } catch (e) {
     return console.error(e);
   }
