@@ -148,3 +148,33 @@ export const logoutAll = () => async (dispatch, getState) => {
     return console.error(e);
   }
 };
+
+/**
+ * Modify user document
+ * @param {Object} modification Modification object
+ */
+export const modifyUser = modification => async (dispatch, getState) => {
+  try {
+    const { user } = await getState();
+    const request = await makeRequest(`${apiDomain}/users/me`, {
+      json: true,
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: modification,
+      auth: {
+        bearer: user.userData.token
+      }
+    });
+    document.getElementById("modify-user-email").value = "";
+    document.getElementById("modify-user-name").value = "";
+    document.getElementById("modify-user-password").value = "";
+    dispatch(setUserData({ ...user.userData, user: request.body }));
+  } catch (e) {
+    document.getElementById("modify-user-email").value = "";
+    document.getElementById("modify-user-name").value = "";
+    document.getElementById("modify-user-password").value = "";
+    return console.error(e);
+  }
+};

@@ -1,24 +1,24 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { modifyUser } from "../requests";
+import { modifyUser } from "../redux/actions/user";
 import { connect } from "react-redux";
-import { setUserData } from "../redux/actions/user";
 
-const ModifyUser = ({ handleSetUserData, userData }) => {
+const ModifyUser = ({ handleModifyUser }) => {
   const [email, setEmail] = useState(null);
   const [name, setName] = useState(null);
   const [password, setPassword] = useState(null);
 
-  const handleModifyUser = () => {
-    const requestBody = {};
+  const createModification = () => {
+    const modification = {};
+
     const fields = [{ email }, { name }, { password }];
 
     fields.forEach(field => {
       const key = Object.keys(field);
-      if (field[key]) requestBody[key] = field[key];
+      if (field[key]) modification[key] = field[key];
     });
 
-    modifyUser(requestBody, userData, setUserData);
+    handleModifyUser(modification);
   };
 
   return (
@@ -44,7 +44,7 @@ const ModifyUser = ({ handleSetUserData, userData }) => {
           onChange={e => setPassword(e.target.value)}
           type="text"
         />
-        <button onClick={handleModifyUser} type="button">
+        <button onClick={() => createModification()} type="button">
           Modify User
         </button>
       </div>
@@ -53,16 +53,11 @@ const ModifyUser = ({ handleSetUserData, userData }) => {
 };
 
 ModifyUser.propTypes = {
-  handleSetUserData: PropTypes.func.isRequired,
-  userData: PropTypes.object.isRequired
+  handleModifyUser: PropTypes.func.isRequired
 };
 
-const mapStateToProps = ({ app, projects, user }) => ({
-  userData: user.userData
-});
-
 const mapDispatchToProps = dispatch => ({
-  handleSetUserData: userData => dispatch(setUserData(userData))
+  handleModifyUser: modification => dispatch(modifyUser(modification))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ModifyUser);
+export default connect(null, mapDispatchToProps)(ModifyUser);

@@ -1,37 +1,6 @@
 import request from "request";
 import { apiDomain } from "./constants";
 
-export const modifyUser = (requestBody, userData, setUserData) =>
-  request(
-    `${apiDomain}/users/me`,
-    {
-      json: true,
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: requestBody,
-      auth: {
-        bearer: userData.token
-      }
-    },
-    (error, response, body) => {
-      if (error) {
-        document.getElementById("modify-user-email").value = "";
-        document.getElementById("modify-user-name").value = "";
-        document.getElementById("modify-user-password").value = "";
-        return console.error(error);
-      }
-
-      if (response.statusCode === 200) {
-        document.getElementById("modify-user-email").value = "";
-        document.getElementById("modify-user-name").value = "";
-        document.getElementById("modify-user-password").value = "";
-        setUserData({ ...userData, user: body });
-      }
-    }
-  );
-
 export const deleteProject = (id, userData, setProjects, projects) =>
   request(
     `${apiDomain}/projects/${id}`,
