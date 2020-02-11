@@ -84,6 +84,11 @@ export const deleteProject = id => async (dispatch, getState) => {
   }
 };
 
+/**
+ * Modify a project
+ * @param {String} id ID of project document.
+ * @param {Object} modification Object of modifications to make on project document.
+ */
 export const modifyProject = (id, modification) => async (
   dispatch,
   getState
@@ -101,8 +106,6 @@ export const modifyProject = (id, modification) => async (
         bearer: user.userData.token
       }
     });
-
-    debugger;
 
     const newProjectsArray = [...projects.projectData];
     const modifiedProjectIndex = newProjectsArray.findIndex(
