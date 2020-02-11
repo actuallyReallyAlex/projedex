@@ -1,26 +1,22 @@
 import React, { useState, Fragment } from "react";
 import PropTypes from "prop-types";
-import { importRepos } from "../requests";
+import { importRepos } from "../redux/actions/app";
 import { getRepos } from "../redux/actions/app";
 import { connect } from "react-redux";
-import { setProjectData } from "../redux/actions/projects";
 
-const GetRepos = ({ handleGetRepos, handleSetProjects, userData }) => {
+const GetRepos = ({ handleImportRepos, handleGetRepos }) => {
   const [repos, setRepos] = useState([]);
   const [selectedRepos, setSelectedRepos] = useState([]);
 
   const handleImportAll = () => {
     console.log("import all button clicked");
-    importRepos(userData, repos, handleSetProjects);
+    handleImportRepos(repos);
   };
   const handleImportSelected = () => {
     console.log("import selected button clicked");
-    importRepos(
-      userData,
-      selectedRepos.map(id => ({ id })),
-      handleSetProjects
-    );
+    handleImportRepos(selectedRepos.map(id => ({ id })));
   };
+
   return (
     <Fragment>
       {repos.length === 0 && (
@@ -71,18 +67,13 @@ const GetRepos = ({ handleGetRepos, handleSetProjects, userData }) => {
 };
 
 GetRepos.propTypes = {
-  handleGetRepos: PropTypes.func.isRequired,
-  handleSetProjects: PropTypes.func.isRequired,
-  userData: PropTypes.object.isRequired
+  handleImportRepos: PropTypes.func.isRequired,
+  handleGetRepos: PropTypes.func.isRequired
 };
 
-const mapStateToProps = ({ user }) => ({
-  userData: user.userData
-});
-
 const mapDispatchToProps = dispatch => ({
-  handleGetRepos: setRepos => dispatch(getRepos(setRepos)),
-  handleSetProjects: projectData => dispatch(setProjectData(projectData))
+  handleImportRepos: repos => dispatch(importRepos(repos)),
+  handleGetRepos: setRepos => dispatch(getRepos(setRepos))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(GetRepos);
+export default connect(null, mapDispatchToProps)(GetRepos);

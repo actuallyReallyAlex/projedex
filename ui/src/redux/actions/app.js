@@ -149,3 +149,29 @@ export const getRepos = setRepos => async (dispatch, getState) => {
     return console.error(e);
   }
 };
+
+/**
+ * Import GitHub repos as projects.
+ * @param {Array} repos Repos to be imported. Ex. [{ id: 001 }, { id: 002 }]
+ */
+export const importRepos = repos => async (dispatch, getState) => {
+  try {
+    const { user } = await getState();
+    const response = await makeRequest(`${apiDomain}/gh-import`, {
+      json: true,
+      method: "POST",
+      auth: {
+        bearer: user.userData.token
+      },
+      body: { repos }
+    });
+
+    if (response.statusCode === 201) {
+      dispatch(setProjectData(response.body.projects));
+    } else {
+      throw new Error({ error: "Response statusCode was not 201", response });
+    }
+  } catch (e) {
+    return console.error(e);
+  }
+};
