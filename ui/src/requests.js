@@ -1,32 +1,32 @@
 import request from "request";
 import { apiDomain } from "./constants";
 
-export const createProject = (userData, name, setProjects, projects) =>
-  request(
-    `${apiDomain}/projects`,
-    {
-      json: true,
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: { name },
-      auth: {
-        bearer: userData.token
-      }
-    },
-    (error, response, body) => {
-      if (error) {
-        document.getElementById("create-project-name").value = "";
-        return console.error(error);
-      }
+// export const createProject = (userData, name, setProjects, projects) =>
+//   request(
+//     `${apiDomain}/projects`,
+//     {
+//       json: true,
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json"
+//       },
+//       body: { name },
+//       auth: {
+//         bearer: userData.token
+//       }
+//     },
+//     (error, response, body) => {
+//       if (error) {
+//         document.getElementById("create-project-name").value = "";
+//         return console.error(error);
+//       }
 
-      if (response.statusCode === 201) {
-        document.getElementById("create-project-name").value = "";
-        setProjects([...projects, body]);
-      }
-    }
-  );
+//       if (response.statusCode === 201) {
+//         document.getElementById("create-project-name").value = "";
+//         setProjects([...projects, body]);
+//       }
+//     }
+//   );
 
 export const createUser = (email, password, name, setUserData) =>
   request(

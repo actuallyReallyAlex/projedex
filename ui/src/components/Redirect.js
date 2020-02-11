@@ -4,7 +4,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import { saveAccessToken, refreshData } from "../requests";
 import { connect } from "react-redux";
 import { setShouldHitSaveToken } from "../redux/actions/app";
-import { setProjects } from "../redux/actions/projects";
+import { setProjectData } from "../redux/actions/projects";
 import { setUserData } from "../redux/actions/user";
 import { version } from "../../package.json";
 
@@ -58,7 +58,7 @@ const mapStateToProps = ({ app, projects, user }) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  handleSetProjects: projects => dispatch(setProjects(projects)),
+  handleSetProjects: projectData => dispatch(setProjectData(projectData)),
   handleSetShouldHitSaveToken: shouldHitSaveToken =>
     dispatch(setShouldHitSaveToken(shouldHitSaveToken)),
   handleSetUserData: userData => dispatch(setUserData(userData))

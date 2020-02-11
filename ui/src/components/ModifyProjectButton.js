@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { modifyProject } from "../requests";
 import { connect } from "react-redux";
-import { setProjects } from "../redux/actions/projects";
+import { setProjectData } from "../redux/actions/projects";
 
 const ModifyProjectButton = ({ handleSetProjects, id, projects, userData }) => {
   const [isModifying, setIsModifying] = useState(false);
@@ -44,12 +44,12 @@ ModifyProjectButton.propTypes = {
 };
 
 const mapStateToProps = ({ app, projects, user }) => ({
-  projects,
+  projectData: projects.projectData,
   userData: user.userData
 });
 
 const mapDispatchToProps = dispatch => ({
-  handleSetProjects: projects => dispatch(setProjects(projects))
+  handleSetProjects: projectData => dispatch(setProjectData(projectData))
 });
 
 export default connect(

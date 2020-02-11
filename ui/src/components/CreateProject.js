@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { createProject } from "../requests";
+import { createProject } from "../redux/actions/projects";
 import { connect } from "react-redux";
-import { setProjects } from "../redux/actions/projects";
+import { setProjectData } from "../redux/actions/projects";
 
-const CreateProject = ({ handleSetProjects, projects, userData }) => {
+const CreateProject = ({
+  handleCreateProject,
+  handleSetProjects,
+  projectData,
+  userData
+}) => {
   const [name, setName] = useState(null);
-
-  const handleCreateProject = () =>
-    createProject(userData, name, handleSetProjects, projects);
 
   return (
     <div id="create-project">
@@ -20,7 +22,7 @@ const CreateProject = ({ handleSetProjects, projects, userData }) => {
           onChange={e => setName(e.target.value)}
           type="text"
         />
-        <button onClick={handleCreateProject} type="button">
+        <button onClick={() => handleCreateProject(name)} type="button">
           Create Project
         </button>
       </div>
@@ -29,18 +31,20 @@ const CreateProject = ({ handleSetProjects, projects, userData }) => {
 };
 
 CreateProject.propTypes = {
+  handleCreateProject: PropTypes.func.isRequired,
   handleSetProjects: PropTypes.func.isRequired,
-  projects: PropTypes.array.isRequired,
+  projectData: PropTypes.array.isRequired,
   userData: PropTypes.object.isRequired
 };
 
 const mapStateToProps = ({ app, projects, user }) => ({
-  projects,
+  projectData: projects.projectData,
   userData: user.userData
 });
 
 const mapDispatchToProps = dispatch => ({
-  handleSetProjects: projects => dispatch(setProjects(projects))
+  handleCreateProject: name => dispatch(createProject(name)),
+  handleSetProjects: projectData => dispatch(setProjectData(projectData))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateProject);

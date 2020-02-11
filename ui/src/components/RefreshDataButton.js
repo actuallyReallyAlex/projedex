@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { refreshData } from "../requests";
 import { connect } from "react-redux";
-import { setProjects } from "../redux/actions/projects";
+import { setProjectData } from "../redux/actions/projects";
 import { setUserData } from "../redux/actions/user";
 
 const RefreshDataButton = ({
@@ -31,7 +31,7 @@ const mapStateToProps = ({ app, projects, user }) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  handleSetProjects: projects => dispatch(setProjects(projects)),
+  handleSetProjects: projectData => dispatch(setProjectData(projectData)),
   handleSetUserData: userData => dispatch(setUserData(userData))
 });
 

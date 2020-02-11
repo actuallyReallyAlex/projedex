@@ -1,11 +1,11 @@
 const projectsDefaultState = {
-  projects: []
+  projectData: []
 };
 
 export default (state = projectsDefaultState, action) => {
   switch (action.type) {
-    case "SET_PROJECTS":
-      return { ...state, projects: action.payload.projects };
+    case "SET_PROJECT_DATA":
+      return { ...state, projectData: action.payload.projectData };
     default:
       return state;
   }

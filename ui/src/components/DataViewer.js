@@ -4,12 +4,12 @@ import DeleteProjectButton from "./DeleteProjectButton";
 import ModifyProjectButton from "./ModifyProjectButton";
 import { connect } from "react-redux";
 
-const DataViewer = ({ projects, userData }) => {
+const DataViewer = ({ projectData, userData }) => {
   return (
     <div id="data-viewer">
       <pre>{JSON.stringify({ userData }, null, 2)}</pre>
-      {projects.length > 0 && <h2>Projects:</h2>}
-      {projects.map(({ _id, name }) => (
+      {projectData.length > 0 && <h2>Projects:</h2>}
+      {projectData.map(({ _id, name }) => (
         <div key={_id}>
           <span>{name}</span>
           <DeleteProjectButton id={_id} />
@@ -21,12 +21,12 @@ const DataViewer = ({ projects, userData }) => {
 };
 
 DataViewer.propTypes = {
-  projects: PropTypes.array.isRequired,
+  projectData: PropTypes.array.isRequired,
   userData: PropTypes.object
 };
 
 const mapStateToProps = ({ app, projects, user }) => ({
-  projects,
+  projectData: projects.projectData,
   userData: user.userData
 });
 

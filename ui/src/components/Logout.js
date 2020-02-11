@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { logout } from "../requests";
 import { connect } from "react-redux";
 import { setHasFetchedProjectData } from "../redux/actions/app";
-import { setProjects } from "../redux/actions/projects";
+import { setProjectData } from "../redux/actions/projects";
 import { setUserData } from "../redux/actions/user";
 
 const Logout = ({
@@ -43,7 +43,7 @@ const mapStateToProps = ({ app, projects, user }) => ({
 const mapDispatchToProps = dispatch => ({
   handleSetHasFetchedProjectData: hasFetchedProjectData =>
     dispatch(setHasFetchedProjectData(hasFetchedProjectData)),
-  handleSetProjects: projects => dispatch(setProjects(projects)),
+  handleSetProjects: projectData => dispatch(setProjectData(projectData)),
   handleSetUserData: userData => dispatch(setUserData(userData))
 });
 
