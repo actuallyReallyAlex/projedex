@@ -1,36 +1,6 @@
 import request from "request";
 import { apiDomain } from "./constants";
 
-export const modifyProject = (id, userData, name, setProjects, projects) =>
-  request(
-    `${apiDomain}/projects/${id}`,
-    {
-      json: true,
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: { name },
-      auth: {
-        bearer: userData.token
-      }
-    },
-    (error, response, body) => {
-      if (error) {
-        return console.error(error);
-      }
-
-      if (response.statusCode === 200) {
-        const newProjectsArray = [...projects];
-        const modifiedProjectIndex = newProjectsArray.findIndex(
-          project => project._id === body._id
-        );
-        newProjectsArray[modifiedProjectIndex] = body;
-        setProjects(newProjectsArray);
-      }
-    }
-  );
-
 export const refreshData = (userData, setUserData, setProjects, cb) => {
   let newUserData;
   let newProjects;

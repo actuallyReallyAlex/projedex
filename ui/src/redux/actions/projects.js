@@ -83,3 +83,35 @@ export const deleteProject = id => async (dispatch, getState) => {
     return console.error(e);
   }
 };
+
+export const modifyProject = (id, modification) => async (
+  dispatch,
+  getState
+) => {
+  try {
+    const { projects, user } = getState();
+    const response = await makeRequest(`${apiDomain}/projects/${id}`, {
+      json: true,
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: modification,
+      auth: {
+        bearer: user.userData.token
+      }
+    });
+
+    debugger;
+
+    const newProjectsArray = [...projects.projectData];
+    const modifiedProjectIndex = newProjectsArray.findIndex(
+      project => project._id === id
+    );
+    newProjectsArray[modifiedProjectIndex] = response.body;
+
+    dispatch(setProjectData(newProjectsArray));
+  } catch (e) {
+    return console.error(e);
+  }
+};
