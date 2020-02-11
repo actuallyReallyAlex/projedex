@@ -74,3 +74,20 @@ export const deleteUser = () => async (dispatch, getState) => {
     return console.error(e);
   }
 };
+
+export const login = (email, password) => async dispatch => {
+  try {
+    const response = await makeRequest(`${apiDomain}/users/login`, {
+      json: true,
+      body: { email, password },
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    });
+
+    dispatch(setUserData(response.body));
+  } catch (e) {
+    return console.error(e);
+  }
+};

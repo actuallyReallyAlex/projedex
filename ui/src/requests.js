@@ -1,26 +1,6 @@
 import request from "request";
 import { apiDomain } from "./constants";
 
-export const login = (email, password, setUserData) =>
-  request(
-    `${apiDomain}/users/login`,
-    {
-      json: true,
-      body: { email, password },
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      }
-    },
-    (error, response, body) => {
-      if (error) {
-        return console.error(error);
-      }
-
-      setUserData(body);
-    }
-  );
-
 export const logout = (
   userData,
   setUserData,
