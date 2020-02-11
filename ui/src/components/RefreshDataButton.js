@@ -1,37 +1,22 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { refreshData } from "../requests";
+import { refreshData } from "../redux/actions/app";
 import { connect } from "react-redux";
-import { setProjects, setUserData } from "../redux/actions/app";
 
-const RefreshDataButton = ({
-  handleSetProjects,
-  handleSetUserData,
-  userData
-}) => {
-  const handleDataRefresh = () => {
-    refreshData(userData, handleSetUserData, handleSetProjects);
-  };
+const RefreshDataButton = ({ handleRefreshData }) => {
   return (
-    <button onClick={handleDataRefresh} type="button">
+    <button onClick={handleRefreshData} type="button">
       Refresh Data
     </button>
   );
 };
 
 RefreshDataButton.propTypes = {
-  handleSetProjects: PropTypes.func.isRequired,
-  handleSetUserData: PropTypes.func.isRequired,
-  userData: PropTypes.object.isRequired
+  handleRefreshData: PropTypes.func.isRequired
 };
 
-const mapStateToProps = ({ app }) => ({
-  userData: app.userData
-});
-
 const mapDispatchToProps = dispatch => ({
-  handleSetProjects: projects => dispatch(setProjects(projects)),
-  handleSetUserData: userData => dispatch(setUserData(userData))
+  handleRefreshData: () => dispatch(refreshData())
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(RefreshDataButton);
+export default connect(null, mapDispatchToProps)(RefreshDataButton);

@@ -1,10 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { integrateWithGitHub } from "../requests";
+import { integrateWithGitHub } from "../redux/actions/app";
 import { connect } from "react-redux";
 
-const IntegrateWithGitHub = ({ userData }) => {
-  const handleIntegrateWithGitHub = () => integrateWithGitHub(userData);
+const IntegrateWithGitHub = ({ handleIntegrateWithGitHub }) => {
   return (
     <button onClick={handleIntegrateWithGitHub} type="button">
       Integrate With GitHub
@@ -13,9 +12,11 @@ const IntegrateWithGitHub = ({ userData }) => {
 };
 
 IntegrateWithGitHub.propTypes = {
-  userData: PropTypes.object.isRequired
+  handleIntegrateWithGitHub: PropTypes.func.isRequired
 };
 
-const mapStateToProps = ({ app }) => ({ userData: app.userData });
+const mapDispatchToProps = dispatch => ({
+  handleIntegrateWithGitHub: () => dispatch(integrateWithGitHub())
+});
 
-export default connect(mapStateToProps, null)(IntegrateWithGitHub);
+export default connect(null, mapDispatchToProps)(IntegrateWithGitHub);
