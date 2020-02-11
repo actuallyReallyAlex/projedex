@@ -1,30 +1,6 @@
 import request from "request";
 import { apiDomain } from "./constants";
 
-export const saveAccessToken = (userData, accessToken, cb) =>
-  request(
-    `${apiDomain}/users/me`,
-    {
-      json: true,
-      method: "PATCH",
-      auth: {
-        bearer: userData.token
-      },
-      body: {
-        accessToken
-      }
-    },
-    (error, response, body) => {
-      if (error) {
-        return console.error(error);
-      }
-
-      if (response.statusCode === 200) {
-        cb();
-      }
-    }
-  );
-
 export const getRepos = (userData, handleSetRepos) => {
   request(
     `${apiDomain}/gh-import`,

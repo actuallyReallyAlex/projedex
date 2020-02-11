@@ -1,18 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { useHistory, useLocation } from "react-router-dom";
-import { saveAccessToken } from "../requests";
-import { refreshData } from "../redux/actions/app";
+import { saveAccessToken } from "../redux/actions/app";
 import { connect } from "react-redux";
-import { setShouldHitSaveToken } from "../redux/actions/app";
 import { version } from "../../package.json";
 
-const Redirect = ({
-  handleRefreshData,
-  handleSetShouldHitSaveToken,
-  shouldHitSaveToken,
-  userData
-}) => {
+const Redirect = ({ handleSaveAccessToken, shouldHitSaveToken }) => {
   const useQuery = () => new URLSearchParams(useLocation().search);
   const query = useQuery();
   const history = useHistory();
@@ -23,15 +16,7 @@ const Redirect = ({
   // * seeing this happening like 4 times
   if (accessToken && shouldHitSaveToken) {
     console.log({ accessToken });
-    const cb = () => {
-      // refreshData(userData, handleSetUserData, handleSetProjects, () => {
-      //   history.push("/");
-      // });
-      handleRefreshData(history);
-    };
-
-    saveAccessToken(userData, accessToken, cb);
-    handleSetShouldHitSaveToken(false);
+    handleSaveAccessToken(history, accessToken);
   } else {
     console.log({ accessToken, shouldHitSaveToken });
   }
@@ -44,21 +29,17 @@ const Redirect = ({
 };
 
 Redirect.propTypes = {
-  handleRefreshData: PropTypes.func.isRequired,
-  handleSetShouldHitSaveToken: PropTypes.func.isRequired,
-  shouldHitSaveToken: PropTypes.bool.isRequired,
-  userData: PropTypes.object
+  handleSaveAccessToken: PropTypes.func.isRequired,
+  shouldHitSaveToken: PropTypes.bool.isRequired
 };
 
-const mapStateToProps = ({ app, user }) => ({
-  shouldHitSaveToken: app.shouldHitSaveToken,
-  userData: user.userData
+const mapStateToProps = ({ app }) => ({
+  shouldHitSaveToken: app.shouldHitSaveToken
 });
 
 const mapDispatchToProps = dispatch => ({
-  handleRefreshData: history => dispatch(refreshData(history)),
-  handleSetShouldHitSaveToken: shouldHitSaveToken =>
-    dispatch(setShouldHitSaveToken(shouldHitSaveToken))
+  handleSaveAccessToken: (history, accessToken) =>
+    dispatch(saveAccessToken(history, accessToken))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Redirect);

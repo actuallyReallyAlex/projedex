@@ -97,3 +97,32 @@ export const integrateWithGitHub = () => async (dispatch, getState) => {
     return console.error(e);
   }
 };
+
+/**
+ * Save accessToken to database
+ * @param {Object} history History object from React Router
+ * @param {String} accessToken Access token provided by GitHub
+ */
+export const saveAccessToken = (history, accessToken) => async (
+  dispatch,
+  getState
+) => {
+  try {
+    const { user } = await getState();
+    await makeRequest(`${apiDomain}/users/me`, {
+      json: true,
+      method: "PATCH",
+      auth: {
+        bearer: user.userData.token
+      },
+      body: {
+        accessToken
+      }
+    });
+
+    dispatch(refreshData(history));
+    dispatch(setShouldHitSaveToken(false));
+  } catch (e) {
+    return console.error(e);
+  }
+};
