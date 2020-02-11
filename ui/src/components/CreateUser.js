@@ -1,18 +1,13 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { createUser } from "../requests";
+import { createUser } from "../redux/actions/user";
 import { connect } from "react-redux";
-import { setUserData } from "../redux/actions/user";
 
-const CreateUser = ({ handleSetUserData }) => {
+const CreateUser = ({ handleCreateUser }) => {
   const [name, setName] = useState(null);
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
-  const handleCreateUser = async e => {
-    e.preventDefault();
 
-    createUser(email, password, name, handleSetUserData);
-  };
   return (
     <div id="createUser">
       <h2>Create User</h2>
@@ -34,7 +29,10 @@ const CreateUser = ({ handleSetUserData }) => {
         onChange={e => setPassword(e.target.value)}
         type="text"
       />
-      <button onClick={handleCreateUser} type="button">
+      <button
+        onClick={() => handleCreateUser(email, name, password)}
+        type="button"
+      >
         Create User
       </button>
     </div>
@@ -42,11 +40,12 @@ const CreateUser = ({ handleSetUserData }) => {
 };
 
 CreateUser.propTypes = {
-  handleSetUserData: PropTypes.func.isRequired
+  handleCreateUser: PropTypes.func.isRequired
 };
 
 const mapDispatchToProps = dispatch => ({
-  handleSetUserData: userData => dispatch(setUserData(userData))
+  handleCreateUser: (email, name, password) =>
+    dispatch(createUser(email, name, password))
 });
 
 export default connect(null, mapDispatchToProps)(CreateUser);
