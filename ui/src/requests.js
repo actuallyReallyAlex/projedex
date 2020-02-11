@@ -1,62 +1,6 @@
 import request from "request";
 import { apiDomain } from "./constants";
 
-export const refreshData = (userData, setUserData, setProjects, cb) => {
-  let newUserData;
-  let newProjects;
-
-  request(
-    `${apiDomain}/users/me`,
-    {
-      json: true,
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      auth: {
-        bearer: userData.token
-      }
-    },
-    (error, response, body) => {
-      if (error) {
-        return console.error(error);
-      }
-
-      if (response.statusCode === 200) {
-        newUserData = body;
-
-        request(
-          `${apiDomain}/projects`,
-          {
-            json: true,
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json"
-            },
-            auth: {
-              bearer: userData.token
-            }
-          },
-          (error, response, body) => {
-            if (error) {
-              return console.error(error);
-            }
-
-            if (response.statusCode === 200) {
-              newProjects = body;
-
-              setUserData({ ...userData, user: newUserData });
-              setProjects(newProjects);
-
-              if (cb) cb();
-            }
-          }
-        );
-      }
-    }
-  );
-};
-
 export const integrateWithGitHub = userData =>
   request(
     `${apiDomain}/gh`,
