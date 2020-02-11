@@ -1,18 +1,17 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { modifyProject } from "../requests";
+import { modifyProject } from "../redux/actions/projects";
 import { connect } from "react-redux";
-import { setProjects } from "../redux/actions/app";
 
-const ModifyProjectButton = ({ handleSetProjects, id, projects, userData }) => {
+const ModifyProjectButton = ({ handleModifyProject, id }) => {
   const [isModifying, setIsModifying] = useState(false);
   const [name, setName] = useState(null);
 
-  const handleModifyProject = () => {
+  const handleClickSubmitModification = () => {
     document.getElementById(`modify-project-name-${id}`).value = "";
     setIsModifying(false);
 
-    modifyProject(id, userData, name, handleSetProjects, projects);
+    handleModifyProject(id, { name });
   };
   return (
     <div>
@@ -27,7 +26,7 @@ const ModifyProjectButton = ({ handleSetProjects, id, projects, userData }) => {
             onChange={e => setName(e.target.value)}
             type="text"
           />
-          <button onClick={handleModifyProject} type="button">
+          <button onClick={handleClickSubmitModification} type="button">
             Submit Modification
           </button>
         </div>
@@ -37,22 +36,13 @@ const ModifyProjectButton = ({ handleSetProjects, id, projects, userData }) => {
 };
 
 ModifyProjectButton.propTypes = {
-  handleSetProjects: PropTypes.func.isRequired,
-  id: PropTypes.string.isRequired,
-  projects: PropTypes.array.isRequired,
-  userData: PropTypes.object.isRequired
+  handleModifyProject: PropTypes.func.isRequired,
+  id: PropTypes.string.isRequired
 };
 
-const mapStateToProps = ({ app }) => ({
-  projects: app.projects,
-  userData: app.userData
-});
-
 const mapDispatchToProps = dispatch => ({
-  handleSetProjects: projects => dispatch(setProjects(projects))
+  handleModifyProject: (id, modification) =>
+    dispatch(modifyProject(id, modification))
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ModifyProjectButton);
+export default connect(null, mapDispatchToProps)(ModifyProjectButton);
