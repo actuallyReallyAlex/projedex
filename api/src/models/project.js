@@ -2,6 +2,9 @@ const mongoose = require("mongoose");
 
 const projectSchema = new mongoose.Schema(
   {
+    description: {
+      type: String
+    },
     name: {
       required: true,
       trim: true,
@@ -11,6 +14,9 @@ const projectSchema = new mongoose.Schema(
       ref: "User",
       required: true,
       type: mongoose.Schema.Types.ObjectId
+    },
+    repoId: {
+      type: Number
     }
   },
   {

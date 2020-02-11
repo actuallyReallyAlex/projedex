@@ -1,0 +1,20 @@
+{
+  "req": {
+    "method": "GET",
+    "url": "http://127.0.0.1:52620/gh-redirect?code=mock-code",
+    "headers": {
+      "user-agent": "node-superagent/3.8.3"
+    }
+  },
+  "header": {
+    "x-powered-by": "Express",
+    "location": "http://localhost:3000/gh?accessToken=mock-access-token",
+    "vary": "Accept",
+    "content-type": "text/plain; charset=utf-8",
+    "content-length": "76",
+    "date": "Sat, 08 Feb 2020 16:07:10 GMT",
+    "connection": "close"
+  },
+  "status": 302,
+  "text": "Found. Redirecting to http://localhost:3000/gh?accessToken=mock-access-token"
+}
