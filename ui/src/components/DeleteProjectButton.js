@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { deleteProject } from "../requests";
 import { connect } from "react-redux";
-import { setProjects } from "../redux/actions/app";
+import { setProjects } from "../redux/actions/projects";
 
 const DeleteProjectButton = ({ handleSetProjects, id, projects, userData }) => {
   const handleDeleteProject = () =>
@@ -21,9 +21,9 @@ DeleteProjectButton.propTypes = {
   userData: PropTypes.object.isRequired
 };
 
-const mapStateToProps = ({ app }) => ({
-  projects: app.projects,
-  userData: app.userData
+const mapStateToProps = ({ app, projects, user }) => ({
+  projects,
+  userData: user.userData
 });
 
 const mapDispatchToProps = dispatch => ({

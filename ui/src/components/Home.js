@@ -47,8 +47,8 @@ Home.propTypes = {
   userData: PropTypes.object
 };
 
-const mapStateToProps = ({ app }) => ({
-  userData: app.userData
+const mapStateToProps = ({ app, projects, user }) => ({
+  userData: user.userData
 });
 
 export default connect(mapStateToProps, null)(Home);

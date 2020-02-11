@@ -2,11 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import { logout } from "../requests";
 import { connect } from "react-redux";
-import {
-  setHasFetchedProjectData,
-  setProjects,
-  setUserData
-} from "../redux/actions/app";
+import { setHasFetchedProjectData } from "../redux/actions/app";
+import { setProjects } from "../redux/actions/projects";
+import { setUserData } from "../redux/actions/user";
 
 const Logout = ({
   handleSetHasFetchedProjectData,
@@ -38,7 +36,9 @@ Logout.propTypes = {
   userData: PropTypes.object.isRequired
 };
 
-const mapStateToProps = ({ app }) => ({ userData: app.userData });
+const mapStateToProps = ({ app, projects, user }) => ({
+  userData: user.userData
+});
 
 const mapDispatchToProps = dispatch => ({
   handleSetHasFetchedProjectData: hasFetchedProjectData =>

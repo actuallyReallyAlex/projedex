@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { createUser } from "../requests";
 import { connect } from "react-redux";
-import { setUserData } from "../redux/actions/app";
+import { setUserData } from "../redux/actions/user";
 
 const CreateUser = ({ handleSetUserData }) => {
   const [name, setName] = useState(null);

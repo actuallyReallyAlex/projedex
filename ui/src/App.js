@@ -6,7 +6,8 @@ import Redirect from "./components/Redirect";
 import request from "request";
 import { apiDomain } from "./constants";
 import { connect } from "react-redux";
-import { setHasFetchedProjectData, setProjects } from "./redux/actions/app";
+import { setHasFetchedProjectData } from "./redux/actions/app";
+import { setProjects } from "./redux/actions/projects";
 
 const App = ({
   handleSetHasFetchedProjectData,
@@ -67,10 +68,10 @@ App.propTypes = {
   userData: PropTypes.object
 };
 
-const mapStateToProps = ({ app }) => ({
+const mapStateToProps = ({ app, projects, user }) => ({
   hasFetchedProjectData: app.hasFetchedProjectData,
-  projects: app.projects,
-  userData: app.userData
+  projects,
+  userData: user.userData
 });
 
 const mapDispatchToProps = dispatch => ({

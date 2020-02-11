@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { modifyUser } from "../requests";
 import { connect } from "react-redux";
-import { setUserData } from "../redux/actions/app";
+import { setUserData } from "../redux/actions/user";
 
 const ModifyUser = ({ handleSetUserData, userData }) => {
   const [email, setEmail] = useState(null);
@@ -57,7 +57,9 @@ ModifyUser.propTypes = {
   userData: PropTypes.object.isRequired
 };
 
-const mapStateToProps = ({ app }) => ({ userData: app.userData });
+const mapStateToProps = ({ app, projects, user }) => ({
+  userData: user.userData
+});
 
 const mapDispatchToProps = dispatch => ({
   handleSetUserData: userData => dispatch(setUserData(userData))

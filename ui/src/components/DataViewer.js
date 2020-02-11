@@ -25,9 +25,9 @@ DataViewer.propTypes = {
   userData: PropTypes.object
 };
 
-const mapStateToProps = ({ app }) => ({
-  projects: app.projects,
-  userData: app.userData
+const mapStateToProps = ({ app, projects, user }) => ({
+  projects,
+  userData: user.userData
 });
 
 export default connect(mapStateToProps, null)(DataViewer);

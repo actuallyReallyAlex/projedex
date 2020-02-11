@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { deleteUser } from "../requests";
 import { connect } from "react-redux";
-import { setUserData } from "../redux/actions/app";
+import { setUserData } from "../redux/actions/user";
 
 const DeleteUser = ({ handleSetUserData, userData }) => {
   const handleDeleteUser = () => deleteUser(userData, handleSetUserData);
@@ -21,7 +21,9 @@ DeleteUser.propTypes = {
   userData: PropTypes.object.isRequired
 };
 
-const mapStateToProps = ({ app }) => ({ userData: app.userData });
+const mapStateToProps = ({ app, projects, user }) => ({
+  userData: user.userData
+});
 
 const mapDispatchToProps = dispatch => ({
   handleSetUserData: userData => dispatch(setUserData(userData))

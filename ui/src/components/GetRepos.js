@@ -2,7 +2,7 @@ import React, { useState, Fragment } from "react";
 import PropTypes from "prop-types";
 import { getRepos, importRepos } from "../requests";
 import { connect } from "react-redux";
-import { setProjects } from "../redux/actions/app";
+import { setProjects } from "../redux/actions/projects";
 
 const GetRepos = ({ handleSetProjects, userData }) => {
   const [repos, setRepos] = useState([]);
@@ -75,7 +75,7 @@ GetRepos.propTypes = {
   userData: PropTypes.object.isRequired
 };
 
-const mapStateToProps = ({ app }) => ({ userData: app.userData });
+const mapStateToProps = ({ app, projects, user }) => ({ userData: user.userData });
 
 const mapDispatchToProps = dispatch => ({
   handleSetProjects: projects => dispatch(setProjects(projects))

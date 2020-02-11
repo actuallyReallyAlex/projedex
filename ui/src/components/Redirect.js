@@ -3,11 +3,9 @@ import PropTypes from "prop-types";
 import { useHistory, useLocation } from "react-router-dom";
 import { saveAccessToken, refreshData } from "../requests";
 import { connect } from "react-redux";
-import {
-  setProjects,
-  setUserData,
-  setShouldHitSaveToken
-} from "../redux/actions/app";
+import { setShouldHitSaveToken } from "../redux/actions/app";
+import { setProjects } from "../redux/actions/projects";
+import { setUserData } from "../redux/actions/user";
 import { version } from "../../package.json";
 
 const Redirect = ({
@@ -54,9 +52,9 @@ Redirect.propTypes = {
   userData: PropTypes.object
 };
 
-const mapStateToProps = ({ app }) => ({
+const mapStateToProps = ({ app, projects, user }) => ({
   shouldHitSaveToken: app.shouldHitSaveToken,
-  userData: app.userData
+  userData: user.userData
 });
 
 const mapDispatchToProps = dispatch => ({
