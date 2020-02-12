@@ -14,12 +14,17 @@ import GetRepos from "./GetRepos";
 import { connect } from "react-redux";
 import { version } from "../../package.json";
 
+import { Button } from "semantic-ui-react";
+
+const ButtonExampleButton = () => <Button>Click Here</Button>;
+
 const Home = ({ userData }) => {
   return (
     <div className="App">
       <h1>Projedex (BASIC UI) {version}</h1>
       {userData && <RefreshDataButton />}
       <DataViewer />
+      <ButtonExampleButton />
       <form>
         {!userData && (
           <Fragment>
