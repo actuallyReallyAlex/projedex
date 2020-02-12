@@ -8,7 +8,8 @@ const cors = require("cors");
 const Sentry = require("@sentry/node");
 
 Sentry.init({
-  dsn: "https://11a8f63857134e91b049f0452e9d0330@sentry.io/2448589"
+  dsn: "https://11a8f63857134e91b049f0452e9d0330@sentry.io/2448589",
+  environment: process.env.NODE_ENV
 });
 
 const app = express();
