@@ -1,7 +1,7 @@
 import request from "request";
 import { apiDomain } from "../../constants";
 import { setProjectData } from "./projects";
-import { setHasFetchedProjectData } from "./app";
+import { setHasFetchedProjectData, setError, setLoading } from "./app";
 
 // * ACTION TYPES
 const SET_USER_DATA = "SET_USER_DATA";
@@ -82,7 +82,7 @@ export const deleteUser = () => async (dispatch, getState) => {
  * @param {String} email Email
  * @param {String} password Password
  */
-export const login = (email, password) => async dispatch => {
+export const logIn = (email, password) => async dispatch => {
   try {
     const response = await makeRequest(`${apiDomain}/users/login`, {
       json: true,
@@ -93,8 +93,25 @@ export const login = (email, password) => async dispatch => {
       }
     });
 
-    dispatch(setUserData(response.body));
+    // * 1. Server error -> Code 400
+    // * 2. No "Error", but unable to log in -> Code 200 + response.body = { error: "Unable to log in" }
+    // * 3. Client Side Error -> Catch bloock
+    // * 4. Success -> Code 200 + response.body = { user: {}, token: "" }
+    if (response.statusCode === 400) {
+      dispatch(setError({ state: true, message: "Error ..." }));
+      dispatch(setLoading(false));
+    } else if (response.statusCode === 200) {
+      if (response.body.error) {
+        dispatch(setError({ state: true, message: response.body.error }));
+        dispatch(setLoading(false));
+      } else {
+        dispatch(setUserData(response.body));
+        dispatch(setLoading(false));
+      }
+    }
   } catch (e) {
+    dispatch(setError({ state: true, message: "Error ..." }));
+    dispatch(setLoading(false));
     return console.error(e);
   }
 };
