@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Redirect from "./pages/Redirect";
-import request from "request";
-import { apiDomain } from "./constants";
+// import request from "request";
+// import { apiDomain } from "./constants";
 import { connect } from "react-redux";
 import { setHasFetchedProjectData } from "./redux/actions/app";
 import { setProjectData } from "./redux/actions/projects";
@@ -18,31 +18,30 @@ const App = ({
 }) => {
   useEffect(() => {
     // * Check if you should read projects
-    if (userData && !hasFetchedProjectData) {
-      request(
-        `${apiDomain}/projects`,
-        {
-          json: true,
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          auth: {
-            bearer: userData.token
-          }
-        },
-        (error, response, body) => {
-          if (error) {
-            return console.error(error);
-          }
-
-          if (response.statusCode === 200) {
-            handleSetHasFetchedProjectData(true);
-            handleSetProjects(body);
-          }
-        }
-      );
-    }
+    // if (userData && !hasFetchedProjectData) {
+    //   request(
+    //     `${apiDomain}/projects`,
+    //     {
+    //       json: true,
+    //       method: "GET",
+    //       headers: {
+    //         "Content-Type": "application/json"
+    //       },
+    //       auth: {
+    //         bearer: userData.token
+    //       }
+    //     },
+    //     (error, response, body) => {
+    //       if (error) {
+    //         return console.error(error);
+    //       }
+    //       if (response.statusCode === 200) {
+    //         handleSetHasFetchedProjectData(true);
+    //         handleSetProjects(body);
+    //       }
+    //     }
+    //   );
+    // }
   }, [
     userData,
     projectData,
