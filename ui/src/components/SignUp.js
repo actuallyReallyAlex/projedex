@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { createUser } from "../redux/actions/user";
 import { connect } from "react-redux";
-import { Button, Container, Form } from "semantic-ui-react";
+import { Button, Container, Form, Input } from "semantic-ui-react";
 
 const SignUp = ({ handleBack, handleCreateUser }) => {
   const [name, setName] = useState(null);
@@ -13,33 +13,34 @@ const SignUp = ({ handleBack, handleCreateUser }) => {
   // TODO - ConfirmPassword functionality
 
   const handleSubmit = () => {
+    console.log({ confirmPassword });
     handleCreateUser(email, name, password);
   };
 
   return (
     <Form onSubmit={handleSubmit}>
-      <Form.Field>
-        <label>Name</label>
-        <input id="sign-up-name" onChange={e => setName(e.target.value)} />
-      </Form.Field>
-      <Form.Field>
-        <label>Email</label>
-        <input id="sign-up-email" onChange={e => setEmail(e.target.value)} />
-      </Form.Field>
-      <Form.Field>
-        <label>Password</label>
-        <input
-          id="sign-up-password"
-          onChange={e => setPassword(e.target.value)}
-        />
-      </Form.Field>
-      <Form.Field>
-        <label>Confirm Password</label>
-        <input
-          id="sign-up-confirm-password"
-          onChange={e => setConfirmPassword(e.target.value)}
-        />
-      </Form.Field>
+      <Form.Field
+        control={Input}
+        label="Name"
+        onChange={e => setName(e.target.value)}
+      />
+      <Form.Field
+        control={Input}
+        label="Email"
+        onChange={e => setEmail(e.target.value)}
+      />
+      <Form.Field
+        control={Input}
+        label="Password"
+        onChange={e => setPassword(e.target.value)}
+        type="password"
+      />
+      <Form.Field
+        control={Input}
+        label="Confirm Password"
+        onChange={e => setConfirmPassword(e.target.value)}
+        type="password"
+      />
       <Container
         className="button__container"
         fluid
