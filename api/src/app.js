@@ -20,7 +20,10 @@ app.use(express.json());
 
 const whitelistDomains = [
   "https://projedex.netlify.com",
-  "http://localhost:5000"
+  "http://localhost:5000",
+  "https://api.github.com",
+  "https://github.com",
+  undefined // ? Issue? Check for HOST
 ];
 
 const corsOptions = {

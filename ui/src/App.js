@@ -1,18 +1,19 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Home from "./components/Home";
-import Redirect from "./components/Redirect";
+import Home from "./pages/Home";
+import Redirect from "./pages/Redirect";
 import request from "request";
 import { apiDomain } from "./constants";
 import { connect } from "react-redux";
-import { setHasFetchedProjectData, setProjects } from "./redux/actions/app";
+import { setHasFetchedProjectData } from "./redux/actions/app";
+import { setProjectData } from "./redux/actions/projects";
 
 const App = ({
   handleSetHasFetchedProjectData,
   handleSetProjects,
   hasFetchedProjectData,
-  projects,
+  projectData,
   userData
 }) => {
   useEffect(() => {
@@ -44,7 +45,7 @@ const App = ({
     }
   }, [
     userData,
-    projects,
+    projectData,
     hasFetchedProjectData,
     handleSetHasFetchedProjectData,
     handleSetProjects
@@ -63,20 +64,20 @@ App.propTypes = {
   handleSetHasFetchedProjectData: PropTypes.func.isRequired,
   handleSetProjects: PropTypes.func.isRequired,
   hasFetchedProjectData: PropTypes.bool.isRequired,
-  projects: PropTypes.array.isRequired,
+  projectData: PropTypes.array.isRequired,
   userData: PropTypes.object
 };
 
-const mapStateToProps = ({ app }) => ({
+const mapStateToProps = ({ app, projects, user }) => ({
   hasFetchedProjectData: app.hasFetchedProjectData,
-  projects: app.projects,
-  userData: app.userData
+  projectData: projects.projectData,
+  userData: user.userData
 });
 
 const mapDispatchToProps = dispatch => ({
   handleSetHasFetchedProjectData: hasFetchedProjectData =>
     dispatch(setHasFetchedProjectData(hasFetchedProjectData)),
-  handleSetProjects: projects => dispatch(setProjects(projects))
+  handleSetProjects: projectData => dispatch(setProjectData(projectData))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
