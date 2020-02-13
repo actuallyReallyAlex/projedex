@@ -1,6 +1,6 @@
 {
   "name": "ui",
-  "version": "0.18.0",
+  "version": "0.19.0",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
@@ -15,7 +15,8 @@
     "redux-thunk": "^2.3.0",
     "request": "^2.88.0",
     "semantic-ui-css": "^2.4.1",
-    "semantic-ui-react": "^0.88.2"
+    "semantic-ui-react": "^0.88.2",
+    "validator": "^12.2.0"
   },
   "scripts": {
     "start": "env-cmd -e development react-scripts start",
