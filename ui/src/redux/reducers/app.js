@@ -1,5 +1,10 @@
 const appDefaultState = {
+  error: {
+    message: null,
+    state: false
+  },
   hasFetchedProjectData: false,
+  loading: false,
   shouldHitSaveToken: true
 };
 
@@ -14,6 +19,16 @@ export default (state = appDefaultState, action) => {
       return {
         ...state,
         shouldHitSaveToken: action.payload.shouldHitSaveToken
+      };
+    case "SET_ERROR":
+      return {
+        ...state,
+        error: action.payload.error
+      };
+    case "SET_LOADING":
+      return {
+        ...state,
+        loading: action.payload.loading
       };
     default:
       return state;
