@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Home from "./components/Home";
-import Redirect from "./components/Redirect";
+import Home from "./pages/Home";
+import Redirect from "./pages/Redirect";
 import request from "request";
 import { apiDomain } from "./constants";
 import { connect } from "react-redux";
