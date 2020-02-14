@@ -161,7 +161,10 @@ export const logoutAll = () => async (dispatch, getState) => {
     dispatch(setUserData(null));
     dispatch(setProjectData([]));
     dispatch(setHasFetchedProjectData(false));
+    dispatch(setLoading(false));
   } catch (e) {
+    // TODO - Handle dispatching errors
+    dispatch(setLoading(false));
     return console.error(e);
   }
 };

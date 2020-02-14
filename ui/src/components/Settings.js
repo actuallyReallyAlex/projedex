@@ -3,10 +3,15 @@ import PropTypes from "prop-types";
 import { Segment, Header, Form, Input, Button } from "semantic-ui-react";
 import { connect } from "react-redux";
 import moment from "moment";
-import { modifyUser } from "../redux/actions/user";
+import { modifyUser, logoutAll } from "../redux/actions/user";
 import { setLoading } from "../redux/actions/app";
 
-const Settings = ({ handleUpdateProfile, loading, userData }) => {
+const Settings = ({
+  handleLogOutAll,
+  handleUpdateProfile,
+  loading,
+  userData
+}) => {
   const [isChangingPassword, setIsChangingPassword] = useState(false);
   const [name, setName] = useState(userData.user.name);
   const [email, setEmail] = useState(userData.user.email);
@@ -131,11 +136,18 @@ const Settings = ({ handleUpdateProfile, loading, userData }) => {
           </Form>
         )}
       </Segment>
+      <Segment raised color="red">
+        <Header as="h3">Log out</Header>
+        <Button negative onClick={handleLogOutAll} type="button">
+          Log out of all devices
+        </Button>
+      </Segment>
     </div>
   );
 };
 
 Settings.propTypes = {
+  handleLogOutAll: PropTypes.func.isRequired,
   handleUpdateProfile: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
   userData: PropTypes.object.isRequired
@@ -147,6 +159,10 @@ const mapStateToProps = ({ app, user }) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+  handleLogOutAll: () => {
+    dispatch(setLoading(true));
+    dispatch(logoutAll());
+  },
   handleUpdateProfile: modification => {
     dispatch(setLoading(true));
     dispatch(modifyUser(modification));
