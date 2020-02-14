@@ -184,14 +184,11 @@ export const modifyUser = modification => async (dispatch, getState) => {
         bearer: user.userData.token
       }
     });
-    document.getElementById("modify-user-email").value = "";
-    document.getElementById("modify-user-name").value = "";
-    document.getElementById("modify-user-password").value = "";
     dispatch(setUserData({ ...user.userData, user: request.body }));
+    dispatch(setLoading(false));
   } catch (e) {
-    document.getElementById("modify-user-email").value = "";
-    document.getElementById("modify-user-name").value = "";
-    document.getElementById("modify-user-password").value = "";
+    // TODO - Handle dispatching error here
+    dispatch(setLoading(false));
     return console.error(e);
   }
 };
