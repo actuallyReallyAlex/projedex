@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { Segment, Header, Form, Input, Button } from "semantic-ui-react";
+import { Segment, Header, Form, Input, Button, Modal } from "semantic-ui-react";
 import { connect } from "react-redux";
 import moment from "moment";
-import { modifyUser, logoutAll } from "../redux/actions/user";
+import { modifyUser, logoutAll, deleteUser } from "../redux/actions/user";
 import { setLoading } from "../redux/actions/app";
 
 const Settings = ({
+  handleDeleteUser,
   handleLogOutAll,
   handleUpdateProfile,
   loading,
@@ -18,6 +19,7 @@ const Settings = ({
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   const handleUpdate = () => {
     const modification = { name, email };
@@ -142,11 +144,45 @@ const Settings = ({
           Log out of all devices
         </Button>
       </Segment>
+      <Segment raised color="red">
+        <Header as="h3">Delete user</Header>
+        <Modal
+          open={isDeleteModalOpen}
+          size="tiny"
+          trigger={
+            <Button
+              negative
+              onClick={() => setIsDeleteModalOpen(true)}
+              type="button"
+            >
+              Delete account
+            </Button>
+          }
+        >
+          <Modal.Header>Delete account</Modal.Header>
+          <Modal.Content>
+            <Modal.Description>
+              <Header>Danger!</Header>
+              <p>This will completely delete your user account.</p>
+              <p>Are you sure you wish to continue?</p>
+              <div>
+                <Button loading={loading} negative onClick={handleDeleteUser}>
+                  Delete
+                </Button>
+                <Button onClick={() => setIsDeleteModalOpen(false)}>
+                  Cancel
+                </Button>
+              </div>
+            </Modal.Description>
+          </Modal.Content>
+        </Modal>
+      </Segment>
     </div>
   );
 };
 
 Settings.propTypes = {
+  handleDeleteUser: PropTypes.func.isRequired,
   handleLogOutAll: PropTypes.func.isRequired,
   handleUpdateProfile: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
@@ -159,6 +195,10 @@ const mapStateToProps = ({ app, user }) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+  handleDeleteUser: () => {
+    dispatch(setLoading(true));
+    dispatch(deleteUser());
+  },
   handleLogOutAll: () => {
     dispatch(setLoading(true));
     dispatch(logoutAll());

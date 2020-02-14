@@ -72,7 +72,10 @@ export const deleteUser = () => async (dispatch, getState) => {
     });
 
     dispatch(setUserData(null));
+    dispatch(setLoading(false));
   } catch (e) {
+    // TODO - Handle dispatching errors
+    dispatch(setLoading(false));
     return console.error(e);
   }
 };
