@@ -28,7 +28,8 @@ const Settings = ({ handleUpdateProfile, loading, userData }) => {
   };
 
   const handleChangePassword = () => {
-    console.log("handleChangePassword()");
+    // TODO - Actual validation / checks here
+    handleUpdateProfile({ password: confirmNewPassword });
   };
 
   return (
