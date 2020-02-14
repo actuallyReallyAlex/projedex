@@ -1,49 +1,56 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { Header, Icon } from "semantic-ui-react";
+import { Header, Icon, Menu } from "semantic-ui-react";
 import { connect } from "react-redux";
 import { logout } from "../redux/actions/user";
 import { setContent } from "../redux/actions/app";
+import Info from "./Info";
 
 const Sidebar = ({ handleLogOut, handleSelectHome, handleSelectSettings }) => {
+  const [activeItem, setActiveItem] = useState("");
   return (
-    <div
-      style={{
-        alignItems: "center",
-        display: "flex",
-        flexDirection: "column",
-        height: "100%"
-      }}
-    >
-      <Header as="h1">
+    <Menu style={{ maxWidth: "100%" }} vertical>
+      <Header
+        as="h1"
+        style={{ fontSize: "1.5rem", marginTop: "14px", textAlign: "center" }}
+      >
         <Header.Content>Projédex</Header.Content>
       </Header>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          height: "100%",
-          justifyContent: "space-between"
+      <Menu.Item
+        name="home"
+        active={activeItem === "home"}
+        onClick={() => {
+          setActiveItem("home");
+          handleSelectHome();
         }}
       >
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          <Icon
-            link
-            name="home"
-            onClick={handleSelectHome}
-            size="large"
-            style={{ marginBottom: "25px" }}
-          />
-          <Icon
-            link
-            name="settings"
-            onClick={handleSelectSettings}
-            size="large"
-          />
-        </div>
-        <Icon link name="log out" onClick={handleLogOut} size="large" />
-      </div>
-    </div>
+        <Icon name="home" />
+        Home
+      </Menu.Item>
+      <Menu.Item
+        name="settings"
+        active={activeItem === "settings"}
+        onClick={() => {
+          setActiveItem("settings");
+          handleSelectSettings();
+        }}
+      >
+        <Icon name="settings" />
+        Settings
+      </Menu.Item>
+      <Menu.Item
+        name="log out"
+        active={activeItem === "log out"}
+        onClick={() => {
+          setActiveItem("log out");
+          handleLogOut();
+        }}
+      >
+        <Icon name="log out" />
+        Log out
+      </Menu.Item>
+      <Info />
+    </Menu>
   );
 };
 

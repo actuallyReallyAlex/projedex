@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Info from "../components/Info";
 import { Grid, Placeholder } from "semantic-ui-react";
 import Sidebar from "./Sidebar";
 import { connect } from "react-redux";
@@ -14,15 +13,14 @@ const contentOptions = {
 
 const Dashboard = ({ content }) => {
   const SelectedContent = contentOptions[content];
-  
+
   return (
     <Grid className="application" columns={3} divided id="app">
-      <Grid.Column width={2}>
+      <Grid.Column style={{ padding: "0" }} width={2}>
         <Sidebar />
       </Grid.Column>
       <Grid.Column width={10}>
         <SelectedContent />
-        <Info />
       </Grid.Column>
       <Grid.Column width={4}>
         <Placeholder>
