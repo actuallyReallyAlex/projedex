@@ -1,4 +1,5 @@
 const appDefaultState = {
+  content: "home",
   error: {
     message: null,
     state: false
@@ -29,6 +30,11 @@ export default (state = appDefaultState, action) => {
       return {
         ...state,
         loading: action.payload.loading
+      };
+    case "SET_CONTENT":
+      return {
+        ...state,
+        content: action.payload.content
       };
     default:
       return state;

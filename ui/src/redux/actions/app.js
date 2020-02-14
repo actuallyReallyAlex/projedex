@@ -8,6 +8,7 @@ const SET_HAS_FETCHED_PROJECT_DATA = "SET_HAS_FETCHED_PROJECT_DATA";
 const SET_SHOULD_HIT_SAVE_TOKEN = "SET_SHOULD_HIT_SAVE_TOKEN";
 const SET_ERROR = "SET_ERROR";
 const SET_LOADING = "SET_LOADING";
+const SET_CONTENT = "SET_CONTENT";
 
 // * ACTION GENERATORS
 export const setHasFetchedProjectData = hasFetchedProjectData => ({
@@ -25,6 +26,11 @@ export const setError = error => ({ type: SET_ERROR, payload: { error } });
 export const setLoading = loading => ({
   type: SET_LOADING,
   payload: { loading }
+});
+
+export const setContent = content => ({
+  type: SET_CONTENT,
+  payload: { content }
 });
 
 // * PROMISES
