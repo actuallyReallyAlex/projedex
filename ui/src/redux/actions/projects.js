@@ -1,5 +1,6 @@
 import request from "request";
 import { apiDomain } from "../../constants";
+import { setLoading } from "./app";
 
 // * ACTION TYPES
 const SET_PROJECT_DATA = "SET_PROJECT_DATA";
@@ -50,10 +51,11 @@ export const createProject = name => async (dispatch, getState) => {
       }
     });
 
-    document.getElementById("create-project-name").value = "";
     dispatch(setProjectData([...projects.projectData, response.body]));
+    dispatch(setLoading(false));
   } catch (e) {
-    document.getElementById("create-project-name").value = "";
+    // TODO - Dispatch errors
+    dispatch(setLoading(false));
     return console.error(e);
   }
 };

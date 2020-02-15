@@ -4,10 +4,12 @@ import { Grid, Placeholder } from "semantic-ui-react";
 import Sidebar from "./Sidebar";
 import { connect } from "react-redux";
 import Home from "./Home";
+import NewProject from "./NewProject";
 import Settings from "./Settings";
 
 const contentOptions = {
   home: Home,
+  newProject: NewProject,
   settings: Settings
 };
 

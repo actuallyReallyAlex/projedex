@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { Header, Icon, Menu } from "semantic-ui-react";
+import { Header, Icon, Menu, Button } from "semantic-ui-react";
 import { connect } from "react-redux";
 import { logout } from "../redux/actions/user";
 import { setContent } from "../redux/actions/app";
 import Info from "./Info";
 
 const Sidebar = ({
+  handleNewProject,
   handleLogOut,
   handleSelectHome,
   handleSelectSettings,
@@ -40,8 +41,25 @@ const Sidebar = ({
           // TODO - Display projects in middle
         }}
       >
-        <Icon name="book" />
-        Projects
+        <div
+          style={{
+            alignItems: "center",
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between"
+          }}
+        >
+          Projects
+          <Button
+            onClick={handleNewProject}
+            positive
+            size="mini"
+            style={{ marginRight: "0", padding: "6px" }}
+          >
+            New
+          </Button>
+        </div>
+
         {projectData.length > 0 && (
           <Menu.Menu>
             {projectData.map(project => {
@@ -79,6 +97,7 @@ const Sidebar = ({
 };
 
 Sidebar.propTypes = {
+  handleNewProject: PropTypes.func.isRequired,
   handleLogOut: PropTypes.func.isRequired,
   handleSelectHome: PropTypes.func.isRequired,
   handleSelectSettings: PropTypes.func.isRequired,
@@ -90,6 +109,7 @@ const mapStateToProps = ({ projects }) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+  handleNewProject: () => dispatch(setContent("newProject")),
   handleLogOut: () => dispatch(logout()),
   handleSelectHome: () => dispatch(setContent("home")),
   handleSelectSettings: () => dispatch(setContent("settings"))
