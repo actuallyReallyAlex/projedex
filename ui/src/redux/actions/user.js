@@ -1,7 +1,12 @@
 import request from "request";
 import { apiDomain } from "../../constants";
 import { setProjectData } from "./projects";
-import { setHasFetchedProjectData, setError, setLoading } from "./app";
+import {
+  setHasFetchedProjectData,
+  setError,
+  setLoading,
+  refreshData
+} from "./app";
 
 // * ACTION TYPES
 const SET_USER_DATA = "SET_USER_DATA";
@@ -109,6 +114,7 @@ export const logIn = (email, password) => async dispatch => {
         dispatch(setLoading(false));
       } else {
         dispatch(setUserData(response.body));
+        dispatch(refreshData());
         dispatch(setLoading(false));
       }
     }
