@@ -6,7 +6,12 @@ import { logout } from "../redux/actions/user";
 import { setContent } from "../redux/actions/app";
 import Info from "./Info";
 
-const Sidebar = ({ handleLogOut, handleSelectHome, handleSelectSettings }) => {
+const Sidebar = ({
+  handleLogOut,
+  handleSelectHome,
+  handleSelectSettings,
+  projectData
+}) => {
   const [activeItem, setActiveItem] = useState("");
   return (
     <Menu style={{ maxWidth: "100%" }} vertical>
@@ -26,6 +31,25 @@ const Sidebar = ({ handleLogOut, handleSelectHome, handleSelectSettings }) => {
       >
         <Icon name="home" />
         Home
+      </Menu.Item>
+      <Menu.Item
+        name="projects"
+        active={activeItem === "projects"}
+        onClick={() => {
+          setActiveItem("projects");
+          // TODO - Display projects in middle
+        }}
+      >
+        <Icon name="book" />
+        Projects
+        {projectData.length > 0 && (
+          <Menu.Menu>
+            {projectData.map(project => {
+              // TODO - Add 'active' and 'onClick' props
+              return <Menu.Item key={project.id} name={project.name} />;
+            })}
+          </Menu.Menu>
+        )}
       </Menu.Item>
       <Menu.Item
         name="settings"
@@ -57,8 +81,13 @@ const Sidebar = ({ handleLogOut, handleSelectHome, handleSelectSettings }) => {
 Sidebar.propTypes = {
   handleLogOut: PropTypes.func.isRequired,
   handleSelectHome: PropTypes.func.isRequired,
-  handleSelectSettings: PropTypes.func.isRequired
+  handleSelectSettings: PropTypes.func.isRequired,
+  projectData: PropTypes.array.isRequired
 };
+
+const mapStateToProps = ({ projects }) => ({
+  projectData: projects.projectData
+});
 
 const mapDispatchToProps = dispatch => ({
   handleLogOut: () => dispatch(logout()),
@@ -66,4 +95,4 @@ const mapDispatchToProps = dispatch => ({
   handleSelectSettings: () => dispatch(setContent("settings"))
 });
 
-export default connect(null, mapDispatchToProps)(Sidebar);
+export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);
