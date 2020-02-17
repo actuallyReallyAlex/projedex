@@ -4,6 +4,7 @@ import { Header, Icon, Menu, Button } from "semantic-ui-react";
 import { connect } from "react-redux";
 import { logout } from "../redux/actions/user";
 import { setContent } from "../redux/actions/app";
+import { setCurrentProjectId } from "../redux/actions/projects";
 import Info from "./Info";
 
 const Sidebar = ({
@@ -11,6 +12,7 @@ const Sidebar = ({
   handleLogOut,
   handleSelectHome,
   handleSelectSettings,
+  handleViewProject,
   projectData
 }) => {
   const [activeItem, setActiveItem] = useState("");
@@ -64,7 +66,15 @@ const Sidebar = ({
           <Menu.Menu>
             {projectData.map(project => {
               // TODO - Add 'active' and 'onClick' props
-              return <Menu.Item key={project.id} name={project.name} />;
+              return (
+                <Menu.Item
+                  as="div"
+                  key={project._id}
+                  link
+                  name={project.name}
+                  onClick={() => handleViewProject(project._id)}
+                />
+              );
             })}
           </Menu.Menu>
         )}
@@ -101,6 +111,7 @@ Sidebar.propTypes = {
   handleLogOut: PropTypes.func.isRequired,
   handleSelectHome: PropTypes.func.isRequired,
   handleSelectSettings: PropTypes.func.isRequired,
+  handleViewProject: PropTypes.func.isRequired,
   projectData: PropTypes.array.isRequired
 };
 
@@ -112,7 +123,11 @@ const mapDispatchToProps = dispatch => ({
   handleNewProject: () => dispatch(setContent("newProject")),
   handleLogOut: () => dispatch(logout()),
   handleSelectHome: () => dispatch(setContent("home")),
-  handleSelectSettings: () => dispatch(setContent("settings"))
+  handleSelectSettings: () => dispatch(setContent("settings")),
+  handleViewProject: id => {
+    dispatch(setCurrentProjectId(id));
+    dispatch(setContent("viewProject"));
+  }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);

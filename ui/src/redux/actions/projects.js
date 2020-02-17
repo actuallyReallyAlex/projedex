@@ -4,11 +4,17 @@ import { setLoading } from "./app";
 
 // * ACTION TYPES
 const SET_PROJECT_DATA = "SET_PROJECT_DATA";
+const SET_CURRENT_PROJECT_ID = "SET_CURRENT_PROJECT_ID";
 
 // * ACTION GENERATORS
 export const setProjectData = projectData => ({
   type: SET_PROJECT_DATA,
   payload: { projectData }
+});
+
+export const setCurrentProjectId = currentProjectId => ({
+  type: SET_CURRENT_PROJECT_ID,
+  payload: { currentProjectId }
 });
 
 // * PROMISES
