@@ -11,6 +11,7 @@ const Sidebar = ({
   handleNewProject,
   handleLogOut,
   handleSelectHome,
+  handleSelectProjects,
   handleSelectSettings,
   handleViewProject,
   projectData
@@ -40,7 +41,7 @@ const Sidebar = ({
         active={activeItem === "projects"}
         onClick={() => {
           setActiveItem("projects");
-          // TODO - Display projects in middle
+          handleSelectProjects();
         }}
       >
         <div
@@ -72,7 +73,10 @@ const Sidebar = ({
                   key={project._id}
                   link
                   name={project.name}
-                  onClick={() => handleViewProject(project._id)}
+                  onClick={e => {
+                    e.stopPropagation();
+                    handleViewProject(project._id);
+                  }}
                 />
               );
             })}
@@ -110,6 +114,7 @@ Sidebar.propTypes = {
   handleNewProject: PropTypes.func.isRequired,
   handleLogOut: PropTypes.func.isRequired,
   handleSelectHome: PropTypes.func.isRequired,
+  handleSelectProjects: PropTypes.func.isRequired,
   handleSelectSettings: PropTypes.func.isRequired,
   handleViewProject: PropTypes.func.isRequired,
   projectData: PropTypes.array.isRequired
@@ -123,6 +128,7 @@ const mapDispatchToProps = dispatch => ({
   handleNewProject: () => dispatch(setContent("newProject")),
   handleLogOut: () => dispatch(logout()),
   handleSelectHome: () => dispatch(setContent("home")),
+  handleSelectProjects: () => dispatch(setContent("projects")),
   handleSelectSettings: () => dispatch(setContent("settings")),
   handleViewProject: id => {
     dispatch(setCurrentProjectId(id));

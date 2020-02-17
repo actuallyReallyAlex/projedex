@@ -5,12 +5,14 @@ import Sidebar from "./Sidebar";
 import { connect } from "react-redux";
 import Home from "./Home";
 import NewProject from "./NewProject";
+import Projects from "./Projects";
 import Settings from "./Settings";
 import ViewProject from "./ViewProject";
 
 const contentOptions = {
   home: Home,
   newProject: NewProject,
+  projects: Projects,
   settings: Settings,
   viewProject: ViewProject
 };
