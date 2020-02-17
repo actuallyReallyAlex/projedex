@@ -122,7 +122,10 @@ export const modifyProject = (id, modification) => async (
     newProjectsArray[modifiedProjectIndex] = response.body;
 
     dispatch(setProjectData(newProjectsArray));
+    dispatch(setLoading(false));
   } catch (e) {
+    // TODO - Dispatch Errors
+    dispatch(setLoading(false));
     return console.error(e);
   }
 };
