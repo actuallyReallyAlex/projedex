@@ -17,3 +17,8 @@
   display: flex;
   margin-top: 25px;
 }
+
+#app.application {
+  height: 100vh;
+  margin: 0;
+}
