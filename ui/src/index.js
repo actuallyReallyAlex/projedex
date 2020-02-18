@@ -6,6 +6,11 @@ import * as serviceWorker from "./serviceWorker";
 import { Provider } from "react-redux";
 import store from "./redux/store/store";
 import "semantic-ui-css/semantic.min.css";
+import * as Sentry from "@sentry/browser";
+
+Sentry.init({
+  dsn: "https://3e9e5a7f93194dca8e9e0ae5bee3923b@sentry.io/2639408"
+});
 
 ReactDOM.render(
   <Provider store={store}>
