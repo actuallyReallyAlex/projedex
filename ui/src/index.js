@@ -9,7 +9,8 @@ import "semantic-ui-css/semantic.min.css";
 import * as Sentry from "@sentry/browser";
 
 Sentry.init({
-  dsn: "https://3e9e5a7f93194dca8e9e0ae5bee3923b@sentry.io/2639408"
+  dsn: "https://3e9e5a7f93194dca8e9e0ae5bee3923b@sentry.io/2639408",
+  environment: process.env.NODE_ENV
 });
 
 ReactDOM.render(
