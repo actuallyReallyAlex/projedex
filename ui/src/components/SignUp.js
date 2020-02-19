@@ -40,6 +40,47 @@ const SignUp = ({
       return handleError("Passwords do not match.");
     }
 
+    // * Password should be at least 7 characters long
+
+    if (!validator.isLength(password, { min: 7 })) {
+      return handleError("Password should be at least 7 characters long.");
+    }
+
+    // * Password should contain:
+    // * 1. At least 1 uppercase letter
+    // * 2. At least 1 lowercase letter
+    // * 3. At least 1 letter
+    // * 4. At least 1 number
+    // * 5. At least 1 special character
+
+    if (validator.isLowercase(password)) {
+      return handleError(
+        "Password should contain at least 1 uppercase letter."
+      );
+    }
+
+    if (validator.isUppercase(password)) {
+      return handleError(
+        "Password should contain at least 1 lowercase letter."
+      );
+    }
+
+    if (validator.isNumeric(password)) {
+      return handleError(
+        "Password must contain at least 1 uppercase letter and 1 lowercase letter."
+      );
+    }
+
+    if (password.split("").every(char => isNaN(Number(char)))) {
+      return handleError("Password should contain at least 1 number.");
+    }
+
+    if (validator.isAlphanumeric(password)) {
+      return handleError(
+        "Password should contain at least 1 special character."
+      );
+    }
+
     handleCreateUser(email, name, password);
   };
 
@@ -99,8 +140,10 @@ const mapStateToProps = ({ app }) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  handleCreateUser: (email, name, password) =>
-    dispatch(createUser(email, name, password)),
+  handleCreateUser: (email, name, password) => {
+    dispatch(setError({ state: false, message: "" }));
+    dispatch(createUser(email, name, password));
+  },
   handleError: error => dispatch(setError({ state: true, message: error })),
   handleResetState: () => {
     dispatch(setError({ state: null, message: "" }));
