@@ -1,6 +1,6 @@
 import request from "request";
 import { apiDomain } from "../../constants";
-import { setLoading } from "./app";
+import { setLoading, setContent } from "./app";
 
 // * ACTION TYPES
 const SET_PROJECT_DATA = "SET_PROJECT_DATA";
@@ -87,7 +87,11 @@ export const deleteProject = id => async (dispatch, getState) => {
     dispatch(
       setProjectData(projects.projectData.filter(project => project._id !== id))
     );
+    dispatch(setContent("projects"));
+    dispatch(setLoading(false));
   } catch (e) {
+    // TODO - Dispatch errors
+    dispatch(setLoading(false));
     return console.error(e);
   }
 };
