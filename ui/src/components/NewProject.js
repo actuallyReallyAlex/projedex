@@ -5,8 +5,6 @@ import { connect } from "react-redux";
 import { createProject } from "../redux/actions/projects";
 import { setLoading } from "../redux/actions/app";
 
-// TODO - Allow description to be added
-
 const NewProject = ({ handleCreateNewProject, loading }) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -14,7 +12,12 @@ const NewProject = ({ handleCreateNewProject, loading }) => {
 
   const handleSubmit = () => {
     setFormSubmitted(true);
-    handleCreateNewProject(name);
+    const project = { name, description };
+    Object.keys(project).forEach(key => {
+      if (project[key] === "") delete project[key];
+    });
+
+    handleCreateNewProject(project);
   };
 
   useEffect(() => {
@@ -76,9 +79,9 @@ NewProject.propTypes = {
 const mapStateToProps = ({ app }) => ({ loading: app.loading });
 
 const mapDispatchToProps = dispatch => ({
-  handleCreateNewProject: name => {
+  handleCreateNewProject: project => {
     dispatch(setLoading(true));
-    dispatch(createProject(name));
+    dispatch(createProject(project));
   }
 });
 

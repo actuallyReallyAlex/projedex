@@ -38,9 +38,9 @@ const makeRequest = (uri, options) =>
 // * THUNKS
 /**
  * Create a Project.
- * @param {String} name Name of Project
+ * @param {Object} project Object of project and it's properties. Ex { name: "New Project", description: "A cool project."}
  */
-export const createProject = name => async (dispatch, getState) => {
+export const createProject = project => async (dispatch, getState) => {
   try {
     const appState = await getState();
     const { projects, user } = appState;
@@ -51,7 +51,7 @@ export const createProject = name => async (dispatch, getState) => {
       headers: {
         "Content-Type": "application/json"
       },
-      body: { name },
+      body: project,
       auth: {
         bearer: user.userData.token
       }
