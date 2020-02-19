@@ -54,7 +54,10 @@ const Sidebar = ({
         >
           Projects
           <Button
-            onClick={handleNewProject}
+            onClick={e => {
+              e.stopPropagation();
+              handleNewProject();
+            }}
             positive
             size="mini"
             style={{ marginRight: "0", padding: "6px" }}

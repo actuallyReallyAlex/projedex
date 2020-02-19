@@ -4,10 +4,11 @@ import { Form, Header, Segment, Input, Button } from "semantic-ui-react";
 import { connect } from "react-redux";
 import moment from "moment";
 import { setLoading } from "../redux/actions/app";
-import { modifyProject } from "../redux/actions/projects";
+import { modifyProject, deleteProject } from "../redux/actions/projects";
 
 const ViewProject = ({
   currentProjectId,
+  handleDeleteProject,
   handleModifyProject,
   loading,
   projectData
@@ -46,14 +47,18 @@ const ViewProject = ({
       setIsEditing(false);
     }
 
-    setCurrentProject(
-      projectData.find(project => project._id === currentProjectId)
-    );
-    setName(projectData.find(project => project._id === currentProjectId).name);
-    setDescription(
-      projectData.find(project => project._id === currentProjectId)
-        .description || ""
-    );
+    if (!loading) {
+      setCurrentProject(
+        projectData.find(project => project._id === currentProjectId)
+      );
+      setName(
+        projectData.find(project => project._id === currentProjectId).name
+      );
+      setDescription(
+        projectData.find(project => project._id === currentProjectId)
+          .description || ""
+      );
+    }
   }, [loading, formSubmitted, currentProjectId, projectData]);
 
   return (
@@ -100,20 +105,22 @@ const ViewProject = ({
               style={{
                 alignItems: "flex-start",
                 display: "flex",
-                flexDirection: "column"
+                marginTop: "14px"
               }}
             >
-              <Button
-                primary
-                style={{ marginBottom: "14px", marginTop: "14px" }}
-                type="submit"
-              >
+              <Button primary type="submit">
                 Update project
+              </Button>
+              <Button
+                negative
+                onClick={() => handleDeleteProject(currentProjectId)}
+                type="button"
+              >
+                Delete project
               </Button>
               <Button
                 onClick={() => setIsEditing(false)}
                 secondary
-                style={{ marginBottom: "14px", marginTop: "14px" }}
                 type="button"
               >
                 Cancel
@@ -128,6 +135,7 @@ const ViewProject = ({
 
 ViewProject.propTypes = {
   currentProjectId: PropTypes.string.isRequired,
+  handleDeleteProject: PropTypes.func.isRequired,
   handleModifyProject: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
   projectData: PropTypes.array.isRequired
@@ -140,6 +148,10 @@ const mapStateToProps = ({ app, projects }) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+  handleDeleteProject: id => {
+    dispatch(setLoading(true));
+    dispatch(deleteProject(id));
+  },
   handleModifyProject: (id, modification) => {
     dispatch(setLoading(true));
     dispatch(modifyProject(id, modification));
