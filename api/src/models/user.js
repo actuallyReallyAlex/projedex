@@ -38,8 +38,43 @@ const userSchema = new mongoose.Schema(
       trim: true,
       type: String,
       validate: value => {
+        // * Password should contain:
+        // * 1. At least 1 uppercase letter
+        // * 2. At least 1 lowercase letter
+        // * 3. At least 1 letter
+        // * 4. At least 1 number
+        // * 5. At least 1 special character
+
         if (value.toLowerCase().includes("password")) {
           throw new Error(`Password can't contain the string "password".`);
+        }
+
+        if (validator.isLowercase(password)) {
+          return handleError(
+            "Password should contain at least 1 uppercase letter."
+          );
+        }
+
+        if (validator.isUppercase(password)) {
+          throw new Error(
+            "Password should contain at least 1 lowercase letter."
+          );
+        }
+
+        if (validator.isNumeric(password)) {
+          throw new Error(
+            "Password must contain at least 1 uppercase letter and 1 lowercase letter."
+          );
+        }
+
+        if (password.split("").every(char => isNaN(Number(char)))) {
+          throw new Error("Password should contain at least 1 number.");
+        }
+
+        if (validator.isAlphanumeric(password)) {
+          throw new Error(
+            "Password should contain at least 1 special character."
+          );
         }
       }
     },
