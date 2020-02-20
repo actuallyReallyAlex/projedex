@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require("path");
 require("./db/mongoose");
 
 const userRouter = require("./routers/user");
@@ -21,6 +22,7 @@ app.use(express.json());
 const whitelistDomains = [
   "https://projedex.netlify.com",
   "http://localhost:5000",
+  "http://localhost:3000",
   "https://api.github.com",
   "https://github.com",
   "https://www.projedex.com",
@@ -39,6 +41,8 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
+
+app.use(express.static(path.join(__dirname, "../../client/build")));
 
 app.use(userRouter);
 app.use(projectRouter);

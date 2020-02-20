@@ -1,0 +1,26 @@
+{
+  "name": "projedex",
+  "version": "0.0.0",
+  "description": "Like a pokédex, but for your projects.",
+  "scripts": {
+    "build-client": "cd client && npm run build",
+    "dev-server": "cd server && npm run dev",
+    "start": "cd server && npm start"
+  },
+  "author": "Alex Lee <www.alexlee.dev>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexlee-dev/projedex.git"
+  },
+  "keywords": [
+    "project",
+    "dashboard",
+    "overview",
+    "projedex"
+  ],
+  "bugs": {
+    "url": "https://github.com/alexlee-dev/projedex/issues"
+  },
+  "homepage": "https://www.projedex.com/"
+}
