@@ -8,8 +8,16 @@ router.post("/users", async (req, res) => {
 
   try {
     await user.save();
+    // * Generate a token and store it onto the user object in an array of tokens
     const token = await user.generateAuthToken();
-    res.status(201).send({ user, token });
+    // * Set a Cookie with that token
+    res.cookie("projedexToken", token, {
+      maxAge: 60 * 60 * 1000, // 1 hour
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production", // * localhost isn't https
+      sameSite: true
+    });
+    res.status(201).send({ user });
   } catch (e) {
     res.status(400).send(e);
   }
@@ -21,8 +29,16 @@ router.post("/users/login", async (req, res) => {
       req.body.email,
       req.body.password
     );
+    // * Generate a token
     const token = await user.generateAuthToken();
-    res.send({ user, token });
+    // * Set a Cookie with that token
+    res.cookie("projedexToken", token, {
+      maxAge: 60 * 60 * 1000, // 1 hour
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production", // * localhost isn't https
+      sameSite: true
+    });
+    res.send({ user });
   } catch (e) {
     if (e.message === "Unable to log in.") {
       res.status(200).send({ error: e.message });
@@ -39,6 +55,8 @@ router.post("/users/logout", auth, async (req, res) => {
     );
     await req.user.save();
 
+    res.clearCookie("projedexCookie");
+
     res.send();
   } catch (e) {
     res.status(500).send();
@@ -49,6 +67,8 @@ router.post("/users/logoutAll", auth, async (req, res) => {
   try {
     req.user.tokens = [];
     await req.user.save();
+
+    res.clearCookie("projedexCookie");
 
     res.send();
   } catch (e) {

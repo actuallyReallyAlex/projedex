@@ -65,9 +65,6 @@ export const refreshData = history => async (dispatch, getState) => {
       method: "GET",
       headers: {
         "Content-Type": "application/json"
-      },
-      auth: {
-        bearer: user.userData.token
       }
     });
     const newUserData = userResponse.body;
@@ -76,9 +73,6 @@ export const refreshData = history => async (dispatch, getState) => {
       method: "GET",
       headers: {
         "Content-Type": "application/json"
-      },
-      auth: {
-        bearer: user.userData.token
       }
     });
     const newProjects = projectsResponse.body;
@@ -95,15 +89,11 @@ export const refreshData = history => async (dispatch, getState) => {
 /**
  * Integrate with GitHub
  */
-export const integrateWithGitHub = () => async (dispatch, getState) => {
+export const integrateWithGitHub = () => async () => {
   try {
-    const { user } = await getState();
     const response = await makeRequest(`${apiDomain}/gh`, {
       json: true,
-      method: "GET",
-      auth: {
-        bearer: user.userData.token
-      }
+      method: "GET"
     });
     window.location.assign(response.body.url);
   } catch (e) {
@@ -116,18 +106,11 @@ export const integrateWithGitHub = () => async (dispatch, getState) => {
  * @param {Object} history History object from React Router
  * @param {String} accessToken Access token provided by GitHub
  */
-export const saveAccessToken = (history, accessToken) => async (
-  dispatch,
-  getState
-) => {
+export const saveAccessToken = (history, accessToken) => async dispatch => {
   try {
-    const { user } = await getState();
     await makeRequest(`${apiDomain}/users/me`, {
       json: true,
       method: "PATCH",
-      auth: {
-        bearer: user.userData.token
-      },
       body: {
         accessToken
       }
@@ -146,13 +129,9 @@ export const saveAccessToken = (history, accessToken) => async (
  */
 export const getRepos = setRepos => async (dispatch, getState) => {
   try {
-    const { user } = await getState();
     const response = await makeRequest(`${apiDomain}/gh-import`, {
       json: true,
-      method: "GET",
-      auth: {
-        bearer: user.userData.token
-      }
+      method: "GET"
     });
 
     if (response.statusCode === 200) {
@@ -169,15 +148,11 @@ export const getRepos = setRepos => async (dispatch, getState) => {
  * Import GitHub repos as projects.
  * @param {Array} repos Repos to be imported. Ex. [{ id: 001 }, { id: 002 }]
  */
-export const importRepos = repos => async (dispatch, getState) => {
+export const importRepos = repos => async dispatch => {
   try {
-    const { user } = await getState();
     const response = await makeRequest(`${apiDomain}/gh-import`, {
       json: true,
       method: "POST",
-      auth: {
-        bearer: user.userData.token
-      },
       body: { repos }
     });
 

@@ -43,7 +43,7 @@ const makeRequest = (uri, options) =>
 export const createProject = project => async (dispatch, getState) => {
   try {
     const appState = await getState();
-    const { projects, user } = appState;
+    const { projects } = appState;
 
     const response = await makeRequest(`${apiDomain}/projects`, {
       json: true,
@@ -51,10 +51,7 @@ export const createProject = project => async (dispatch, getState) => {
       headers: {
         "Content-Type": "application/json"
       },
-      body: project,
-      auth: {
-        bearer: user.userData.token
-      }
+      body: project
     });
 
     dispatch(setProjectData([...projects.projectData, response.body]));
@@ -72,15 +69,12 @@ export const createProject = project => async (dispatch, getState) => {
  */
 export const deleteProject = id => async (dispatch, getState) => {
   try {
-    const { projects, user } = await getState();
+    const { projects } = await getState();
     await makeRequest(`${apiDomain}/projects/${id}`, {
       json: true,
       method: "DELETE",
       headers: {
         "Content-Type": "application/json"
-      },
-      auth: {
-        bearer: user.userData.token
       }
     });
 
@@ -106,17 +100,14 @@ export const modifyProject = (id, modification) => async (
   getState
 ) => {
   try {
-    const { projects, user } = getState();
+    const { projects } = getState();
     const response = await makeRequest(`${apiDomain}/projects/${id}`, {
       json: true,
       method: "PATCH",
       headers: {
         "Content-Type": "application/json"
       },
-      body: modification,
-      auth: {
-        bearer: user.userData.token
-      }
+      body: modification
     });
 
     const newProjectsArray = [...projects.projectData];
