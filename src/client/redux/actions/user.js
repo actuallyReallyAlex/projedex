@@ -62,17 +62,13 @@ export const createUser = (email, name, password) => async dispatch => {
 /**
  * Delete User
  */
-export const deleteUser = () => async (dispatch, getState) => {
+export const deleteUser = () => async dispatch => {
   try {
-    const { user } = await getState();
     await makeRequest(`${apiDomain}/users/me`, {
       json: true,
       method: "DELETE",
       headers: {
         "Content-Type": "application/json"
-      },
-      auth: {
-        bearer: user.userData.token
       }
     });
 
@@ -128,17 +124,13 @@ export const logIn = (email, password) => async dispatch => {
 /**
  * Logout User
  */
-export const logout = () => async (dispatch, getState) => {
+export const logout = () => async dispatch => {
   try {
-    const { user } = await getState();
     await makeRequest(`${apiDomain}/users/logout`, {
       json: true,
       method: "POST",
       headers: {
         "Content-Type": "application/json"
-      },
-      auth: {
-        bearer: user.userData.token
       }
     });
 
@@ -153,17 +145,13 @@ export const logout = () => async (dispatch, getState) => {
 /**
  * Logout User from All Accounts
  */
-export const logoutAll = () => async (dispatch, getState) => {
+export const logoutAll = () => async dispatch => {
   try {
-    const { user } = await getState();
     await makeRequest(`${apiDomain}/users/logoutAll`, {
       json: true,
       method: "POST",
       headers: {
         "Content-Type": "application/json"
-      },
-      auth: {
-        bearer: user.userData.token
       }
     });
 
@@ -191,10 +179,7 @@ export const modifyUser = modification => async (dispatch, getState) => {
       headers: {
         "Content-Type": "application/json"
       },
-      body: modification,
-      auth: {
-        bearer: user.userData.token
-      }
+      body: modification
     });
     dispatch(setUserData({ ...user.userData, user: request.body }));
     dispatch(setLoading(false));
