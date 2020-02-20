@@ -1,20 +1,21 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const webpack = require("webpack");
 
 const outputDirectory = "dist";
 
 console.log({
   API_DOMAIN: process.env.API_DOMAIN,
-  UI_DOMAIN: process.env.UI_DOMAIN,
+  JWT_SECRET: process.env.JWT_SECRET,
+  MOCK: process.env.MOCK,
+  MONGODB_URL: process.env.MONGODB_URL,
   NODE_ENV: process.env.NODE_ENV,
-  PORT: process.env.PORT,
   OAUTH_CLIENT_ID: process.env.OAUTH_CLIENT_ID,
   OAUTH_REDIRECT_URI: process.env.OAUTH_REDIRECT_URI,
-  JWT_SECRET: process.env.JWT_SECRET,
+  PORT: process.env.PORT,
   PUBLIC_URL: process.env.PUBLIC_URL,
-  MONGODB_URL: process.env.MONGODB_URL,
-  MOCK: process.env.MOCK
+  UI_DOMAIN: process.env.UI_DOMAIN
 });
 
 module.exports = {
@@ -58,6 +59,18 @@ module.exports = {
     }
   },
   plugins: [
+    new webpack.EnvironmentPlugin({
+      API_DOMAIN: process.env.API_DOMAIN,
+      JWT_SECRET: process.env.JWT_SECRET,
+      MOCK: process.env.MOCK,
+      MONGODB_URL: process.env.MONGODB_URL,
+      NODE_ENV: process.env.NODE_ENV,
+      OAUTH_CLIENT_ID: process.env.OAUTH_CLIENT_ID,
+      OAUTH_REDIRECT_URI: process.env.OAUTH_REDIRECT_URI,
+      PORT: process.env.PORT,
+      PUBLIC_URL: process.env.PUBLIC_URL,
+      UI_DOMAIN: process.env.UI_DOMAIN
+    }),
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       template: "./public/index.html",

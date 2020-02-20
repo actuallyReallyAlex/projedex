@@ -6,7 +6,7 @@
     "start": "npm run build && node src/server/index.js",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "build": "webpack --mode production",
-    "client": "webpack-dev-server --mode development --devtool inline-source-map --hot",
+    "client": "env-cmd -e development webpack-dev-server --mode development --devtool inline-source-map --hot",
     "server": "env-cmd -e development nodemon src/server/index.js",
     "----": "----",
     "tr-dev": "concurrently 'npm run server' 'npm run client'",
