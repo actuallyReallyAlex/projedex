@@ -5,7 +5,7 @@
   "scripts": {
     "start": "npm run build && node src/server/index.js",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "build": "env-cmd -e production webpack --mode production",
+    "build": "webpack --mode production",
     "client": "webpack-dev-server --mode development --devtool inline-source-map --hot",
     "server": "env-cmd -e development nodemon src/server/index.js",
     "----": "----",
