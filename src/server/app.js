@@ -7,6 +7,7 @@ const projectRouter = require("./routers/project");
 const ghRouter = require("./routers/gh");
 const cors = require("cors");
 const Sentry = require("@sentry/node");
+const cookieParser = require("cookie-parser");
 
 Sentry.init({
   dsn: "https://11a8f63857134e91b049f0452e9d0330@sentry.io/2448589",
@@ -18,6 +19,8 @@ const app = express();
 app.use(Sentry.Handlers.requestHandler());
 
 app.use(express.json());
+
+app.use(cookieParser());
 
 const whitelistDomains = [
   "https://projedex.netlify.com",
