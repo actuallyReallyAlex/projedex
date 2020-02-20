@@ -9,6 +9,7 @@ const cors = require("cors");
 const Sentry = require("@sentry/node");
 const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
+const secure = require("./middleware/secure");
 
 Sentry.init({
   dsn: "https://11a8f63857134e91b049f0452e9d0330@sentry.io/2448589",
@@ -24,6 +25,8 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use(morgan("dev"));
+
+app.use(secure);
 
 const whitelistDomains = [
   "https://projedex.netlify.com",
