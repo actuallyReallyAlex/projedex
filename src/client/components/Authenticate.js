@@ -9,9 +9,9 @@ import {
   Transition,
   Segment
 } from "semantic-ui-react";
-import LogIn from "../components/LogIn";
-import SignUp from "../components/SignUp";
-import Info from "../components/Info";
+import LogIn from "./LogIn";
+import SignUp from "./SignUp";
+import Info from "./Info";
 
 const Authenticate = () => {
   const [action, setAction] = useState("start");
