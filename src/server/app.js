@@ -26,6 +26,7 @@ const whitelistDomains = [
   "https://api.github.com",
   "https://github.com",
   "https://www.projedex.com",
+  "http://www.projedex.com",
   undefined // ? Issue? Check for HOST
 ];
 
