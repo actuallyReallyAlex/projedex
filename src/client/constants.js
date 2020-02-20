@@ -1,1 +1,1 @@
-export const apiDomain = process.env.REACT_APP_API_DOMAIN;
+export const apiDomain = process.env.API_DOMAIN;
