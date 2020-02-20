@@ -6,7 +6,7 @@
  */
 const secure = (req, res, next) => {
   try {
-    if (!req.secure && process.env.NODE_ENV === "production") {
+    if (req.protocol === "http" && process.env.NODE_ENV === "production") {
       console.warn(`Request to ${req.url} made via http. Routing to https.`);
       res.redirect(`https://${req.headers.host}${req.url}`);
     } else {
