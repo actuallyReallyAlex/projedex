@@ -3,7 +3,9 @@ import PropTypes from "prop-types";
 import { useHistory, useLocation } from "react-router-dom";
 import { saveAccessToken } from "../redux/actions/app";
 import { connect } from "react-redux";
-import { version } from "../../package.json";
+// import { version } from "../../package.json";
+
+const version = 0;
 
 const Redirect = ({ handleSaveAccessToken, shouldHitSaveToken }) => {
   const useQuery = () => new URLSearchParams(useLocation().search);
