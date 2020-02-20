@@ -4,7 +4,18 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 const outputDirectory = "dist";
 
-console.log(process.env)
+console.log({
+  API_DOMAIN: process.env.API_DOMAIN,
+  UI_DOMAIN: process.env.UI_DOMAIN,
+  NODE_ENV: process.env.NODE_ENV,
+  PORT: process.env.PORT,
+  OAUTH_CLIENT_ID: process.env.OAUTH_CLIENT_ID,
+  OAUTH_REDIRECT_URI: process.env.OAUTH_REDIRECT_URI,
+  JWT_SECRET: process.env.JWT_SECRET,
+  PUBLIC_URL: process.env.PUBLIC_URL,
+  MONGODB_URL: process.env.MONGODB_URL,
+  MOCK: process.env.MOCK
+});
 
 module.exports = {
   node: {
