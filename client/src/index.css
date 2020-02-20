@@ -1,0 +1,24 @@
+#not-logged-in.not-logged-in__container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: center;
+  width: 100vw;
+}
+
+#action-container.not-logged-in__action-container {
+  max-width: 50%;
+  min-width: 350px;
+}
+
+#log-in-button-container.button__container,
+#sign-up-button-container.button__container {
+  display: flex;
+  margin-top: 25px;
+}
+
+#app.application {
+  height: 100vh;
+  margin: 0;
+}
