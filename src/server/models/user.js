@@ -1,8 +1,8 @@
-const mongoose = require("mongoose");
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcryptjs");
-const validator = require("validator");
-const Project = require("./project");
+const mongoose = require('mongoose')
+const jwt = require('jsonwebtoken')
+const bcrypt = require('bcryptjs')
+const validator = require('validator')
+const Project = require('./project')
 
 const userSchema = new mongoose.Schema(
   {
@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema(
       unique: true,
       validate: value => {
         if (!validator.isEmail(value)) {
-          throw new Error("Email is invalid.");
+          throw new Error('Email is invalid.')
         }
       }
     },
@@ -45,36 +45,28 @@ const userSchema = new mongoose.Schema(
         // * 4. At least 1 number
         // * 5. At least 1 special character
 
-        if (value.toLowerCase().includes("password")) {
-          throw new Error(`Password can't contain the string "password".`);
+        if (value.toLowerCase().includes('password')) {
+          throw new Error(`Password can't contain the string "password".`)
         }
 
         if (validator.isLowercase(value)) {
-          return handleError(
-            "Password should contain at least 1 uppercase letter."
-          );
+          return handleError('Password should contain at least 1 uppercase letter.')
         }
 
         if (validator.isUppercase(value)) {
-          throw new Error(
-            "Password should contain at least 1 lowercase letter."
-          );
+          throw new Error('Password should contain at least 1 lowercase letter.')
         }
 
         if (validator.isNumeric(value)) {
-          throw new Error(
-            "Password must contain at least 1 uppercase letter and 1 lowercase letter."
-          );
+          throw new Error('Password must contain at least 1 uppercase letter and 1 lowercase letter.')
         }
 
-        if (value.split("").every(char => isNaN(Number(char)))) {
-          throw new Error("Password should contain at least 1 number.");
+        if (value.split('').every(char => isNaN(Number(char)))) {
+          throw new Error('Password should contain at least 1 number.')
         }
 
         if (validator.isAlphanumeric(value)) {
-          throw new Error(
-            "Password should contain at least 1 special character."
-          );
+          throw new Error('Password should contain at least 1 special character.')
         }
       }
     },
@@ -88,67 +80,67 @@ const userSchema = new mongoose.Schema(
     ]
   },
   { timestamps: true }
-);
+)
 
-userSchema.virtual("projects", {
-  ref: "Project",
-  localField: "_id",
-  foreignField: "owner"
-});
+userSchema.virtual('projects', {
+  ref: 'Project',
+  localField: '_id',
+  foreignField: 'owner'
+})
 
 userSchema.methods.toJSON = function() {
-  const user = this;
-  const userObject = user.toObject();
+  const user = this
+  const userObject = user.toObject()
 
-  delete userObject.password;
-  delete userObject.tokens;
+  delete userObject.password
+  delete userObject.tokens
 
-  return userObject;
-};
+  return userObject
+}
 
 userSchema.methods.generateAuthToken = async function() {
-  const user = this;
-  const token = jwt.sign({ _id: user.id.toString() }, process.env.JWT_SECRET);
+  const user = this
+  const token = jwt.sign({ _id: user.id.toString() }, process.env.JWT_SECRET)
 
-  user.tokens = user.tokens.concat({ token });
+  user.tokens = user.tokens.concat({ token })
 
-  await user.save();
+  await user.save()
 
-  return token;
-};
+  return token
+}
 
 userSchema.statics.findByCredentials = async (email, password) => {
-  const user = await User.findOne({ email });
+  const user = await User.findOne({ email })
 
   if (!user) {
-    throw new Error("Unable to log in.");
+    throw new Error('Unable to log in.')
   }
 
-  const isMatch = await bcrypt.compare(password, user.password);
+  const isMatch = await bcrypt.compare(password, user.password)
 
   if (!isMatch) {
-    throw new Error("Unable to log in.");
+    throw new Error('Unable to log in.')
   }
 
-  return user;
-};
+  return user
+}
 
-userSchema.pre("save", async function(next) {
-  const user = this;
+userSchema.pre('save', async function(next) {
+  const user = this
 
-  if (user.isModified("password")) {
-    user.password = await bcrypt.hash(user.password, 8);
+  if (user.isModified('password')) {
+    user.password = await bcrypt.hash(user.password, 8)
   }
 
-  next();
-});
+  next()
+})
 
-userSchema.pre("remove", async function(next) {
-  const user = this;
-  await Project.deleteMany({ owner: user._id });
-  next();
-});
+userSchema.pre('remove', async function(next) {
+  const user = this
+  await Project.deleteMany({ owner: user._id })
+  next()
+})
 
-const User = mongoose.model("User", userSchema);
+const User = mongoose.model('User', userSchema)
 
-module.exports = User;
+module.exports = User

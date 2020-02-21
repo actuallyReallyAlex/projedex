@@ -1,37 +1,37 @@
-import { apiDomain } from "../../constants";
-import { setUserData } from "./user";
-import { setProjectData } from "./projects";
-import request from "request";
+import { apiDomain } from '../../constants'
+import { setUserData } from './user'
+import { setProjectData } from './projects'
+import request from 'request'
 
 // * ACTION TYPES
-const SET_HAS_FETCHED_PROJECT_DATA = "SET_HAS_FETCHED_PROJECT_DATA";
-const SET_SHOULD_HIT_SAVE_TOKEN = "SET_SHOULD_HIT_SAVE_TOKEN";
-const SET_ERROR = "SET_ERROR";
-const SET_LOADING = "SET_LOADING";
-const SET_CONTENT = "SET_CONTENT";
+const SET_HAS_FETCHED_PROJECT_DATA = 'SET_HAS_FETCHED_PROJECT_DATA'
+const SET_SHOULD_HIT_SAVE_TOKEN = 'SET_SHOULD_HIT_SAVE_TOKEN'
+const SET_ERROR = 'SET_ERROR'
+const SET_LOADING = 'SET_LOADING'
+const SET_CONTENT = 'SET_CONTENT'
 
 // * ACTION GENERATORS
 export const setHasFetchedProjectData = hasFetchedProjectData => ({
   type: SET_HAS_FETCHED_PROJECT_DATA,
   payload: { hasFetchedProjectData }
-});
+})
 
 export const setShouldHitSaveToken = shouldHitSaveToken => ({
   type: SET_SHOULD_HIT_SAVE_TOKEN,
   payload: { shouldHitSaveToken }
-});
+})
 
-export const setError = error => ({ type: SET_ERROR, payload: { error } });
+export const setError = error => ({ type: SET_ERROR, payload: { error } })
 
 export const setLoading = loading => ({
   type: SET_LOADING,
   payload: { loading }
-});
+})
 
 export const setContent = content => ({
   type: SET_CONTENT,
   payload: { content }
-});
+})
 
 // * PROMISES
 /**
@@ -44,12 +44,12 @@ const makeRequest = (uri, options) =>
   new Promise((resolve, reject) => {
     request(uri, options, (error, response, boody) => {
       if (error) {
-        reject(error);
+        reject(error)
       } else {
-        resolve(response);
+        resolve(response)
       }
-    });
-  });
+    })
+  })
 
 // * THUNKS
 
@@ -59,32 +59,32 @@ const makeRequest = (uri, options) =>
  */
 export const refreshData = history => async (dispatch, getState) => {
   try {
-    const { user } = await getState();
+    const { user } = await getState()
     const userResponse = await makeRequest(`${apiDomain}/users/me`, {
       json: true,
-      method: "GET",
+      method: 'GET',
       headers: {
-        "Content-Type": "application/json"
+        'Content-Type': 'application/json'
       }
-    });
-    const newUserData = userResponse.body;
+    })
+    const newUserData = userResponse.body
     const projectsResponse = await makeRequest(`${apiDomain}/projects`, {
       json: true,
-      method: "GET",
+      method: 'GET',
       headers: {
-        "Content-Type": "application/json"
+        'Content-Type': 'application/json'
       }
-    });
-    const newProjects = projectsResponse.body;
+    })
+    const newProjects = projectsResponse.body
 
-    dispatch(setUserData({ ...user.userData, user: newUserData }));
-    dispatch(setProjectData(newProjects));
+    dispatch(setUserData({ ...user.userData, user: newUserData }))
+    dispatch(setProjectData(newProjects))
 
-    if (history) history.push("/");
+    if (history) history.push('/')
   } catch (e) {
-    return console.error(e);
+    return console.error(e)
   }
-};
+}
 
 /**
  * Integrate with GitHub
@@ -93,13 +93,13 @@ export const integrateWithGitHub = () => async () => {
   try {
     const response = await makeRequest(`${apiDomain}/gh`, {
       json: true,
-      method: "GET"
-    });
-    window.location.assign(response.body.url);
+      method: 'GET'
+    })
+    window.location.assign(response.body.url)
   } catch (e) {
-    return console.error(e);
+    return console.error(e)
   }
-};
+}
 
 /**
  * Save accessToken to database
@@ -110,18 +110,18 @@ export const saveAccessToken = (history, accessToken) => async dispatch => {
   try {
     await makeRequest(`${apiDomain}/users/me`, {
       json: true,
-      method: "PATCH",
+      method: 'PATCH',
       body: {
         accessToken
       }
-    });
+    })
 
-    dispatch(refreshData(history));
-    dispatch(setShouldHitSaveToken(false));
+    dispatch(refreshData(history))
+    dispatch(setShouldHitSaveToken(false))
   } catch (e) {
-    return console.error(e);
+    return console.error(e)
   }
-};
+}
 
 /**
  * Get list of repos
@@ -131,18 +131,18 @@ export const getRepos = setRepos => async (dispatch, getState) => {
   try {
     const response = await makeRequest(`${apiDomain}/gh-import`, {
       json: true,
-      method: "GET"
-    });
+      method: 'GET'
+    })
 
     if (response.statusCode === 200) {
-      setRepos(response.body);
+      setRepos(response.body)
     } else {
-      throw new Error({ error: "Response statusCode was not 200", response });
+      throw new Error({ error: 'Response statusCode was not 200', response })
     }
   } catch (e) {
-    return console.error(e);
+    return console.error(e)
   }
-};
+}
 
 /**
  * Import GitHub repos as projects.
@@ -152,16 +152,16 @@ export const importRepos = repos => async dispatch => {
   try {
     const response = await makeRequest(`${apiDomain}/gh-import`, {
       json: true,
-      method: "POST",
+      method: 'POST',
       body: { repos }
-    });
+    })
 
     if (response.statusCode === 201) {
-      dispatch(setProjectData(response.body.projects));
+      dispatch(setProjectData(response.body.projects))
     } else {
-      throw new Error({ error: "Response statusCode was not 201", response });
+      throw new Error({ error: 'Response statusCode was not 201', response })
     }
   } catch (e) {
-    return console.error(e);
+    return console.error(e)
   }
-};
+}

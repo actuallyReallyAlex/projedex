@@ -1,21 +1,16 @@
-import request from "request";
-import { apiDomain } from "../../constants";
-import { setProjectData } from "./projects";
-import {
-  setHasFetchedProjectData,
-  setError,
-  setLoading,
-  refreshData
-} from "./app";
+import request from 'request'
+import { apiDomain } from '../../constants'
+import { setProjectData } from './projects'
+import { setHasFetchedProjectData, setError, setLoading, refreshData } from './app'
 
 // * ACTION TYPES
-const SET_USER_DATA = "SET_USER_DATA";
+const SET_USER_DATA = 'SET_USER_DATA'
 
 // * ACTION GENERATORS
 export const setUserData = userData => ({
   type: SET_USER_DATA,
   payload: { userData }
-});
+})
 
 // * PROMISES
 /**
@@ -28,12 +23,12 @@ const makeRequest = (uri, options) =>
   new Promise((resolve, reject) => {
     request(uri, options, (error, response, boody) => {
       if (error) {
-        reject(error);
+        reject(error)
       } else {
-        resolve(response);
+        resolve(response)
       }
-    });
-  });
+    })
+  })
 
 // * THUNKS
 /**
@@ -47,17 +42,17 @@ export const createUser = (email, name, password) => async dispatch => {
     const response = await makeRequest(`${apiDomain}/users`, {
       json: true,
       body: { email, password, name },
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json"
+        'Content-Type': 'application/json'
       }
-    });
+    })
 
-    dispatch(setUserData(response.body));
+    dispatch(setUserData(response.body))
   } catch (e) {
-    return console.error(e);
+    return console.error(e)
   }
-};
+}
 
 /**
  * Delete User
@@ -66,20 +61,20 @@ export const deleteUser = () => async dispatch => {
   try {
     await makeRequest(`${apiDomain}/users/me`, {
       json: true,
-      method: "DELETE",
+      method: 'DELETE',
       headers: {
-        "Content-Type": "application/json"
+        'Content-Type': 'application/json'
       }
-    });
+    })
 
-    dispatch(setUserData(null));
-    dispatch(setLoading(false));
+    dispatch(setUserData(null))
+    dispatch(setLoading(false))
   } catch (e) {
     // TODO - Handle dispatching errors
-    dispatch(setLoading(false));
-    return console.error(e);
+    dispatch(setLoading(false))
+    return console.error(e)
   }
-};
+}
 
 /**
  * Login User
@@ -91,35 +86,35 @@ export const logIn = (email, password) => async dispatch => {
     const response = await makeRequest(`${apiDomain}/users/login`, {
       json: true,
       body: { email, password },
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json"
+        'Content-Type': 'application/json'
       }
-    });
+    })
 
     // * 1. Server error -> Code 400
     // * 2. No "Error", but unable to log in -> Code 200 + response.body = { error: "Unable to log in" }
     // * 3. Client Side Error -> Catch bloock
     // * 4. Success -> Code 200 + response.body = { user: {}, token: "" }
     if (response.statusCode === 400) {
-      dispatch(setError({ state: true, message: "Error ..." }));
-      dispatch(setLoading(false));
+      dispatch(setError({ state: true, message: 'Error ...' }))
+      dispatch(setLoading(false))
     } else if (response.statusCode === 200) {
       if (response.body.error) {
-        dispatch(setError({ state: true, message: response.body.error }));
-        dispatch(setLoading(false));
+        dispatch(setError({ state: true, message: response.body.error }))
+        dispatch(setLoading(false))
       } else {
-        dispatch(setUserData(response.body));
-        dispatch(refreshData());
-        dispatch(setLoading(false));
+        dispatch(setUserData(response.body))
+        dispatch(refreshData())
+        dispatch(setLoading(false))
       }
     }
   } catch (e) {
-    dispatch(setError({ state: true, message: "Error ..." }));
-    dispatch(setLoading(false));
-    return console.error(e);
+    dispatch(setError({ state: true, message: 'Error ...' }))
+    dispatch(setLoading(false))
+    return console.error(e)
   }
-};
+}
 
 /**
  * Logout User
@@ -128,19 +123,19 @@ export const logout = () => async dispatch => {
   try {
     await makeRequest(`${apiDomain}/users/logout`, {
       json: true,
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json"
+        'Content-Type': 'application/json'
       }
-    });
+    })
 
-    dispatch(setUserData(null));
-    dispatch(setProjectData([]));
-    dispatch(setHasFetchedProjectData(false));
+    dispatch(setUserData(null))
+    dispatch(setProjectData([]))
+    dispatch(setHasFetchedProjectData(false))
   } catch (e) {
-    return console.error(e);
+    return console.error(e)
   }
-};
+}
 
 /**
  * Logout User from All Accounts
@@ -149,22 +144,22 @@ export const logoutAll = () => async dispatch => {
   try {
     await makeRequest(`${apiDomain}/users/logoutAll`, {
       json: true,
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json"
+        'Content-Type': 'application/json'
       }
-    });
+    })
 
-    dispatch(setUserData(null));
-    dispatch(setProjectData([]));
-    dispatch(setHasFetchedProjectData(false));
-    dispatch(setLoading(false));
+    dispatch(setUserData(null))
+    dispatch(setProjectData([]))
+    dispatch(setHasFetchedProjectData(false))
+    dispatch(setLoading(false))
   } catch (e) {
     // TODO - Handle dispatching errors
-    dispatch(setLoading(false));
-    return console.error(e);
+    dispatch(setLoading(false))
+    return console.error(e)
   }
-};
+}
 
 /**
  * Modify user document
@@ -172,20 +167,20 @@ export const logoutAll = () => async dispatch => {
  */
 export const modifyUser = modification => async (dispatch, getState) => {
   try {
-    const { user } = await getState();
+    const { user } = await getState()
     const request = await makeRequest(`${apiDomain}/users/me`, {
       json: true,
-      method: "PATCH",
+      method: 'PATCH',
       headers: {
-        "Content-Type": "application/json"
+        'Content-Type': 'application/json'
       },
       body: modification
-    });
-    dispatch(setUserData({ ...user.userData, user: request.body }));
-    dispatch(setLoading(false));
+    })
+    dispatch(setUserData({ ...user.userData, user: request.body }))
+    dispatch(setLoading(false))
   } catch (e) {
     // TODO - Handle dispatching error here
-    dispatch(setLoading(false));
-    return console.error(e);
+    dispatch(setLoading(false))
+    return console.error(e)
   }
-};
+}

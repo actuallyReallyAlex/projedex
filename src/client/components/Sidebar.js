@@ -1,36 +1,25 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
-import { Header, Icon, Menu, Button } from "semantic-ui-react";
-import { connect } from "react-redux";
-import { logout } from "../redux/actions/user";
-import { setContent } from "../redux/actions/app";
-import { setCurrentProjectId } from "../redux/actions/projects";
-import Info from "./Info";
+import React, { useState } from 'react'
+import PropTypes from 'prop-types'
+import { Header, Icon, Menu, Button } from 'semantic-ui-react'
+import { connect } from 'react-redux'
+import { logout } from '../redux/actions/user'
+import { setContent } from '../redux/actions/app'
+import { setCurrentProjectId } from '../redux/actions/projects'
+import Info from './Info'
 
-const Sidebar = ({
-  handleNewProject,
-  handleLogOut,
-  handleSelectHome,
-  handleSelectProjects,
-  handleSelectSettings,
-  handleViewProject,
-  projectData
-}) => {
-  const [activeItem, setActiveItem] = useState("");
+const Sidebar = ({ handleNewProject, handleLogOut, handleSelectHome, handleSelectProjects, handleSelectSettings, handleViewProject, projectData }) => {
+  const [activeItem, setActiveItem] = useState('')
   return (
-    <Menu style={{ maxWidth: "100%" }} vertical>
-      <Header
-        as="h1"
-        style={{ fontSize: "1.5rem", marginTop: "14px", textAlign: "center" }}
-      >
+    <Menu style={{ maxWidth: '100%' }} vertical>
+      <Header as="h1" style={{ fontSize: '1.5rem', marginTop: '14px', textAlign: 'center' }}>
         <Header.Content>Projédex</Header.Content>
       </Header>
       <Menu.Item
         name="home"
-        active={activeItem === "home"}
+        active={activeItem === 'home'}
         onClick={() => {
-          setActiveItem("home");
-          handleSelectHome();
+          setActiveItem('home')
+          handleSelectHome()
         }}
       >
         <Icon name="home" />
@@ -38,29 +27,29 @@ const Sidebar = ({
       </Menu.Item>
       <Menu.Item
         name="projects"
-        active={activeItem === "projects"}
+        active={activeItem === 'projects'}
         onClick={() => {
-          setActiveItem("projects");
-          handleSelectProjects();
+          setActiveItem('projects')
+          handleSelectProjects()
         }}
       >
         <div
           style={{
-            alignItems: "center",
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-between"
+            alignItems: 'center',
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'space-between'
           }}
         >
           Projects
           <Button
             onClick={e => {
-              e.stopPropagation();
-              handleNewProject();
+              e.stopPropagation()
+              handleNewProject()
             }}
             positive
             size="mini"
-            style={{ marginRight: "0", padding: "6px" }}
+            style={{ marginRight: '0', padding: '6px' }}
           >
             New
           </Button>
@@ -77,21 +66,21 @@ const Sidebar = ({
                   link
                   name={project.name}
                   onClick={e => {
-                    e.stopPropagation();
-                    handleViewProject(project._id);
+                    e.stopPropagation()
+                    handleViewProject(project._id)
                   }}
                 />
-              );
+              )
             })}
           </Menu.Menu>
         )}
       </Menu.Item>
       <Menu.Item
         name="settings"
-        active={activeItem === "settings"}
+        active={activeItem === 'settings'}
         onClick={() => {
-          setActiveItem("settings");
-          handleSelectSettings();
+          setActiveItem('settings')
+          handleSelectSettings()
         }}
       >
         <Icon name="settings" />
@@ -99,10 +88,10 @@ const Sidebar = ({
       </Menu.Item>
       <Menu.Item
         name="log out"
-        active={activeItem === "log out"}
+        active={activeItem === 'log out'}
         onClick={() => {
-          setActiveItem("log out");
-          handleLogOut();
+          setActiveItem('log out')
+          handleLogOut()
         }}
       >
         <Icon name="log out" />
@@ -110,8 +99,8 @@ const Sidebar = ({
       </Menu.Item>
       <Info />
     </Menu>
-  );
-};
+  )
+}
 
 Sidebar.propTypes = {
   handleNewProject: PropTypes.func.isRequired,
@@ -121,22 +110,22 @@ Sidebar.propTypes = {
   handleSelectSettings: PropTypes.func.isRequired,
   handleViewProject: PropTypes.func.isRequired,
   projectData: PropTypes.array.isRequired
-};
+}
 
 const mapStateToProps = ({ projects }) => ({
   projectData: projects.projectData
-});
+})
 
 const mapDispatchToProps = dispatch => ({
-  handleNewProject: () => dispatch(setContent("newProject")),
+  handleNewProject: () => dispatch(setContent('newProject')),
   handleLogOut: () => dispatch(logout()),
-  handleSelectHome: () => dispatch(setContent("home")),
-  handleSelectProjects: () => dispatch(setContent("projects")),
-  handleSelectSettings: () => dispatch(setContent("settings")),
+  handleSelectHome: () => dispatch(setContent('home')),
+  handleSelectProjects: () => dispatch(setContent('projects')),
+  handleSelectSettings: () => dispatch(setContent('settings')),
   handleViewProject: id => {
-    dispatch(setCurrentProjectId(id));
-    dispatch(setContent("viewProject"));
+    dispatch(setCurrentProjectId(id))
+    dispatch(setContent('viewProject'))
   }
-});
+})
 
-export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);
+export default connect(mapStateToProps, mapDispatchToProps)(Sidebar)
