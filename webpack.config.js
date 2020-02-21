@@ -1,9 +1,9 @@
-const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const webpack = require("webpack");
+const path = require('path')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const webpack = require('webpack')
 
-const outputDirectory = "dist";
+const outputDirectory = 'dist'
 
 console.log({
   API_DOMAIN: process.env.API_DOMAIN,
@@ -16,18 +16,18 @@ console.log({
   PORT: process.env.PORT,
   PUBLIC_URL: process.env.PUBLIC_URL,
   UI_DOMAIN: process.env.UI_DOMAIN
-});
+})
 
 module.exports = {
   node: {
-    fs: "empty",
-    net: "empty",
-    tls: "empty"
+    fs: 'empty',
+    net: 'empty',
+    tls: 'empty'
   },
-  entry: ["babel-polyfill", "./src/client/index.js"],
+  entry: ['babel-polyfill', './src/client/index.js'],
   output: {
     path: path.join(__dirname, outputDirectory),
-    filename: "bundle.js"
+    filename: 'bundle.js'
   },
   module: {
     rules: [
@@ -35,27 +35,27 @@ module.exports = {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader"
+          loader: 'babel-loader'
         }
       },
       {
         test: /\.css$/,
-        use: ["style-loader", "css-loader"]
+        use: ['style-loader', 'css-loader']
       },
       {
         test: /\.(png|woff|woff2|eot|ttf|svg)$/,
-        loader: "url-loader?limit=100000"
+        loader: 'url-loader?limit=100000'
       }
     ]
   },
   resolve: {
-    extensions: ["*", ".js", ".jsx"]
+    extensions: ['*', '.js', '.jsx']
   },
   devServer: {
     port: 3000,
     open: true,
     proxy: {
-      "/api": "http://localhost:8080"
+      '/api': 'http://localhost:8080'
     }
   },
   plugins: [
@@ -73,8 +73,8 @@ module.exports = {
     }),
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
-      template: "./public/index.html",
-      favicon: "./public/favicon.ico"
+      template: './public/index.html',
+      favicon: './public/favicon.ico'
     })
   ]
-};
+}

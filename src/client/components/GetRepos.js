@@ -1,21 +1,21 @@
-import React, { useState, Fragment } from "react";
-import PropTypes from "prop-types";
-import { importRepos } from "../redux/actions/app";
-import { getRepos } from "../redux/actions/app";
-import { connect } from "react-redux";
+import React, { useState, Fragment } from 'react'
+import PropTypes from 'prop-types'
+import { importRepos } from '../redux/actions/app'
+import { getRepos } from '../redux/actions/app'
+import { connect } from 'react-redux'
 
 const GetRepos = ({ handleImportRepos, handleGetRepos }) => {
-  const [repos, setRepos] = useState([]);
-  const [selectedRepos, setSelectedRepos] = useState([]);
+  const [repos, setRepos] = useState([])
+  const [selectedRepos, setSelectedRepos] = useState([])
 
   const handleImportAll = () => {
-    console.log("import all button clicked");
-    handleImportRepos(repos);
-  };
+    console.log('import all button clicked')
+    handleImportRepos(repos)
+  }
   const handleImportSelected = () => {
-    console.log("import selected button clicked");
-    handleImportRepos(selectedRepos.map(id => ({ id })));
-  };
+    console.log('import selected button clicked')
+    handleImportRepos(selectedRepos.map(id => ({ id })))
+  }
 
   return (
     <Fragment>
@@ -44,17 +44,15 @@ const GetRepos = ({ handleImportRepos, handleGetRepos }) => {
               name={name}
               onChange={e => {
                 if (e.target.checked) {
-                  const newArray = Array.from(selectedRepos);
-                  newArray.push(id);
-                  console.log({ newArray });
+                  const newArray = Array.from(selectedRepos)
+                  newArray.push(id)
+                  console.log({ newArray })
 
-                  setSelectedRepos(newArray);
+                  setSelectedRepos(newArray)
                 } else {
-                  const newArray = Array.from(selectedRepos).filter(
-                    selectedRepoId => selectedRepoId !== id
-                  );
-                  console.log({ newArray });
-                  selectedRepos(newArray);
+                  const newArray = Array.from(selectedRepos).filter(selectedRepoId => selectedRepoId !== id)
+                  console.log({ newArray })
+                  selectedRepos(newArray)
                 }
               }}
             />
@@ -63,17 +61,17 @@ const GetRepos = ({ handleImportRepos, handleGetRepos }) => {
         ))}
       </div>
     </Fragment>
-  );
-};
+  )
+}
 
 GetRepos.propTypes = {
   handleImportRepos: PropTypes.func.isRequired,
   handleGetRepos: PropTypes.func.isRequired
-};
+}
 
 const mapDispatchToProps = dispatch => ({
   handleImportRepos: repos => dispatch(importRepos(repos)),
   handleGetRepos: setRepos => dispatch(getRepos(setRepos))
-});
+})
 
-export default connect(null, mapDispatchToProps)(GetRepos);
+export default connect(null, mapDispatchToProps)(GetRepos)

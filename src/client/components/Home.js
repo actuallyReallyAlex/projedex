@@ -1,5 +1,5 @@
-import React from "react";
-import { Placeholder } from "semantic-ui-react";
+import React from 'react'
+import { Placeholder } from 'semantic-ui-react'
 
 const Home = () => {
   return (
@@ -16,7 +16,7 @@ const Home = () => {
         <Placeholder.Line />
       </Placeholder.Paragraph>
     </Placeholder>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home
