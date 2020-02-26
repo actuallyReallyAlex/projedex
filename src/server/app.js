@@ -55,6 +55,10 @@ app.use(userRouter)
 app.use(projectRouter)
 app.use(ghRouter)
 
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../../dist/index.html'))
+})
+
 app.use(Sentry.Handlers.errorHandler())
 
 module.exports = app
