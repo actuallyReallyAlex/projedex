@@ -1,13 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Header, Segment } from 'semantic-ui-react'
+import { Button, Header, Icon, Segment } from 'semantic-ui-react'
 import { connect } from 'react-redux'
+import { integrateWithGitHub } from '../redux/actions/app'
 
 // TODO - Make this look nice
-const Projects = ({ projectData }) => {
+const Projects = ({ handleIntegrateWithGitHub, projectData }) => {
   return (
     <div>
       <Header as="h2">Projects</Header>
+      <Button onClick={handleIntegrateWithGitHub}>
+        <Icon name="github" /> Integrate with Github
+      </Button>
       {projectData.map(project => (
         <Segment key={project._id} raised>
           <Header as="h3">{project.name}</Header>
@@ -19,6 +23,7 @@ const Projects = ({ projectData }) => {
 }
 
 Projects.propTypes = {
+  handleIntegrateWithGitHub: PropTypes.func.isRequired,
   projectData: PropTypes.array.isRequired
 }
 
@@ -26,4 +31,8 @@ const mapStateToProps = ({ projects }) => ({
   projectData: projects.projectData
 })
 
-export default connect(mapStateToProps, null)(Projects)
+const mapDispatchToProps = dispatch => ({
+  handleIntegrateWithGitHub: () => dispatch(integrateWithGitHub())
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Projects)
