@@ -20,8 +20,16 @@ const auth = async (req, res, next) => {
       req.user = user
       next()
     } else {
-      // * User is not authenticated correctly
-      throw new Error('Request was made without a cookie!')
+      console.log({ reqPath: req.path, reqQuery: req.query })
+      if (req.path === '/gh' && req.query.accessToken) {
+        // * There is no cookie here b/c the user is coming back from GitHub.com
+        // TODO - ? Probably check header for if it came from GitHub?
+        console.log('User has been redirected from GitHub')
+        next()
+      } else {
+        // * User is not authenticated correctly
+        throw new Error(`Request for ${req.originalUrl} was made without a cookie!`)
+      }
     }
   } catch (e) {
     console.log(e)
