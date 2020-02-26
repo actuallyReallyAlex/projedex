@@ -16,12 +16,19 @@ router.get('/gh', auth, async (req, res) => {
   // * ✅ 1. Hit /gh -> API sends back a URL (Step 1)
   // * ✅ 2. UI hits that URL (Step 1)
   // * ✅ 3. User authenticates on GitHub (Step 1)
+  const { accessToken } = req.query
 
-  try {
-    const url = `https://github.com/login/oauth/authorize?client_id=${process.env.OAUTH_CLIENT_ID}&redirect_uri=${process.env.OAUTH_REDIRECT_URI}&scope=repo`
-    res.send({ url })
-  } catch (e) {
-    res.status(500).send()
+  // * Check if AccessToken
+  if (accessToken) {
+    console.log('User has gotten to /gh with an accessToken')
+    res.redirect(`/redirect?accessToken=${accessToken}`)
+  } else {
+    try {
+      const url = `https://github.com/login/oauth/authorize?client_id=${process.env.OAUTH_CLIENT_ID}&redirect_uri=${process.env.OAUTH_REDIRECT_URI}&scope=repo`
+      res.send({ url })
+    } catch (e) {
+      res.status(500).send()
+    }
   }
 })
 
