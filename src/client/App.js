@@ -8,6 +8,7 @@ const App = () => {
     <Router>
       <Switch>
         <Route path="/gh" children={<Redirect />} />
+        <Route path="/redirect" children={<Redirect />} />
         <Route path="/" children={<Home />} />
       </Switch>
     </Router>
