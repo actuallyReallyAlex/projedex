@@ -31,6 +31,7 @@
     "mongodb": "^3.5.2",
     "mongoose": "^5.8.11",
     "morgan": "^1.9.1",
+    "newrelic": "^6.4.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-redux": "^7.1.3",
