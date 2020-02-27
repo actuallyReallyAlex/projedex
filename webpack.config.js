@@ -10,6 +10,7 @@ console.log({
   JWT_SECRET: process.env.JWT_SECRET,
   MOCK: process.env.MOCK,
   MONGODB_URL: process.env.MONGODB_URL,
+  NEW_RELIC_KEY: process.env.NEW_RELIC_KEY,
   NODE_ENV: process.env.NODE_ENV,
   OAUTH_CLIENT_ID: process.env.OAUTH_CLIENT_ID,
   OAUTH_REDIRECT_URI: process.env.OAUTH_REDIRECT_URI,
