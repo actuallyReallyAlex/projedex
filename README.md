@@ -1,6 +1,6 @@
 <p align="center">
   <a href="" rel="noopener">
- <img width=256px height=256px src="https://github.com/alexlee-dev/projedex/blob/readme/projedex.svg" alt="Projedex logo"></a>
+ <img width=256px height=256px src="https://github.com/alexlee-dev/projedex/blob/master/projedex.svg" alt="Projedex logo"></a>
 </p>
 
 <h3 align="center">Projedex</h3>
@@ -27,7 +27,6 @@
 - [Usage](#usage)
 - [Built Using](#built_using)
 - [TODO](../TODO.md)
-- [Contributing](../CONTRIBUTING.md)
 - [Authors](#authors)
 - [Acknowledgments](#acknowledgement)
 
