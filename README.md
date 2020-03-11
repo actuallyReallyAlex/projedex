@@ -9,6 +9,7 @@
 
 [![GitHub Issues](https://img.shields.io/github/issues/alexlee-dev/projedex)](https://github.com/alexlee-dev/projedex/issues)
 [![NPM Version](https://img.shields.io/npm/v/projedex)](https://www.npmjs.com/package/projedex)
+[![Dependencies](https://img.shields.io/david/alexlee-dev/projedex)](https://github.com/alexlee-dev/projedex)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
 
 </div>
