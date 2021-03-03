@@ -10,7 +10,9 @@
     "client": "env-cmd -e development webpack-dev-server --mode development --devtool inline-source-map --hot",
     "server": "env-cmd -e development nodemon src/server/index.js",
     "server-debug": "env-cmd -e development node --inspect src/server/index.js",
-    "format": "prettier --write \"**/*.{js,json,md,html}\""
+    "format": "prettier --write \"**/*.{js,json,md,html}\"",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "dependencies": {
     "@octokit/rest": "^16.43.1",
@@ -41,7 +43,8 @@
     "request": "^2.88.0",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^0.88.2",
-    "validator": "^12.2.0"
+    "validator": "^12.2.0",
+    "snyk": "^1.316.1"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
@@ -93,5 +96,6 @@
   "homepage": "https://www.projedex.com/",
   "jest": {
     "testEnvironment": "node"
-  }
+  },
+  "snyk": true
 }
